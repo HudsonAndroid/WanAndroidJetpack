@@ -21,17 +21,17 @@
     </fragment>
     <fragment
         android:id="@+id/treeFragment"
-        android:name="com.hudson.wanandroid.TreeFragment"
+        android:name="com.hudson.wanandroid.ui.fragment.main.TreeFragment"
         android:label="fragment_tree"
         tools:layout="@layout/fragment_tree" />
     <fragment
         android:id="@+id/navigationFragment"
-        android:name="com.hudson.wanandroid.NavigationFragment"
+        android:name="com.hudson.wanandroid.ui.fragment.main.NavigationFragment"
         android:label="fragment_navigation"
         tools:layout="@layout/fragment_navigation" />
     <fragment
         android:id="@+id/projectsFragment"
-        android:name="com.hudson.wanandroid.ProjectsFragment"
+        android:name="com.hudson.wanandroid.ui.fragment.main.ProjectsFragment"
         android:label="fragment_projects"
         tools:layout="@layout/fragment_projects" />
 </navigation>
