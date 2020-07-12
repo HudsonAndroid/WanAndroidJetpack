@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="com.hudson.wanandroid.viewmodel.global.GlobalJumpHandler"/>
+        <variable
+            name="bannerItem"
+            type="com.hudson.wanandroid.data.entity.BannerItem" />
+        <!--绑定静态方法，不需要设置数据data variable-->
+        <!--<variable
+            name="jumpHandler"
+            type="com.hudson.wanandroid.viewmodel.global.GlobalJumpHandler" />-->
+    </data>
+
+    <!--注意kotlin中绑定静态方法时，需要使用@JvmStatic，并且不是GlobalJumpHandler.Companion对象，而是直接调用-->
+    <ImageView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:clickable="true"
+        android:focusable="true"
+        app:imageUrl="@{bannerItem.imagePath}"
+        android:onClick="@{(view)->GlobalJumpHandler.onJumpInvoked(view,bannerItem.url)}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</layout>
