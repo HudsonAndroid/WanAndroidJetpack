@@ -1,6 +1,7 @@
 package com.hudson.wanandroid.data.entity
 
 /**
+ * banner数据
  * Created by Hudson on 2020/7/11.
  */
 data class Banner(
@@ -13,16 +14,6 @@ data class Banner(
 }
 
 
-/**
- * "desc": "享学~",
-"id": 29,
-"imagePath": "https://wanandroid.com/blogimgs/2087429c-f6ac-43dd-9ffe-8af871b6deb8.png",
-"isVisible": 1,
-"order": 0,
-"title": "&ldquo;学不动了，也得学！&rdquo;",
-"type": 0,
-"url": "https://mp.weixin.qq.com/s/PRv6SAZlklz4DRm1EsBdew"
- */
 data class BannerItem(
     val desc: String,
     val id:Int, //如果位数长，考虑Long

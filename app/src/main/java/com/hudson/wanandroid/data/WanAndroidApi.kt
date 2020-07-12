@@ -1,6 +1,8 @@
 package com.hudson.wanandroid.data
 
 import com.hudson.wanandroid.data.entity.Banner
+import com.hudson.wanandroid.data.entity.SearchHotWord
+import com.hudson.wanandroid.data.entity.Website
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,4 +25,10 @@ interface WanAndroidApi {
 
     @GET("banner/json")
     fun bannerApi(): Call<Banner>
+
+    @GET("friend/json")
+    fun websiteApi(): Call<Website>
+
+    @GET("hotkey/json")
+    fun searchHotWordApi(): Call<SearchHotWord>
 }
