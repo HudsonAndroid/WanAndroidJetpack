@@ -12,4 +12,8 @@ open class BaseResult {
         return "BaseResult(errorCode=$errorCode, errorMsg='$errorMsg')"
     }
 
+    open fun isSuccess():Boolean{
+        return errorCode == 0
+    }
+
 }

@@ -12,14 +12,18 @@ import retrofit2.http.GET
  * Created by Hudson on 2020/7/11.
  */
 interface WanAndroidApi {
+    private object Inner{
+        val singleTon: WanAndroidApi = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build().create(WanAndroidApi::class.java)
+    }
+
     companion object{
         private const val BASE_URL = "https://www.wanandroid.com"
 
         fun api():WanAndroidApi{
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build().create(WanAndroidApi::class.java)
+            return Inner.singleTon
         }
     }
 

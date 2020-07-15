@@ -1,6 +1,7 @@
 package com.hudson.wanandroid.viewmodel.bindingadapter
 
 import android.graphics.drawable.Drawable
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.PagerAdapter
@@ -39,4 +40,9 @@ fun indicatorCount(indicator: CirclePointIndicator, bannerCount: Int){
 @BindingAdapter(value = ["indicator"])
 fun indicator(autoSwitchViewPager: AutoSwitchViewPager, indicator: IPagerIndicator){
     autoSwitchViewPager.attachIndicator(indicator)
+}
+
+@BindingAdapter(value = ["showOrHide"])
+fun showOrHide(view: View, show: Boolean){
+    view.visibility =  if(show) View.VISIBLE else View.GONE
 }

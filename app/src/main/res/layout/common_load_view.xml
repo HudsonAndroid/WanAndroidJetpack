@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.hudson.wanandroid.data.entity.wrapper.Status"/>
+        <variable
+            name="resource"
+            type="com.hudson.wanandroid.data.entity.wrapper.Resource" />
+        <variable
+            name="retry"
+            type="com.hudson.wanandroid.ui.common.RetryCallback" />
+    </data>
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:gravity="center"
+        showOrHide="@{resource.data == null}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            app:showOrHide="@{resource.status == Status.LOADING}"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress_bar"
+            android:layout_margin="8dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_retry"
+            android:id="@+id/retry"
+            android:onClick="@{() -> retry.retry()}"
+            app:showOrHide="@{resource.status == Status.ERROR}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/error_msg"
+            android:text="@{resource.msg ?? @string/tips_unknown_error}"
+            app:showOrHide="@{resource.status == Status.ERROR}" />
+
+    </LinearLayout>
+</layout>

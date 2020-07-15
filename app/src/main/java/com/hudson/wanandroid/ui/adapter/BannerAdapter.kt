@@ -13,16 +13,18 @@ import com.hudson.wanandroid.databinding.ItemBannerImgBinding
 class BannerAdapter: PagerAdapter() {
     private val views: MutableList<View> = mutableListOf()
 
-    fun refresh(parent: ViewGroup, banners: List<BannerItem>?){
-        if(banners != null){
-            views.clear()
-            for(bannerItem in banners){
-                val binding =
-                    ItemBannerImgBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                views.add(binding.root)
-                binding.bannerItem = bannerItem
+    fun refresh(parent: ViewGroup?, banners: List<BannerItem>?){
+        parent?.apply {
+            if(banners != null && banners.isNotEmpty()){
+                views.clear()
+                for(bannerItem in banners){
+                    val binding =
+                        ItemBannerImgBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                    views.add(binding.root)
+                    binding.bannerItem = bannerItem
+                }
+                notifyDataSetChanged()
             }
-            notifyDataSetChanged()
         }
     }
 

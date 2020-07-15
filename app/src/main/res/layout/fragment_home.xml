@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="android.text.Html"/>
+        <import type="java.util.List"/>
+        <import type="com.hudson.wanandroid.data.entity.wrapper.Resource"/>
+        <import type="com.hudson.wanandroid.data.entity.BannerItem"/>
+        <import type="androidx.lifecycle.LiveData"/>
+
+        <variable
+            name="banner"
+            type="com.hudson.wanandroid.viewmodel.BannerModel" />
+
+        <variable
+            name="retry"
+            type="com.hudson.wanandroid.ui.common.RetryCallback" />
+
+        <variable
+            name="banners"
+            type="LiveData&lt;Resource&lt;List&lt;BannerItem>>>" />
+
+        <variable
+            name="pageChangeListener"
+            type="com.hudson.wanandroid.ui.view.indicatorviewpager.listener.SimplePageChangeListener" />
+
+        <variable
+            name="indicator"
+            type="com.hudson.wanandroid.ui.view.indicatorviewpager.indicator.IPagerIndicator" />
+
+        <variable
+            name="adapter"
+            type="com.hudson.wanandroid.ui.adapter.BannerAdapter" />
+
+        <variable
+            name="bannerCount"
+            type="LiveData&lt;Integer>" />
+
+        <variable
+            name="bannerTitle"
+            type="LiveData&lt;String>" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.hudson.wanandroid.ui.view.indicatorviewpager.viewpager.AutoSwitchViewPager
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="2.5:1"
+            android:id="@+id/vp_banner"
+            bannerAdapter="@{adapter}"
+            bannerChangeListener="@{pageChangeListener}"
+            indicator="@{indicator}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <com.hudson.wanandroid.ui.view.indicatorviewpager.indicator.PathPointIndicator
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:id="@+id/pp_indicator"
+            app:indicatorCount="@{bannerCount}"
+            app:layout_constraintBottom_toBottomOf="@id/vp_banner"
+            app:layout_constraintRight_toRightOf="@id/vp_banner"
+            app:layout_constraintWidth_percent="0.4" />
+
+        <!--需要判空，否则Html.fromHtml方法会报空指针异常-->
+        <TextView
+            app:layout_constraintLeft_toLeftOf="@id/vp_banner"
+            app:layout_constraintBottom_toBottomOf="@id/vp_banner"
+            android:text="@{bannerTitle == null ? null : Html.fromHtml(bannerTitle)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <!--传递的变量需要和对应layout中的一致-->
+        <include
+            layout="@layout/common_load_view"
+            app:resource="@{(Resource) banners}"
+            app:retry="@{() -> retry.retry()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -32,7 +32,7 @@ public class AutoSwitchViewPager extends CanIndicateViewPager {
         mSwitchDuration = DURATION_SWITCH;
     }
 
-    private void startAutoSwitch() {
+    public void startAutoSwitch() {
         if(mHandler == null){
             mHandler = new SwitchHandler(this,mSwitchDuration);
         }
@@ -96,7 +96,7 @@ public class AutoSwitchViewPager extends CanIndicateViewPager {
                     PagerAdapter adapter = autoSwitchViewPager.getAdapter();
                     if(adapter != null){
                         int count = adapter.getCount();
-                        if(count > 0){
+                        if(count > 0){//如果一开始没有数据，后续需要手动触发切换，因为msg不会发送出去
                             int currentItem = autoSwitchViewPager.getCurrentItem();
                             autoSwitchViewPager.setCurrentItem((currentItem + 1) % count,true);
                             sendEmptyMessageDelayed(MSG_SWITCH,mSwitchDuration);

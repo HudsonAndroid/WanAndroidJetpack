@@ -49,6 +49,13 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
     //kotlinx-coroutines-android
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
+    // navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.0.0'
+    //BottomNavigationView 用于NavHost之外的界面元素协助导航
+    implementation 'com.google.android.material:material:1.1.0'
+    // room
+    def room_version = "2.2.5"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
 }
