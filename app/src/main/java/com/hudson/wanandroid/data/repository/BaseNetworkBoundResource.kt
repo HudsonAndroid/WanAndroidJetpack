@@ -16,7 +16,12 @@ import java.lang.reflect.ParameterizedType
  */
 abstract class BaseNetworkBoundResource<ResultType, RequestType>(
     private val dataWrapperDao: DataWrapperDao
-) :NetworkBoundResource<ResultType, RequestType>(){
+) :NetworkBoundResource<ResultType, RequestType>(false){
+
+    init {
+        load() //调用父类初始化操作，不能在父类直接使用，因为dataWrapperDao在父类中还没有初始化
+    }
+
     override fun saveCallResult(item: RequestType) {
         val dataWrapper = DataWrapper(getRequestClass() as Class<Any>)
         dataWrapper.customInfo = identityInfo()

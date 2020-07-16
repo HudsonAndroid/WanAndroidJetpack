@@ -38,12 +38,19 @@ import retrofit2.Response
  * @param <ResultType>
  * @param <RequestType>
 </RequestType></ResultType> */
+//参数表面是否直接在构造函数中初始化。主要原因是在构造函数中有开始加载数据，但部分变量可能还没初始化，例如Dao
 abstract class NetworkBoundResource<ResultType, RequestType>
-@MainThread constructor() {
+@MainThread constructor(autoInit: Boolean = true) {
 
     private val result = MediatorLiveData<Resource<ResultType>>()
 
     init {
+        if(autoInit){
+            load()
+        }
+    }
+
+    protected fun load() {
         result.value = Resource.loading(null)
         @Suppress("LeakingThis")
         val dbSource = loadFromDb()

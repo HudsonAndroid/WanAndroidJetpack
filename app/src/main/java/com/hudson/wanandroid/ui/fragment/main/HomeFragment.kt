@@ -23,7 +23,7 @@ import com.hudson.wanandroid.viewmodel.BannerModel
  */
 class HomeFragment: Fragment() {
 
-    lateinit var homeBinding: FragmentHomeBinding
+    private lateinit var homeBinding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,9 +31,17 @@ class HomeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
-        // todo use viewModelProvider
-        val bannerModel = BannerModel(HomeRepository(WanAndroidApi.api(),
-            WanAndroidDb.getInstance(context!!).dataWrapperDao()))
+        return homeBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val bannerModel = BannerModel(
+            HomeRepository(
+                WanAndroidApi.api(),
+                WanAndroidDb.getInstance(context!!).dataWrapperDao()
+            )
+        )
         homeBinding.banner = bannerModel
         homeBinding.adapter = BannerAdapter()
         homeBinding.bannerCount = bannerModel.bannerCount
@@ -59,7 +67,6 @@ class HomeFragment: Fragment() {
                 homeBinding.vpBanner.startAutoSwitch()
                 Log.d(javaClass.simpleName,"${it.status}, ${it.data}, ${it.msg}")
             })
-        return homeBinding.root
     }
 
     override fun onDestroy() {

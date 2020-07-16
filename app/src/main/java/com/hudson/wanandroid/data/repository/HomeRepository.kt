@@ -13,7 +13,7 @@ import com.hudson.wanandroid.data.entity.wrapper.Resource
 
 class HomeRepository(
     private val wanAndroidApi: WanAndroidApi,
-    private val dataWrapperDao: DataWrapperDao
+    val dataWrapperDao: DataWrapperDao
 ) {
 
     fun loadBanners(): LiveData<Resource<List<BannerItem>>>{
