@@ -1,5 +1,6 @@
 package com.hudson.wanandroid.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -18,14 +19,27 @@ abstract class BaseNetworkBoundResource<ResultType, RequestType>(
     private val dataWrapperDao: DataWrapperDao
 ) :NetworkBoundResource<ResultType, RequestType>(false){
 
+    @Volatile
+    private var isExpired = false
+
     init {
         load() //调用父类初始化操作，不能在父类直接使用，因为dataWrapperDao在父类中还没有初始化
     }
 
+    override fun shouldFetch(data: ResultType?): Boolean {
+        return isExpired
+    }
+
     override fun saveCallResult(item: RequestType) {
-        val dataWrapper = DataWrapper(getRequestClass() as Class<Any>)
+        val clazz = getRequestClass()
+        val dataWrapper = DataWrapper(clazz)
         dataWrapper.customInfo = identityInfo()
         dataWrapper.content = Gson().toJson(item)
+
+        val age = DataExpireConfig.getAge(clazz)
+        if(age != 0L){ // if we need manage data age
+            dataWrapper.expireTime = System.currentTimeMillis() + age
+        }
         dataWrapperDao.insert(dataWrapper)
     }
 
@@ -40,6 +54,7 @@ abstract class BaseNetworkBoundResource<ResultType, RequestType>(
             //数据库访问，异步处理
             val clazz = getRequestClass()
             val wrapper = dataWrapperDao.queryExactly(clazz.name, identityInfo())
+            checkDataExpire(wrapper)
             val source = wrapper?.content?.run {
                 val jsonEntity = Gson().fromJson(this, clazz)
                 transform(jsonEntity)
@@ -47,6 +62,15 @@ abstract class BaseNetworkBoundResource<ResultType, RequestType>(
             mutableLiveData.postValue(source)
         }
         return mutableLiveData
+    }
+
+    private fun checkDataExpire(dataWrapper: DataWrapper?){
+        dataWrapper?.apply {
+            if(content != null && expireTime != 0L && System.currentTimeMillis() >= expireTime){
+                Log.d(javaClass.simpleName,"data is expired, type: "+ content?.javaClass)
+                isExpired = true // expire tag
+            }
+        }
     }
 
     abstract fun transform(requestType: RequestType): ResultType

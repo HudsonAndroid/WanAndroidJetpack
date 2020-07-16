@@ -11,10 +11,10 @@ import androidx.room.Entity
 class DataWrapper(
     val dataType: String,
     var customInfo: String = "",
-    val expireTime: Long
+    var expireTime: Long
 ){
-    constructor(clazz: Class<Any>):this(clazz.name,"",0)
+    constructor(clazz: Class<*>):this(clazz.name,"",0)
 
-    lateinit var content:String
+    var content:String? = null
 
 }

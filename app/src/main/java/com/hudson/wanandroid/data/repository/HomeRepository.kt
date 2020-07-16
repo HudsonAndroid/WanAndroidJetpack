@@ -19,7 +19,7 @@ class HomeRepository(
     fun loadBanners(): LiveData<Resource<List<BannerItem>>>{
         return object : BaseNetworkBoundResource<List<BannerItem>, Banner>(dataWrapperDao){
             override fun shouldFetch(data: List<BannerItem>?): Boolean {
-                return data == null || data.isEmpty()
+                return super.shouldFetch(data) || data == null || data.isEmpty()
             }
 
             override fun transform(requestType: Banner): List<BannerItem> {
