@@ -3,7 +3,7 @@ package com.hudson.wanandroid.data.repository
 import com.hudson.wanandroid.data.entity.Banner
 
 /**
- * Created by hpz on 2020/7/16 0016.
+ * Created by Hudson on 2020/7/16 0016.
  */
 class DataExpireConfig {
 

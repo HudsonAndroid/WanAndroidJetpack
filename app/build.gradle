@@ -57,17 +57,31 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     // alternately - if using Java8, use the following instead of lifecycle-compiler
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
     //协程
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
     //kotlinx-coroutines-android
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
+
     // navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.0.0'
     //BottomNavigationView 用于NavHost之外的界面元素协助导航
     implementation 'com.google.android.material:material:1.1.0'
+
+
     // room
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+
+    // dagger
+    def dagger_version = "2.16"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    // 如果使用了 Android support libraries 中的相关组件，则需要添加该依赖
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    // android support compiler
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 }

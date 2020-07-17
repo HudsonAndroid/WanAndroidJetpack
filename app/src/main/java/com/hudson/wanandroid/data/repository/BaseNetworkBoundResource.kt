@@ -45,6 +45,7 @@ abstract class BaseNetworkBoundResource<ResultType, RequestType>(
 
     private fun getRequestClass(): Class<RequestType>{
         val type = javaClass.genericSuperclass as ParameterizedType
+        @Suppress("UNCHECKED_CAST")
         return type.actualTypeArguments[1] as Class<RequestType>
     }
 
