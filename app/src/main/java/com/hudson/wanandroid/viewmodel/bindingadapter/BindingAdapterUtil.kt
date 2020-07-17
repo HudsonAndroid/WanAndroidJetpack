@@ -20,14 +20,21 @@ fun bannerAdapter(autoSwitchViewPager: AutoSwitchViewPager, pagerAdapter: PagerA
     autoSwitchViewPager.adapter = pagerAdapter
 }
 
+//DataBinding可以选择性在处理时使用旧值
 @BindingAdapter(value = ["bannerChangeListener"])
-fun bannerChangeListener(autoSwitchViewPager: AutoSwitchViewPager, simplePageChangeListener: SimplePageChangeListener){
-    autoSwitchViewPager.addOnPageChangeListener(simplePageChangeListener)
+fun bannerChangeListener(autoSwitchViewPager: AutoSwitchViewPager, oldListener: SimplePageChangeListener?,
+                         newListener: SimplePageChangeListener?){
+    if(oldListener != null){
+        autoSwitchViewPager.removeOnPageChangeListener(oldListener)//移除旧监听器
+    }
+    if(newListener != null){
+        autoSwitchViewPager.addOnPageChangeListener(newListener)
+    }
 }
 
 @BindingAdapter(value = ["imageUrl","errorDrawable"], requireAll = false)
-fun imageUrl(imageView: ImageView, url:String, error:Drawable?){
-    Glide.with(imageView.context).load(url).error(error).into(imageView);
+fun imageUrl(imageView: ImageView, url:String?, error:Drawable?){
+    Glide.with(imageView.context).load(url).error(error).into(imageView)
 }
 
 //指示器圆点个数

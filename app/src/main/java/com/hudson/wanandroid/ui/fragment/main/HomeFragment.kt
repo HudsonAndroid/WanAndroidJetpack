@@ -15,6 +15,7 @@ import com.hudson.wanandroid.data.repository.HomeRepository
 import com.hudson.wanandroid.databinding.FragmentHomeBinding
 import com.hudson.wanandroid.ui.adapter.BannerAdapter
 import com.hudson.wanandroid.ui.common.RetryCallback
+import com.hudson.wanandroid.ui.util.autoCleared
 import com.hudson.wanandroid.ui.view.indicatorviewpager.listener.SimplePageChangeListener
 import com.hudson.wanandroid.viewmodel.BannerModel
 
@@ -22,8 +23,9 @@ import com.hudson.wanandroid.viewmodel.BannerModel
  * Created by Hudson on 2020/7/12.
  */
 class HomeFragment: Fragment() {
+    private var homeBinding by autoCleared<FragmentHomeBinding>()
 
-    private lateinit var homeBinding: FragmentHomeBinding
+//    private lateinit var homeBinding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +48,7 @@ class HomeFragment: Fragment() {
         homeBinding.adapter = BannerAdapter()
         homeBinding.bannerCount = bannerModel.bannerCount
         homeBinding.bannerTitle = bannerModel.bannerTitle
-        homeBinding.indicator = homeBinding.ppIndicator // can we simply?
+        homeBinding.indicator = homeBinding.ppIndicator // can we simplify?
         homeBinding.pageChangeListener = object : SimplePageChangeListener(){
             override fun onPageSelected(position: Int) {
                 bannerModel.onPageChanged(position)
@@ -67,10 +69,5 @@ class HomeFragment: Fragment() {
                 homeBinding.vpBanner.startAutoSwitch()
                 Log.d(javaClass.simpleName,"${it.status}, ${it.data}, ${it.msg}")
             })
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        homeBinding.vpBanner.clearOnPageChangeListeners()
     }
 }
