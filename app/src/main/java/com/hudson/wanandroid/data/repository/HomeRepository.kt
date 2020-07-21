@@ -6,12 +6,15 @@ import com.hudson.wanandroid.data.db.DataWrapperDao
 import com.hudson.wanandroid.data.entity.Banner
 import com.hudson.wanandroid.data.entity.BannerItem
 import com.hudson.wanandroid.data.entity.wrapper.Resource
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
- * Created by Hudson on 2020/7/14 0014.
+ * 向外界提供注入
+ * Created by Hudson on 2020/7/14.
  */
-
-class HomeRepository(
+@Singleton
+class HomeRepository @Inject constructor(
     private val wanAndroidApi: WanAndroidApi,
     val dataWrapperDao: DataWrapperDao
 ) {

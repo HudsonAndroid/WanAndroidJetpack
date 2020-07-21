@@ -12,12 +12,16 @@ import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 
 /**
- * 自动注入工具
- * Created by Hudson on 2020/7/17 .
+ * activity/fragment自动注入工具
+ * Created by Hudson on 2020/7/17.
  */
 object AppInjector {
     fun init(app: WanAndroidApp){
-        DaggerAppComponent.create().inject(app)
+        DaggerAppComponent
+            .builder()
+            .configApplication(app)
+            .build()
+            .inject(app)
         app.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks{
             override fun onActivityPaused(activity: Activity?) {
                 

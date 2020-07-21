@@ -6,26 +6,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.hudson.wanandroid.data.WanAndroidApi
-import com.hudson.wanandroid.data.db.WanAndroidDb
+import androidx.lifecycle.ViewModelProvider
 import com.hudson.wanandroid.data.entity.BannerItem
 import com.hudson.wanandroid.data.entity.wrapper.Resource
-import com.hudson.wanandroid.data.repository.HomeRepository
 import com.hudson.wanandroid.databinding.FragmentHomeBinding
+import com.hudson.wanandroid.di.Injectable
 import com.hudson.wanandroid.ui.adapter.BannerAdapter
 import com.hudson.wanandroid.ui.common.RetryCallback
 import com.hudson.wanandroid.ui.util.autoCleared
 import com.hudson.wanandroid.ui.view.indicatorviewpager.listener.SimplePageChangeListener
 import com.hudson.wanandroid.viewmodel.BannerModel
+import javax.inject.Inject
 
 /**
+ * 注入代码在AppInjector中完成
  * Created by Hudson on 2020/7/12.
  */
-class HomeFragment: Fragment() {
+class HomeFragment: Fragment() , Injectable{
     private var homeBinding by autoCleared<FragmentHomeBinding>()
 
-//    private lateinit var homeBinding: FragmentHomeBinding
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    // 以下来源自fragment-ktx kotlin扩展库，用于创建ViewModel，
+    // 相当于ViewModelProvider(fragment, factory).get(BannerModel::class.java)
+    val bannerModel: BannerModel by viewModels {
+        viewModelFactory
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,12 +47,15 @@ class HomeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bannerModel = BannerModel(
-            HomeRepository(
-                WanAndroidApi.api(),
-                WanAndroidDb.getInstance(context!!).dataWrapperDao()
-            )
-        )
+        //注释的内容将通过Dagger注入得到ViewModelProvider.Factory，然后根据它创建BannerModel
+        //因此外界并不知道BannerModel如何实现的，BannerModel如果要修改，不会影响到HomeFragment
+//        //应该使用ViewModelProvider来构建
+//        val bannerModel = BannerModel(
+//            HomeRepository(
+//                WanAndroidApi.api(),
+//                WanAndroidDb.getInstance(context!!).dataWrapperDao()
+//            )
+//        )
         homeBinding.banner = bannerModel
         homeBinding.adapter = BannerAdapter()
         homeBinding.bannerCount = bannerModel.bannerCount

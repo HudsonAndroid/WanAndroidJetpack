@@ -7,11 +7,13 @@ import androidx.lifecycle.ViewModel
 import com.hudson.wanandroid.data.entity.BannerItem
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.HomeRepository
+import javax.inject.Inject
 
 /**
+ * 创建方式由Dagger注入
  * Created by Hudson on 2020/7/11.
  */
-class BannerModel(private val repository: HomeRepository): ViewModel() {
+class BannerModel @Inject constructor(private val repository: HomeRepository): ViewModel() {
     val bannerTitle = MutableLiveData<String>()
     val bannerCount = MutableLiveData<Int>()
     val bannersLiveData: MediatorLiveData<Resource<List<BannerItem>>> = MediatorLiveData()
