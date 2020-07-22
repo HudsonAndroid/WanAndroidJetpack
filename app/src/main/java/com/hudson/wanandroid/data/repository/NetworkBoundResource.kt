@@ -19,12 +19,9 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.entity.BaseResult
 import com.hudson.wanandroid.data.entity.wrapper.Resource
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,9 +35,9 @@ import retrofit2.Response
  * @param <ResultType>
  * @param <RequestType>
 </RequestType></ResultType> */
-//参数表面是否直接在构造函数中初始化。主要原因是在构造函数中有开始加载数据，但部分变量可能还没初始化，例如Dao
+//参数表明是否直接在构造函数中初始化。主要原因是在构造函数中有开始加载数据，但部分变量可能还没初始化，例如Dao
 abstract class NetworkBoundResource<ResultType, RequestType>
-@MainThread constructor(autoInit: Boolean = true) {
+@MainThread constructor(autoInit: Boolean = true, val appExecutor: AppExecutor) {
 
     private val result = MediatorLiveData<Resource<ResultType>>()
 
@@ -100,15 +97,25 @@ abstract class NetworkBoundResource<ResultType, RequestType>
                             error(data.errorMsg, dbSource)
                             return //end
                         }
-                        GlobalScope.launch(Dispatchers.Main) {
-                            withContext(Dispatchers.IO){
-                                saveCallResult(data)
-                            }
-                            //reload from disk
-                            result.addSource(loadFromDb()){ newData ->
-                                setValue(Resource.success(newData))
+                        appExecutor.ioExecutor.execute{
+                            saveCallResult(data)
+                            appExecutor.mainThreadExecutor.execute{
+                                //reload from disk
+                                result.addSource(loadFromDb()){ newData ->
+                                    setValue(Resource.success(newData))
+                                }
                             }
                         }
+                        // GlobalScope no use: avoid memory leak
+//                        GlobalScope.launch(Dispatchers.Main) {
+//                            withContext(Dispatchers.IO){
+//                                saveCallResult(data)
+//                            }
+//                            //reload from disk
+//                            result.addSource(loadFromDb()){ newData ->
+//                                setValue(Resource.success(newData))
+//                            }
+//                        }
                     }
                 }else{
                     val msg = response?.errorBody()?.string()

@@ -2,6 +2,7 @@ package com.hudson.wanandroid.di.module
 
 import android.app.Application
 import com.hudson.wanandroid.data.WanAndroidApi
+import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.db.DataWrapperDao
 import com.hudson.wanandroid.data.db.WanAndroidDb
 import dagger.Module
@@ -32,5 +33,11 @@ class AppModule {
     @Singleton
     fun provideWanAndroidDb(context: Application): WanAndroidDb{
         return WanAndroidDb.getInstance(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppExecutor(): AppExecutor{
+        return AppExecutor.getInstance()
     }
 }

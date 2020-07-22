@@ -2,6 +2,7 @@ package com.hudson.wanandroid.data.repository
 
 import androidx.lifecycle.LiveData
 import com.hudson.wanandroid.data.WanAndroidApi
+import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.db.DataWrapperDao
 import com.hudson.wanandroid.data.entity.Banner
 import com.hudson.wanandroid.data.entity.BannerItem
@@ -15,12 +16,13 @@ import javax.inject.Singleton
  */
 @Singleton
 class HomeRepository @Inject constructor(
+    private val appExecutor: AppExecutor,
     private val wanAndroidApi: WanAndroidApi,
     val dataWrapperDao: DataWrapperDao
 ) {
 
     fun loadBanners(): LiveData<Resource<List<BannerItem>>>{
-        return object : BaseNetworkBoundResource<List<BannerItem>, Banner>(dataWrapperDao){
+        return object : BaseNetworkBoundResource<List<BannerItem>, Banner>(dataWrapperDao, appExecutor){
             override fun shouldFetch(data: List<BannerItem>?): Boolean {
                 return super.shouldFetch(data) || data == null || data.isEmpty()
             }

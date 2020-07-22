@@ -4,11 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
+import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.db.DataWrapperDao
 import com.hudson.wanandroid.data.entity.DataWrapper
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -16,8 +14,9 @@ import java.lang.reflect.ParameterizedType
  * Created by Hudson on 2020/7/14 0014.
  */
 abstract class BaseNetworkBoundResource<ResultType, RequestType>(
-    private val dataWrapperDao: DataWrapperDao
-) :NetworkBoundResource<ResultType, RequestType>(false){
+    private val dataWrapperDao: DataWrapperDao,
+    appExecutor: AppExecutor
+) :NetworkBoundResource<ResultType, RequestType>(false, appExecutor){
 
     @Volatile
     private var isExpired = false
@@ -51,7 +50,7 @@ abstract class BaseNetworkBoundResource<ResultType, RequestType>(
 
     override fun loadFromDb(): LiveData<ResultType> {
         val mutableLiveData = MutableLiveData<ResultType>()
-        GlobalScope.launch(Dispatchers.IO) {
+        appExecutor.ioExecutor.execute{
             //数据库访问，异步处理
             val clazz = getRequestClass()
             val wrapper = dataWrapperDao.queryExactly(clazz.name, identityInfo())
