@@ -87,6 +87,8 @@ abstract class NetworkBoundResource<ResultType, RequestType>
                 if(response?.isSuccessful == true){
                     val data = response.body()
                     if(data == null || response.code() == 204){
+                        // hook for MergeDataSource
+                        stashNetworkData(response)
                         //found empty data, reload from disk
                         result.addSource(loadFromDb()){ newData->
                             setValue(Resource.success(newData))
@@ -135,6 +137,8 @@ abstract class NetworkBoundResource<ResultType, RequestType>
             setValue(Resource.error(errorMsg?:"unknown error",newData))
         }
     }
+
+    protected open fun stashNetworkData(response: Response<RequestType>){}
 
     protected open fun onFetchFailed() {}
 
