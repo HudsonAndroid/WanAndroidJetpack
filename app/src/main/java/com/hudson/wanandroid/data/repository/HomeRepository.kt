@@ -3,10 +3,12 @@ package com.hudson.wanandroid.data.repository
 import androidx.lifecycle.LiveData
 import com.hudson.wanandroid.data.WanAndroidApi
 import com.hudson.wanandroid.data.common.AppExecutor
+import com.hudson.wanandroid.data.common.mergecall.RetrofitCall
 import com.hudson.wanandroid.data.db.DataWrapperDao
 import com.hudson.wanandroid.data.entity.Banner
 import com.hudson.wanandroid.data.entity.BannerItem
 import com.hudson.wanandroid.data.entity.wrapper.Resource
+import com.hudson.wanandroid.data.repository.base.BaseNetworkBoundResource
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -31,7 +33,7 @@ class HomeRepository @Inject constructor(
                 return requestType.data
             }
 
-            override fun createCall() = wanAndroidApi.bannerApi()
+            override fun createCall() = RetrofitCall(wanAndroidApi.bannerApi())
 
         }.asLiveData()
     }

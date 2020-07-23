@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hudson.wanandroid.data.repository
+package com.hudson.wanandroid.data.repository.base
 
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.hudson.wanandroid.data.common.AppExecutor
+import com.hudson.wanandroid.data.common.mergecall.Call
+import com.hudson.wanandroid.data.common.mergecall.Callback
 import com.hudson.wanandroid.data.entity.BaseResult
 import com.hudson.wanandroid.data.entity.wrapper.Resource
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
 /**
@@ -75,14 +75,14 @@ abstract class NetworkBoundResource<ResultType, RequestType>
         result.addSource(dbSource) { newData ->
             setValue(Resource.loading(newData))
         }
-        createCall().enqueue(object : Callback<RequestType>{
-            override fun onFailure(call: Call<RequestType>?, t: Throwable?) {
+        createCall().enqueue(object : Callback<RequestType> {
+            override fun onFailure(call: Call<RequestType>, t: Throwable?) {
                 onFetchFailed()
                 result.removeSource(dbSource)
                 error(t?.message, dbSource)
             }
 
-            override fun onResponse(call: Call<RequestType>?, response: Response<RequestType>?) {
+            override fun onResponse(call: Call<RequestType>, response: Response<RequestType>?) {
                 result.removeSource(dbSource)
                 if(response?.isSuccessful == true){
                     val data = response.body()
