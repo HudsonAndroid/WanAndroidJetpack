@@ -12,7 +12,9 @@ import retrofit2.Response
  * 规则：
  *      1）Call1和Call2可以其中一个为null，那么结果MergeData中
  *      对应的数据部分为null；但两者不能同时为null，否则没有意义
+ *
  *      2）为了简便，Call1和Call2任意一个请求发生错误，都将触发失败
+ *
  *      3）由于OkHttp的CacheInterceptor已经处理了304及其缓存的返回
  *      因此，只判断数据是否是空的情况，即204。如果两个Call中任意
  *      一个Call返回码为204或非空call返回空，那么对应的MergeCall中

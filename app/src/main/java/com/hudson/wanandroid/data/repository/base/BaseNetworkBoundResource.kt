@@ -28,6 +28,9 @@ abstract class BaseNetworkBoundResource<ResultType, RequestType>(
         load() //调用父类初始化操作，不能在父类直接使用，因为dataWrapperDao在父类中还没有初始化
     }
 
+    /**
+     * 你必须重新修改规则，否则将默认不会从网络获取数据，因为默认是使用isExpired（false）作为标识
+     */
     override fun shouldFetch(data: ResultType?): Boolean {
         return isExpired
     }

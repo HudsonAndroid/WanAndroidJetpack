@@ -2,6 +2,7 @@ package com.hudson.wanandroid.data.repository.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.common.mergecall.MergeData
 import com.hudson.wanandroid.data.db.DataWrapperDao
@@ -17,7 +18,7 @@ abstract class BaseMergeDataResource<ResultType, RequestType: MergeData<*,*>>(
     appExecutor: AppExecutor
 ): BaseNetworkBoundResource<ResultType, RequestType>(dataWrapperDao, appExecutor){
 
-    private var stashNetworkData: Response<RequestType>? = null
+    protected var stashNetworkData: Response<RequestType>? = null
 
     final override fun saveCallResult(item: RequestType) {
         if(!item.networkData1Empty){
@@ -50,6 +51,11 @@ abstract class BaseMergeDataResource<ResultType, RequestType: MergeData<*,*>>(
         return mutableLiveData
     }
 
+    /**
+     * 在网络请求返回数据存在204或空的情况下，
+     * 如果内部有部分数据是从网络上更新下来的，
+     * 那么需要刷回数据库中
+     */
     private fun needSaveResult(): Boolean{
         return stashNetworkData?.isSuccessful == true &&
                 stashNetworkData?.code() == 204 &&
@@ -88,4 +94,28 @@ abstract class BaseMergeDataResource<ResultType, RequestType: MergeData<*,*>>(
 
     abstract fun saveFirstData(data: Any?)
     abstract fun saveSecondData(data: Any?)
+
+    protected fun loadDataWrapperFromDb(clazz: Class<*>, identityInfo: String): Any?{
+        val wrapper = loadDataWrapper(
+            clazz,
+            dataWrapperDao,
+            identityInfo
+        )
+        //if one of MergeData is expired, the data is expired
+        checkDataExpire(wrapper)
+        return wrapper?.content?.run {
+            Gson().fromJson(this, clazz)
+        }
+    }
+
+    protected fun saveDataCommon(data: Any?, identityInfo: String){
+        data?.apply {
+            saveDataWrapper(
+                data.javaClass,
+                data,
+                dataWrapperDao,
+                identityInfo
+            )
+        }
+    }
 }
