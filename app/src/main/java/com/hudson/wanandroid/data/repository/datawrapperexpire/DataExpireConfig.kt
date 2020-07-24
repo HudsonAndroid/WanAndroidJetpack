@@ -1,6 +1,8 @@
 package com.hudson.wanandroid.data.repository.datawrapperexpire
 
 import com.hudson.wanandroid.data.entity.Banner
+import com.hudson.wanandroid.data.entity.HomeArticle
+import com.hudson.wanandroid.data.entity.TopArticle
 
 /**
  * Created by Hudson on 2020/7/16 0016.
@@ -15,6 +17,8 @@ class DataExpireConfig {
 
         init { //相当于静态代码块
             expireConfig[Banner::class.java] = 1
+            expireConfig[TopArticle::class.java] = 1
+            expireConfig[HomeArticle::class.java] = 1
         }
 
         fun getAge(clazz: Class<*>): Long{

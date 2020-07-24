@@ -26,7 +26,9 @@ import retrofit2.Response
  * Created by Hudson on 2020/7/21.
  */
 class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>(private val call1: Call<Data1>?,
-                                                          private val call2: Call<Data2>?) : Call<T>{
+                                                          private val call2: Call<Data2>?,
+                                                          private val appExecutor: AppExecutor
+                                                          = AppExecutor.getInstance()) : Call<T>{
 
     private fun judgeDataValid(call: Call<*>?, response: Response<*>?): Response<T>? {
         if(call != null && response != null){
@@ -106,7 +108,6 @@ class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>(private val call1: Cal
     }
 
     override fun enqueue(callback: Callback<T>) {
-        val appExecutor = AppExecutor.getInstance()
         appExecutor.networkExecutor.execute{
             val result: MergeData<Data1,Data2> = MergeData()
             var failure: Throwable? = null

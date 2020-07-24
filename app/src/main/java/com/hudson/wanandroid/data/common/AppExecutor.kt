@@ -8,7 +8,7 @@ import java.util.concurrent.*
 /**
  * Created by Hudson on 2020/7/22.
  */
-class AppExecutor(
+open class AppExecutor(
     val networkExecutor: Executor,
     val ioExecutor: Executor,
     val mainThreadExecutor: Executor

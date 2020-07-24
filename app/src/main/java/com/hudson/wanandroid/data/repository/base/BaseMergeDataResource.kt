@@ -37,9 +37,10 @@ abstract class BaseMergeDataResource<ResultType, RequestType: MergeData<*,*>>(
             // MergeData types
             val firstDataType = mergeDataType.actualTypeArguments[0] as Class<*>
             val secondDataType = mergeDataType.actualTypeArguments[1] as Class<*>
-
+            // 查看是否存在网络数据返回204或空的情况，如果存在，确定内部是否有部分新数据，有则使用
             val firstData = tryToGetValidFirstData() ?: loadFirstDataFromDb(firstDataType)
             val secondData = tryToGetValidSecondData() ?: loadSecondDataFromDb(secondDataType)
+            // todo 最好通过发射处理，这样不会要求外界必须要有这样的构造方法
             val mergeData = clazz.getDeclaredConstructor(firstDataType, secondDataType)
                 .newInstance(firstData, secondData)
             mutableLiveData.postValue(transform(mergeData))

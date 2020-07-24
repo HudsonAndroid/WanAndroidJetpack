@@ -79,6 +79,7 @@ abstract class NetworkBoundResource<ResultType, RequestType>
             override fun onFailure(call: Call<RequestType>, t: Throwable?) {
                 onFetchFailed()
                 result.removeSource(dbSource)
+                t?.printStackTrace()
                 error(t?.message, dbSource)
             }
 
