@@ -20,7 +20,7 @@ import javax.inject.Singleton
 class HomeRepository @Inject constructor(
     private val appExecutor: AppExecutor,
     private val wanAndroidApi: WanAndroidApi,
-    val dataWrapperDao: DataWrapperDao
+    private val dataWrapperDao: DataWrapperDao
 ) {
 
     fun loadBanners(): LiveData<Resource<List<BannerItem>>>{
