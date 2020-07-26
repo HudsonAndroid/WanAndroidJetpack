@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.hudson.wanandroid.data.entity.DataWrapper
 
 /**
- * Created by Hudson on 2020/7/14 0014.
+ * Created by Hudson on 2020/7/14.
  */
 @Database(
     entities = [

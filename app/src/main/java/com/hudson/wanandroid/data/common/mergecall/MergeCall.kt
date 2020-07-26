@@ -91,17 +91,18 @@ abstract class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>
 //        }
 //    }
 
-    protected abstract fun createTargetMergeDataInstance(): T
+    protected abstract fun createTargetMergeDataInstance(data1: Data1?, data2: Data2?): T
 
     override fun execute(): Response<T> {
         commonCheck()
-        val result: T = createTargetMergeDataInstance()
+        var data1: Data1? = null
+        var data2: Data2? = null
         var response1: Response<Data1>? = null
         val firstCallSuccess = if(call1 == null){
             true
         }else{
             response1 = call1.execute()
-            result.data1 = response1.body()
+            data1 = response1.body()
             response1.isSuccessful
         }
         return if(firstCallSuccess){
@@ -115,7 +116,7 @@ abstract class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>
                 true
             }else{
                 response2 = call2.execute()
-                result.data2 = response2.body()
+                data2 = response2.body()
                 response2.isSuccessful
             }
             if(secondCallSuccess){
@@ -125,7 +126,8 @@ abstract class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>
                     return data2Valid
                 }
                 // 判断数据空的情况
-                return createSuccessResponse(response1, response2, result)
+                return createSuccessResponse(response1, response2,
+                    createTargetMergeDataInstance(data1,data2))
             }else{
                 Response.error(response2!!.errorBody(), response2.raw())
             }
@@ -160,8 +162,9 @@ abstract class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>
 
     override fun enqueue(callback: Callback<T>) {
         appExecutor.networkExecutor.execute{
-            val result: T = createTargetMergeDataInstance()
             var failure: Throwable? = null
+            var data1: Data1? = null
+            var data2: Data2? = null
             try{
                 commonCheck()
                 var response1: Response<Data1>? = null
@@ -169,14 +172,13 @@ abstract class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>
                     true
                 }else{
                     response1 = call1.execute()
-                    result.data1 = response1.body()
+                    data1 = response1.body()
                     response1.isSuccessful
                 }
                 // 进一步判断call1数据的有效性
                 if(firstCallSuccess && call1 != null && response1 != null){
-                    val tmp = result.data1
-                    if(tmp != null && tmp is BaseResult && !tmp.isSuccess()){
-                        failure = MergeCallException(collectErrorInfo(tmp.errorMsg, call1))
+                    if(data1 != null && data1 is BaseResult && !data1.isSuccess()){
+                        failure = MergeCallException(collectErrorInfo(data1.errorMsg, call1))
                         firstCallSuccess = false
                     }
                 }
@@ -186,20 +188,20 @@ abstract class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>
                         true
                     }else{
                         response2 = call2.execute()
-                        result.data2 = response2.body()
+                        data2 = response2.body()
                         response2.isSuccessful
                     }
                     // 进一步判断Call2数据的有效性
                     if(secondCallSuccess && call2 != null && response2 != null){
-                        val tmp = result.data2
-                        if(tmp != null && tmp is BaseResult && !tmp.isSuccess()){
-                            failure = MergeCallException(collectErrorInfo(tmp.errorMsg,call2))
+                        if(data2 != null && data2 is BaseResult && !data2.isSuccess()){
+                            failure = MergeCallException(collectErrorInfo(data2.errorMsg,call2))
                             secondCallSuccess = false
                         }
                     }
                     if(secondCallSuccess){
                         // 判断数据空的情况
-                        val response = createSuccessResponse(response1, response2, result)
+                        val response = createSuccessResponse(response1, response2,
+                            createTargetMergeDataInstance(data1, data2))
                         appExecutor.mainThreadExecutor.execute{
                             callback.onResponse(this, response)
                         }

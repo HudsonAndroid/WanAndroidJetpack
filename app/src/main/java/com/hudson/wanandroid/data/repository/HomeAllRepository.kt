@@ -122,16 +122,24 @@ class HomeAllRepository @Inject constructor(
                 // merge article calls
                 val articleCall = object: MergeCall<TopArticle, HomeArticle, ArticleWrapper>(topArticleCall
                     ,homeArticleCall,appExecutor){
-                    override fun createTargetMergeDataInstance(): ArticleWrapper {
-                        return ArticleWrapper(null,null)
+                    override fun createTargetMergeDataInstance(
+                        data1: TopArticle?,
+                        data2: HomeArticle?
+                    ): ArticleWrapper {
+                        return ArticleWrapper(data1, data2)
                     }
+
                 }
                 // merge all calls
                 return object: MergeCall<ArticleWrapper, Banner, HomeDataWrapper>(articleCall,
                     bannerCall,appExecutor){
-                    override fun createTargetMergeDataInstance(): HomeDataWrapper {
-                        return HomeDataWrapper(null,null)
+                    override fun createTargetMergeDataInstance(
+                        data1: ArticleWrapper?,
+                        data2: Banner?
+                    ): HomeDataWrapper {
+                        return HomeDataWrapper(data1, data2)
                     }
+
                 }
             }
 

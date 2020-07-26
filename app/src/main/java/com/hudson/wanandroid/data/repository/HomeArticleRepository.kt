@@ -55,8 +55,11 @@ class HomeArticleRepository @Inject constructor(
                 }
                 return object: MergeCall<TopArticle, HomeArticle, ArticleWrapper>(topArticleCall,
                     wrapperCall(wanAndroidApi.homeArticle(pageNo)),appExecutor){
-                    override fun createTargetMergeDataInstance(): ArticleWrapper {
-                        return ArticleWrapper(null,null)
+                    override fun createTargetMergeDataInstance(
+                        data1: TopArticle?,
+                        data2: HomeArticle?
+                    ): ArticleWrapper {
+                        return ArticleWrapper(data1, data2)
                     }
                 }
             }
