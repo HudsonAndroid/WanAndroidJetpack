@@ -16,6 +16,7 @@ import com.hudson.wanandroid.data.entity.wrapper.HomeData
 import com.hudson.wanandroid.data.entity.wrapper.HomeDataWrapper
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.base.BaseMergeDataResource
+import com.hudson.wanandroid.data.repository.base.convertTypeOrNull
 import com.hudson.wanandroid.data.repository.base.wrapperCall
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
@@ -45,34 +46,26 @@ class HomeAllRepository @Inject constructor(
                 val secondType = mergeDataType.actualTypeArguments[1] as Class<*>
                 // 第一个类型是ArticleWrapper，MergeData类型，需要对内部数据进行拆分处理
                 //本身有三种数据，任意一种都可能导致204，因此要对数据逐一判断
-                var topArticle: Any? = null
-                var homeArticle: Any? = null
                 if(stashNetworkData?.isSuccessful == true && stashNetworkData?.code() == 204){
                     if(stashNetworkData?.body()?.networkData1Empty == false){ // 说明ArticleWrapper全部有效
-                        topArticle = stashNetworkData!!.body()!!.data1
-                        homeArticle = stashNetworkData!!.body()!!.data2
+                        return stashNetworkData!!.body()!!.data1
                     }
                     // 如果其中某一个网络数据为空，则从数据库获取并与其他一个数据（可能也要从数据库获取）合并
                     val articleWrapper = stashNetworkData?.body()?.data1
-                    articleWrapper?.apply {
+                    return articleWrapper?.apply {
                         // 首先判断是否是第一个数据为204或空导致
                         if(networkData1Empty){
-                            topArticle = loadDataWrapperFromDb(firstType, identityInfo())
+                            data1 = convertTypeOrNull(loadDataWrapperFromDb(firstType, identityInfo()))
                         }
                         if(networkData2Empty){
-                            homeArticle = loadDataWrapperFromDb(secondType, identityInfo())
+                            data2 = convertTypeOrNull(loadDataWrapperFromDb(secondType, identityInfo()))
                         }
                     }
                 }else{
                     // 全部从数据库获取
-                    topArticle = loadDataWrapperFromDb(firstType, identityInfo())
-                    homeArticle = loadDataWrapperFromDb(secondType, identityInfo())
+                    return ArticleWrapper(convertTypeOrNull(loadDataWrapperFromDb(firstType, identityInfo())),
+                        convertTypeOrNull(loadDataWrapperFromDb(secondType, identityInfo())))
                 }
-                // MergeCall实际返回的是一个MergeData，或者从数据库获取的只是data1和data2
-                // 因此据此构建出一个ArticleWrapper
-                return ArticleWrapper(
-                    if(topArticle == null) null else topArticle as TopArticle,
-                    if(homeArticle == null) null else homeArticle as HomeArticle)
             }
 
             override fun loadSecondDataFromDb(clazz: Class<*>): Any? {

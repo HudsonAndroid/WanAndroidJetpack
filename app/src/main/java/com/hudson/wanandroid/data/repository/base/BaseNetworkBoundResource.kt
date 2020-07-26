@@ -99,6 +99,10 @@ fun loadDataWrapper(clazz: Class<*>,dataWrapperDao: DataWrapperDao,
     return dataWrapperDao.queryExactly(clazz.name, identityInfo)
 }
 
+fun <T> convertTypeOrNull(input: Any?): T?{
+    return if(input == null) null else input as T
+}
+
 fun <T> wrapperCall(call: retrofit2.Call<T>): Call<T> {
     return RetrofitCall(call)
 }
