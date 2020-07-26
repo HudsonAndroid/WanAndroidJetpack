@@ -121,14 +121,14 @@ class HomeAllRepository @Inject constructor(
                 val homeArticleCall = wrapperCall(wanAndroidApi.homeArticle(pageNo))
                 // merge article calls
                 val articleCall = object: MergeCall<TopArticle, HomeArticle, ArticleWrapper>(topArticleCall
-                    ,wrapperCall(wanAndroidApi.homeArticle(pageNo)),appExecutor){
+                    ,homeArticleCall,appExecutor){
                     override fun createTargetMergeDataInstance(): ArticleWrapper {
                         return ArticleWrapper(null,null)
                     }
                 }
                 // merge all calls
                 return object: MergeCall<ArticleWrapper, Banner, HomeDataWrapper>(articleCall,
-                    wrapperCall(wanAndroidApi.bannerApi()),appExecutor){
+                    bannerCall,appExecutor){
                     override fun createTargetMergeDataInstance(): HomeDataWrapper {
                         return HomeDataWrapper(null,null)
                     }
