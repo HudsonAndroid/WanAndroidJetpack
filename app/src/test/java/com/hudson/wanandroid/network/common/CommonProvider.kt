@@ -10,7 +10,7 @@ fun provideFailedData(chain: Interceptor.Chain): Response {
         .request(chain.request())
         .protocol(Protocol.HTTP_1_1)
         .code(404)
-        .body(null)
+        .body(ResponseBody.create(MediaType.parse("application/x-www-form-urlencoded"), "not found"))
         .message("failed")
         .build()
 }
