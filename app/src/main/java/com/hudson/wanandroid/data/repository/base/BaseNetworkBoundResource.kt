@@ -14,7 +14,7 @@ import java.lang.reflect.ParameterizedType
 
 /**
  * for json object data entity
- * Created by Hudson on 2020/7/14 0014.
+ * Created by Hudson on 2020/7/14.
  */
 abstract class BaseNetworkBoundResource<ResultType, RequestType>(
     protected val dataWrapperDao: DataWrapperDao,
