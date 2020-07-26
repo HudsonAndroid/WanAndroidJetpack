@@ -25,10 +25,43 @@ import retrofit2.Response
  *
  * Created by Hudson on 2020/7/21.
  */
-class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>(private val call1: Call<Data1>?,
-                                                          private val call2: Call<Data2>?,
-                                                          private val appExecutor: AppExecutor
-                                                          = AppExecutor.getInstance()) : Call<T>{
+abstract class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>
+        (private val call1: Call<Data1>?,
+                            private val call2: Call<Data2>?,
+                            private val appExecutor: AppExecutor = AppExecutor.getInstance()) : Call<T>{
+
+    //这种方式也不行，Builder本身类没有子类，不晓得泛型具体类型，因此传递给MergeCall也就不知道了
+//    open class Builder<Data1, Data2, T: MergeData<Data1,Data2>>{
+//        private var call1: Call<Data1>? = null
+//        private var call2: Call<Data2>? = null
+//        private var appExecutor:AppExecutor = AppExecutor.getInstance()
+//
+//        fun call1(call: Call<Data1>?):Builder<Data1, Data2, T>{
+//            call1 = call
+//            return this
+//        }
+//
+//        fun call2(call: Call<Data2>?):Builder<Data1, Data2, T>{
+//            call2 = call
+//            return this
+//        }
+//
+//        fun appExecutor(appExecutor: AppExecutor): Builder<Data1, Data2, T>{
+//            this.appExecutor = appExecutor
+//            return this
+//        }
+//
+//        fun build(): MergeCall<Data1,Data2,T>{
+//            // you can use this type. see test folder generics to get more information
+////            return object :MergeCall<TopArticle, HomeArticle, ArticleWrapper>(topArticleCall,
+////                wrapperCall(
+////                    wanAndroidApi.homeArticle(pageNo)
+////                ),
+////                appExecutor
+////            ){}
+//            return object: MergeCall<Data1,Data2,T>(call1,call2,appExecutor){}
+//        }
+//    }
 
     private fun judgeDataValid(call: Call<*>?, response: Response<*>?): Response<T>? {
         if(call != null && response != null){
@@ -42,9 +75,27 @@ class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>(private val call1: Cal
         return null
     }
 
+//    @Suppress("UNCHECKED_CAST")
+//    private fun createTargetMergeDataInstance(): T{
+//        val type = javaClass.genericSuperclass as ParameterizedType
+//        println("${hashCode()} $javaClass ${type.actualTypeArguments[0]} ${type.actualTypeArguments[1]}  ${type.actualTypeArguments[2]}")
+//        val mergeDataClass = type.actualTypeArguments[2] as Class<T>
+//        val data1Class = type.actualTypeArguments[0] as Class<Data1>
+//        val data2Class = type.actualTypeArguments[1] as Class<Data2>
+//        try{
+//            return mergeDataClass.getDeclaredConstructor(data1Class, data2Class)
+//                .newInstance(null, null)
+//        }catch (noSuchMethod:NoSuchMethodException){
+//            throw NoSuchMethodException("MergeData in MergeCall should has a constructor with" +
+//                    "$data1Class and $data2Class ParamTypes.")
+//        }
+//    }
+
+    protected abstract fun createTargetMergeDataInstance(): T
+
     override fun execute(): Response<T> {
         commonCheck()
-        val result: MergeData<Data1,Data2> = MergeData()
+        val result: T = createTargetMergeDataInstance()
         var response1: Response<Data1>? = null
         val firstCallSuccess = if(call1 == null){
             true
@@ -109,7 +160,7 @@ class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>(private val call1: Cal
 
     override fun enqueue(callback: Callback<T>) {
         appExecutor.networkExecutor.execute{
-            val result: MergeData<Data1,Data2> = MergeData()
+            val result: T = createTargetMergeDataInstance()
             var failure: Throwable? = null
             try{
                 commonCheck()
@@ -125,7 +176,7 @@ class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>(private val call1: Cal
                 if(firstCallSuccess && call1 != null && response1 != null){
                     val tmp = result.data1
                     if(tmp != null && tmp is BaseResult && !tmp.isSuccess()){
-                        failure = RuntimeException(tmp.errorMsg)
+                        failure = MergeCallException(collectErrorInfo(tmp.errorMsg, call1))
                         firstCallSuccess = false
                     }
                 }
@@ -142,7 +193,7 @@ class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>(private val call1: Cal
                     if(secondCallSuccess && call2 != null && response2 != null){
                         val tmp = result.data2
                         if(tmp != null && tmp is BaseResult && !tmp.isSuccess()){
-                            failure = RuntimeException(tmp.errorMsg)
+                            failure = MergeCallException(collectErrorInfo(tmp.errorMsg,call2))
                             secondCallSuccess = false
                         }
                     }
@@ -153,10 +204,12 @@ class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>(private val call1: Cal
                             callback.onResponse(this, response)
                         }
                     }else{
-                        failure = RuntimeException(getErrorMsg(response2!!))
+                        failure = MergeCallException(
+                            collectErrorInfo(getErrorMsg(response2!!),call2))
                     }
                 }else{
-                    failure = RuntimeException(getErrorMsg(response1!!))
+                    failure = MergeCallException(
+                        collectErrorInfo(getErrorMsg(response1!!), call1))
                 }
             } catch (e: Exception){
                 failure = e
@@ -167,6 +220,10 @@ class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>(private val call1: Cal
                 }
             }
         }
+    }
+
+    private fun collectErrorInfo(msg: String, call: Call<*>?): String{
+        return "error description: ${msg}, call type: $call"
     }
 
     private fun getErrorMsg(response: Response<*>): String{

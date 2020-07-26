@@ -8,6 +8,7 @@ import com.hudson.wanandroid.data.common.mergecall.MergeCall
 import com.hudson.wanandroid.data.common.mergecall.MergeData
 import com.hudson.wanandroid.data.db.DataWrapperDao
 import com.hudson.wanandroid.data.entity.Article
+import com.hudson.wanandroid.data.entity.Banner
 import com.hudson.wanandroid.data.entity.HomeArticle
 import com.hudson.wanandroid.data.entity.TopArticle
 import com.hudson.wanandroid.data.entity.wrapper.ArticleWrapper
@@ -44,30 +45,34 @@ class HomeAllRepository @Inject constructor(
                 val secondType = mergeDataType.actualTypeArguments[1] as Class<*>
                 // 第一个类型是ArticleWrapper，MergeData类型，需要对内部数据进行拆分处理
                 //本身有三种数据，任意一种都可能导致204，因此要对数据逐一判断
+                var topArticle: Any? = null
+                var homeArticle: Any? = null
                 if(stashNetworkData?.isSuccessful == true && stashNetworkData?.code() == 204){
-                    // todo 下面部分内容返回的实际是一个MergeData（由MergeCall导致），因此需要转为ArticleWrapper
                     if(stashNetworkData?.body()?.networkData1Empty == false){ // 说明ArticleWrapper全部有效
-                        return stashNetworkData!!.body()!!.data1
+                        topArticle = stashNetworkData!!.body()!!.data1
+                        homeArticle = stashNetworkData!!.body()!!.data2
                     }
                     // 如果其中某一个网络数据为空，则从数据库获取并与其他一个数据（可能也要从数据库获取）合并
                     val articleWrapper = stashNetworkData?.body()?.data1
-                    return articleWrapper?.apply {
+                    articleWrapper?.apply {
                         // 首先判断是否是第一个数据为204或空导致
                         if(networkData1Empty){
-                            data1 = loadDataWrapperFromDb(firstType, identityInfo()) as TopArticle
+                            topArticle = loadDataWrapperFromDb(firstType, identityInfo())
                         }
                         if(networkData2Empty){
-                            data2 = loadDataWrapperFromDb(secondType, identityInfo()) as HomeArticle
+                            homeArticle = loadDataWrapperFromDb(secondType, identityInfo())
                         }
                     }
                 }else{
                     // 全部从数据库获取
-                    val topArticle = loadDataWrapperFromDb(firstType, identityInfo())
-                    val homeArticle = loadDataWrapperFromDb(secondType, identityInfo())
-                    return ArticleWrapper(
-                        if(topArticle == null) null else topArticle as TopArticle,
-                        if(homeArticle == null) null else homeArticle as HomeArticle)
+                    topArticle = loadDataWrapperFromDb(firstType, identityInfo())
+                    homeArticle = loadDataWrapperFromDb(secondType, identityInfo())
                 }
+                // MergeCall实际返回的是一个MergeData，或者从数据库获取的只是data1和data2
+                // 因此据此构建出一个ArticleWrapper
+                return ArticleWrapper(
+                    if(topArticle == null) null else topArticle as TopArticle,
+                    if(homeArticle == null) null else homeArticle as HomeArticle)
             }
 
             override fun loadSecondDataFromDb(clazz: Class<*>): Any? {
@@ -121,8 +126,20 @@ class HomeAllRepository @Inject constructor(
                 }
                 // create home article call
                 val homeArticleCall = wrapperCall(wanAndroidApi.homeArticle(pageNo))
-                // merge calls
-                return MergeCall(MergeCall(topArticleCall, homeArticleCall, appExecutor), bannerCall, appExecutor) as Call<HomeDataWrapper>
+                // merge article calls
+                val articleCall = object: MergeCall<TopArticle, HomeArticle, ArticleWrapper>(topArticleCall
+                    ,wrapperCall(wanAndroidApi.homeArticle(pageNo)),appExecutor){
+                    override fun createTargetMergeDataInstance(): ArticleWrapper {
+                        return ArticleWrapper(null,null)
+                    }
+                }
+                // merge all calls
+                return object: MergeCall<ArticleWrapper, Banner, HomeDataWrapper>(articleCall,
+                    wrapperCall(wanAndroidApi.bannerApi()),appExecutor){
+                    override fun createTargetMergeDataInstance(): HomeDataWrapper {
+                        return HomeDataWrapper(null,null)
+                    }
+                }
             }
 
             override fun identityInfo(): String {

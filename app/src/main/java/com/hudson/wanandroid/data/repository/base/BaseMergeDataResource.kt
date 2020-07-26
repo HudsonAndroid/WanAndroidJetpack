@@ -40,13 +40,18 @@ abstract class BaseMergeDataResource<ResultType, RequestType: MergeData<*,*>>(
             // 查看是否存在网络数据返回204或空的情况，如果存在，确定内部是否有部分新数据，有则使用
             val firstData = tryToGetValidFirstData() ?: loadFirstDataFromDb(firstDataType)
             val secondData = tryToGetValidSecondData() ?: loadSecondDataFromDb(secondDataType)
-            // todo 最好通过发射处理，这样不会要求外界必须要有这样的构造方法
-            val mergeData = clazz.getDeclaredConstructor(firstDataType, secondDataType)
-                .newInstance(firstData, secondData)
-            mutableLiveData.postValue(transform(mergeData))
-            // 判断在MergeData是空数据的情况下，是否要刷新数据到数据库，因为可能只是其中一个数据为空导致的
-            if(needSaveResult()){
-                saveCallResult(mergeData)
+            // 目前封装类必须保留有一个data1和data2的构造方法
+            try{
+                val mergeData = clazz.getDeclaredConstructor(firstDataType, secondDataType)
+                    .newInstance(firstData, secondData)
+                mutableLiveData.postValue(transform(mergeData))
+                // 判断在MergeData是空数据的情况下，是否要刷新数据到数据库，因为可能只是其中一个数据为空导致的
+                if(needSaveResult()){
+                    saveCallResult(mergeData)
+                }
+            }catch (noSuchMethod:NoSuchMethodException){
+                throw NoSuchMethodException("MergeData in MergeCall should has a constructor with" +
+                        "$firstDataType and $secondDataType ParamTypes.")
             }
         }
         return mutableLiveData
