@@ -68,6 +68,10 @@ class HomeAllRepository @Inject constructor(
                 }
             }
 
+            override fun createTargetMergeDataInstance(data1: Any?, data2: Any?): HomeDataWrapper {
+                return HomeDataWrapper(convertTypeOrNull(data1), convertTypeOrNull(data2))
+            }
+
             override fun loadSecondDataFromDb(clazz: Class<*>): Any? {
                 // 第二个类型是Banner，非MergeData类型，直接处理
                 return loadDataWrapperFromDb(clazz, identityInfo())

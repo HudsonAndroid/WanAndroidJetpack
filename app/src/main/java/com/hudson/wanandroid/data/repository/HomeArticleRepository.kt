@@ -12,6 +12,7 @@ import com.hudson.wanandroid.data.entity.TopArticle
 import com.hudson.wanandroid.data.entity.wrapper.ArticleWrapper
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.base.BaseSimpleMergeDataSource
+import com.hudson.wanandroid.data.repository.base.convertTypeOrNull
 import com.hudson.wanandroid.data.repository.base.wrapperCall
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,6 +29,10 @@ class HomeArticleRepository @Inject constructor(
 
     fun loadArticles(pageNo: Int): LiveData<Resource<List<Article>>>{
         return object : BaseSimpleMergeDataSource<List<Article>, ArticleWrapper>(dataWrapperDao, appExecutor){
+
+            override fun createTargetMergeDataInstance(data1: Any?, data2: Any?): ArticleWrapper {
+                return ArticleWrapper(convertTypeOrNull(data1), convertTypeOrNull(data2))
+            }
 
             override fun shouldFetch(data: List<Article>?): Boolean {
                 return super.shouldFetch(data) || data == null || data.isEmpty()
