@@ -1,4 +1,4 @@
-package com.hudson.wanandroid.data.entity.wrapper
+package com.hudson.wanandroid.network.mergecall.entity
 
 import com.hudson.wanandroid.data.common.mergecall.MergeData
 import com.hudson.wanandroid.data.entity.Article

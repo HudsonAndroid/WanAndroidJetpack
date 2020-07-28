@@ -1,4 +1,4 @@
-package com.hudson.wanandroid.data.repository
+package com.hudson.wanandroid.network.mergecall.repository
 
 import androidx.lifecycle.LiveData
 import com.hudson.wanandroid.data.WanAndroidApi
@@ -9,11 +9,11 @@ import com.hudson.wanandroid.data.db.DataWrapperDao
 import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.HomeArticle
 import com.hudson.wanandroid.data.entity.TopArticle
-import com.hudson.wanandroid.data.entity.wrapper.ArticleWrapper
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.base.BaseSimpleMergeDataSource
 import com.hudson.wanandroid.data.repository.base.convertTypeOrNull
 import com.hudson.wanandroid.data.repository.base.wrapperCall
+import com.hudson.wanandroid.network.mergecall.entity.ArticleWrapper
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,7 +21,7 @@ import javax.inject.Singleton
  * Created by Hudson on 2020/7/22.
  */
 @Singleton
-class HomeArticleRepository @Inject constructor(
+class ArticleRepository @Inject constructor(
     private val appExecutor: AppExecutor,
     private val wanAndroidApi: WanAndroidApi,
     private val dataWrapperDao: DataWrapperDao

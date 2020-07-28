@@ -50,7 +50,7 @@ class SingleExecuteServiceAppExecutor : AppExecutor(
 }
 
 object Creator{
-    private val executor = ThreadPoolExecutor(1, Int.MAX_VALUE, 60, TimeUnit.SECONDS,
-        SynchronousQueue<Runnable>(), Util.threadFactory("SingleThreadAppExecutor", false))
+    private val executor = ThreadPoolExecutor(0, Int.MAX_VALUE, 60, TimeUnit.SECONDS,
+        SynchronousQueue<Runnable>(), Util.threadFactory("SingleExecuteServiceAppExecutor", false))
     fun getSingleExecutor() = executor
 }

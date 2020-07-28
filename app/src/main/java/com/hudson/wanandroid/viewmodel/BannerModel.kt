@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hudson.wanandroid.data.entity.BannerItem
 import com.hudson.wanandroid.data.entity.wrapper.Resource
-import com.hudson.wanandroid.data.repository.HomeAllRepository
-import com.hudson.wanandroid.data.repository.HomeArticleRepository
 import com.hudson.wanandroid.data.repository.HomeRepository
 import javax.inject.Inject
 
@@ -15,16 +13,11 @@ import javax.inject.Inject
  * 创建方式由Dagger注入
  * Created by Hudson on 2020/7/11.
  */
-class BannerModel @Inject constructor(private val repository: HomeRepository,
-                                      private val articleRepository: HomeArticleRepository,
-                                      private val homeAllRepository: HomeAllRepository): ViewModel() {
+class BannerModel @Inject constructor(private val repository: HomeRepository): ViewModel() {
     val bannerTitle = MutableLiveData<String>()
     val bannerCount = MutableLiveData<Int>()
     val bannersLiveData: MediatorLiveData<Resource<List<BannerItem>>> = MediatorLiveData()
     var oldData: LiveData<Resource<List<BannerItem>>>? = null
-
-    val articleLiveData = articleRepository.loadArticles(0)
-    val homeAllDataLiveData = homeAllRepository.loadHomePageData(1)
 
     init {
         bannersLiveData.addSource(repository.loadBanners()){

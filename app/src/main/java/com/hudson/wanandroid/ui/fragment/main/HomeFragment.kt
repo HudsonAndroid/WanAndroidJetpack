@@ -74,7 +74,6 @@ class HomeFragment: Fragment() , Injectable{
         homeBinding.banners = bannerModel.bannersLiveData
         homeBinding.lifecycleOwner = this //自动为LiveData设置数据观察绑定，相当于liveData.observe自动完成
 
-        //1.仅获取Banner
         bannerModel.bannersLiveData.observe(this,
             Observer<Resource<List<BannerItem>>> {
                 homeBinding.adapter!!.refresh(homeBinding.vpBanner,it.data)
@@ -82,18 +81,6 @@ class HomeFragment: Fragment() , Injectable{
                 homeBinding.vpBanner.startAutoSwitch()
                 Log.d(javaClass.simpleName,"${it.status}, ${it.data}, ${it.msg}")
             })
-
-        // MergeCall 合并请求
-        //2.同时获取置顶文章接口数据和首页文章指定页数据，但不携带Banner数据
-//        bannerModel.articleLiveData.observe(this, Observer {
-//            Log.e("hudson","articles: $it")
-//        })
-
-        // MergeCall 合并请求
-        // 3.同时获取Banner + 置顶文章 + 首页文章数据
-        bannerModel.homeAllDataLiveData.observe(this, Observer {
-            Log.e("hudson","home all data: $it")
-        })
 
     }
 }
