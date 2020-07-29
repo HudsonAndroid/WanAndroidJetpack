@@ -1,4 +1,4 @@
-package com.hudson.wanandroid.data.entity
+package com.hudson.wanandroid.data.entity.wrapper
 
 /**
  * Created by Hudson on 2020/7/11.

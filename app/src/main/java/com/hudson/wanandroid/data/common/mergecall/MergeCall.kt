@@ -1,7 +1,7 @@
 package com.hudson.wanandroid.data.common.mergecall
 
 import com.hudson.wanandroid.data.common.AppExecutor
-import com.hudson.wanandroid.data.entity.BaseResult
+import com.hudson.wanandroid.data.entity.wrapper.BaseResult
 import okhttp3.MediaType
 import okhttp3.Protocol
 import okhttp3.Request

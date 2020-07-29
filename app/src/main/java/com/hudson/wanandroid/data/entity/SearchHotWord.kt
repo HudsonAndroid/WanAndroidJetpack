@@ -1,12 +1,14 @@
 package com.hudson.wanandroid.data.entity
 
+import com.hudson.wanandroid.data.entity.wrapper.BaseResult
+
 /**
  * 搜索热词
  * Created by Hudson on 2020/7/12.
  */
 data class SearchHotWord(
     val data:List<HotWord>
-):BaseResult(){
+): BaseResult(){
     override fun toString(): String {
         return "SearchHotWord(data=$data)"
     }

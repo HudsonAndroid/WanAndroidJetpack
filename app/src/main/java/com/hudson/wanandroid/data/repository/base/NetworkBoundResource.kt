@@ -22,7 +22,7 @@ import androidx.lifecycle.MediatorLiveData
 import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.common.mergecall.Call
 import com.hudson.wanandroid.data.common.mergecall.Callback
-import com.hudson.wanandroid.data.entity.BaseResult
+import com.hudson.wanandroid.data.entity.wrapper.BaseResult
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import retrofit2.Response
 

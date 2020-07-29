@@ -1,12 +1,14 @@
 package com.hudson.wanandroid.data.entity
 
+import com.hudson.wanandroid.data.entity.wrapper.BaseResult
+
 /**
  * 常用网站
  * Created by Hudson on 2020/7/12.
  */
 data class Website(
     val data: List<WebsiteItem>
-):BaseResult(){
+): BaseResult(){
     override fun toString(): String {
         return "Website(data=$data)"
     }

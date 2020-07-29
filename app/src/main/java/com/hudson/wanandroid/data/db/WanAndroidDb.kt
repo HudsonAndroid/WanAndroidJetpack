@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.hudson.wanandroid.data.entity.DataWrapper
+import com.hudson.wanandroid.data.entity.wrapper.DataWrapper
 
 /**
  * Created by Hudson on 2020/7/14.

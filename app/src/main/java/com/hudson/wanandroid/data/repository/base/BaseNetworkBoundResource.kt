@@ -8,7 +8,7 @@ import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.common.mergecall.Call
 import com.hudson.wanandroid.data.common.mergecall.RetrofitCall
 import com.hudson.wanandroid.data.db.DataWrapperDao
-import com.hudson.wanandroid.data.entity.DataWrapper
+import com.hudson.wanandroid.data.entity.wrapper.DataWrapper
 import com.hudson.wanandroid.data.repository.datawrapperexpire.DataExpireConfig
 import java.lang.reflect.ParameterizedType
 
@@ -110,7 +110,8 @@ fun <T> wrapperCall(call: retrofit2.Call<T>): Call<T> {
 fun <T> saveDataWrapper(clazz: Class<*>, content: T,
                     dataWrapperDao: DataWrapperDao,
                     identityInfo: String = ""){
-    val dataWrapper = DataWrapper(clazz)
+    val dataWrapper =
+        DataWrapper(clazz)
     dataWrapper.customInfo = identityInfo
     dataWrapper.content = Gson().toJson(content)
 

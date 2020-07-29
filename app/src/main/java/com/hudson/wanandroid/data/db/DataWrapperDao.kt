@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.hudson.wanandroid.data.entity.DataWrapper
+import com.hudson.wanandroid.data.entity.wrapper.DataWrapper
 
 /**
  * Created by Hudson on 2020/7/14 0014.

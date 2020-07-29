@@ -1,4 +1,4 @@
-package com.hudson.wanandroid.data.entity
+package com.hudson.wanandroid.data.entity.wrapper
 
 import androidx.room.Entity
 
