@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.wrapper.DataWrapper
 
 /**
@@ -11,13 +13,19 @@ import com.hudson.wanandroid.data.entity.wrapper.DataWrapper
  */
 @Database(
     entities = [
-        DataWrapper::class
+        DataWrapper::class,
+        PagingNextKey::class,
+        Article::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
+// DbMemberConverters被PagingNextKey使用
+@TypeConverters(DbMemberConverters::class)
 abstract class WanAndroidDb: RoomDatabase(){
     abstract fun dataWrapperDao(): DataWrapperDao
+    abstract fun pagingNextKeyDao(): PagingNextKeyDao
+    abstract fun articleDao(): ArticleDao
 
     companion object{
         @Volatile

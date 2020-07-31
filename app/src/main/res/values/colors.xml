@@ -5,5 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorNavSelected">#2196F3</color>
     <color name="colorNavNormal">#4e5864</color>
+    <color name="colorText">#333</color>
     <color name="white">#fff</color>
+    <color name="transparent">#0000</color>
 </resources>

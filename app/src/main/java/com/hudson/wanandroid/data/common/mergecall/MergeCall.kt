@@ -1,6 +1,7 @@
 package com.hudson.wanandroid.data.common.mergecall
 
 import com.hudson.wanandroid.data.common.AppExecutor
+import com.hudson.wanandroid.data.common.getErrorMsg
 import com.hudson.wanandroid.data.entity.wrapper.BaseResult
 import okhttp3.MediaType
 import okhttp3.Protocol
@@ -207,11 +208,11 @@ abstract class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>
                         }
                     }else{
                         failure = MergeCallException(
-                            collectErrorInfo(getErrorMsg(response2!!),call2))
+                            collectErrorInfo(response2!!.getErrorMsg(),call2))
                     }
                 }else{
                     failure = MergeCallException(
-                        collectErrorInfo(getErrorMsg(response1!!), call1))
+                        collectErrorInfo(response1!!.getErrorMsg(), call1))
                 }
             } catch (e: Exception){
                 failure = e
@@ -226,18 +227,6 @@ abstract class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>
 
     private fun collectErrorInfo(msg: String, call: Call<*>?): String{
         return "error description: ${msg}, call type: $call"
-    }
-
-    private fun getErrorMsg(response: Response<*>): String{
-        if(!response.isSuccessful){
-            val msg = response.errorBody()?.string()
-            return if(msg.isNullOrEmpty()){
-                response.message()
-            }else{
-                msg
-            }
-        }
-        throw IllegalArgumentException("The response is successful, cannot fetch error msg")
     }
 
 }

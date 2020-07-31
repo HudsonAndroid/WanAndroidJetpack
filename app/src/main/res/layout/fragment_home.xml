@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="android.text.Html"/>
@@ -41,14 +42,123 @@
             type="LiveData&lt;String>" />
 
     </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.hudson.wanandroid.ui.view.indicatorviewpager.viewpager.AutoSwitchViewPager
+        <!--发现了一个问题，如果下面的height设置成了wrap_content，会莫名出现一个空白有颜色填充的部分，应该
+        是fitSystemWindows导致，需要设置具体值，这样才不会出现-->
+        <com.google.android.material.appbar.AppBarLayout
+            android:background="@color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/ctl_layout"
+                app:contentScrim="@color/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+              <!--  <ImageView
+                    android:scaleType="centerCrop"
+                    android:fitsSystemWindows="true"
+                    android:src="@drawable/bg_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"/>-->
+                <!--<TextView
+                    android:id="@+id/tv_tmp"
+                    android:text="我是一个"
+                    android:fitsSystemWindows="true"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="#5f00"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"/>-->
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--<TextView
+                        android:id="@+id/tv_tmp"
+                        android:text="我是一个"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"/>-->
+
+                    <com.hudson.wanandroid.ui.view.indicatorviewpager.viewpager.AutoSwitchViewPager
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintDimensionRatio="2:1"
+                        android:id="@+id/vp_banner"
+                        bannerAdapter="@{adapter}"
+                        bannerChangeListener="@{pageChangeListener}"
+                        indicator="@{indicator}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                    <com.hudson.wanandroid.ui.view.indicatorviewpager.indicator.PathPointIndicator
+                        android:layout_width="0dp"
+                        android:layout_height="10dp"
+                        android:id="@+id/pp_indicator"
+                        app:indicatorCount="@{bannerCount}"
+                        app:layout_constraintBottom_toBottomOf="@id/vp_banner"
+                        app:layout_constraintRight_toRightOf="@id/vp_banner"
+                        app:layout_constraintWidth_percent="0.4" />
+
+                    <!--需要判空，否则Html.fromHtml方法会报空指针异常-->
+                    <TextView
+                        app:layout_constraintLeft_toLeftOf="@id/vp_banner"
+                        app:layout_constraintBottom_toBottomOf="@id/vp_banner"
+                        android:text="@{bannerTitle == null ? null : Html.fromHtml(bannerTitle)}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:overScrollMode="never"
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <!--传递的变量需要和对应layout中的一致-->
+        <include
+            layout="@layout/common_load_view"
+            app:resource="@{(Resource) banners}"
+            app:retry="@{() -> retry.retry()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+<!--
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    &lt;!&ndash;    <com.hudson.wanandroid.ui.view.indicatorviewpager.viewpager.AutoSwitchViewPager
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="2:1"
@@ -69,16 +179,25 @@
             app:layout_constraintRight_toRightOf="@id/vp_banner"
             app:layout_constraintWidth_percent="0.4" />
 
-        <!--需要判空，否则Html.fromHtml方法会报空指针异常-->
+        &lt;!&ndash;需要判空，否则Html.fromHtml方法会报空指针异常&ndash;&gt;
         <TextView
             app:layout_constraintLeft_toLeftOf="@id/vp_banner"
             app:layout_constraintBottom_toBottomOf="@id/vp_banner"
             android:text="@{bannerTitle == null ? null : Html.fromHtml(bannerTitle)}"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"/>&ndash;&gt;
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
+            app:layout_constraintTop_toBottomOf="@id/vp_banner"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
 
-        <!--传递的变量需要和对应layout中的一致-->
+        &lt;!&ndash;传递的变量需要和对应layout中的一致&ndash;&gt;
         <include
             layout="@layout/common_load_view"
             app:resource="@{(Resource) banners}"
@@ -93,6 +212,6 @@
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 </layout>

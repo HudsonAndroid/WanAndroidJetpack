@@ -1,12 +1,10 @@
 package com.hudson.wanandroid.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.hudson.wanandroid.data.entity.BannerItem
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.HomeRepository
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -24,6 +22,8 @@ class BannerModel @Inject constructor(private val repository: HomeRepository): V
             bannersLiveData.value = it
         }
     }
+
+    fun getArticles() = repository.loadArticles()
 
     fun onPageChanged(position: Int){
         bannerTitle.value = bannersLiveData.value?.data?.get(position)?.title

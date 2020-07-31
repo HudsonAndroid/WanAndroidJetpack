@@ -1,9 +1,15 @@
 package com.hudson.wanandroid.data.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 /**
- * Created by Hudson on 2020/7/21 0021.
+ * Created by Hudson on 2020/7/21.
  */
+@Entity(primaryKeys = ["id", "chapterId"])
 data class Article(
+//    @PrimaryKey (不要直接使用id作为主键，因为ROOM会按照id大小顺序存储，导致最后文章先后顺序错乱)
+    val id: Int,//如果位数过长，可以考虑Long
     val apkLink: String,
     val audit: Int,
     val author: String,
@@ -16,7 +22,6 @@ data class Article(
     val descMd: String,
     val envelopePic: String,
     val fresh: Boolean,
-    val id: Int,//如果位数过长，可以考虑Long
     val link: String,
     val niceDate: String,
     val niceShareDate: String,

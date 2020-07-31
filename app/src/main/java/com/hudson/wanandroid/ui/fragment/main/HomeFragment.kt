@@ -9,15 +9,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.entity.BannerItem
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.databinding.FragmentHomeBinding
 import com.hudson.wanandroid.di.Injectable
+import com.hudson.wanandroid.ui.adapter.ArticleAdapter
 import com.hudson.wanandroid.ui.adapter.BannerAdapter
+import com.hudson.wanandroid.ui.adapter.PagingLoadStateAdapter
 import com.hudson.wanandroid.ui.common.RetryCallback
 import com.hudson.wanandroid.ui.util.autoCleared
 import com.hudson.wanandroid.ui.view.indicatorviewpager.listener.SimplePageChangeListener
 import com.hudson.wanandroid.viewmodel.BannerModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.observeOn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -34,6 +44,10 @@ class HomeFragment: Fragment() , Injectable{
     // 相当于ViewModelProvider(fragment, factory).get(BannerModel::class.java)
     val bannerModel: BannerModel by viewModels {
         viewModelFactory
+    }
+
+    private val articleAdapter: ArticleAdapter by lazy {
+        ArticleAdapter()
     }
 
     override fun onCreateView(
@@ -69,6 +83,7 @@ class HomeFragment: Fragment() , Injectable{
         homeBinding.retry = object : RetryCallback {
             override fun retry() {
                 bannerModel.retry()
+                articleAdapter.retry()
             }
         }
         homeBinding.banners = bannerModel.bannersLiveData
@@ -82,5 +97,37 @@ class HomeFragment: Fragment() , Injectable{
                 Log.d(javaClass.simpleName,"${it.status}, ${it.data}, ${it.msg}")
             })
 
+        attachArticles()
+    }
+
+    private fun attachArticles(){
+        homeBinding.rvList.adapter = articleAdapter.withLoadStateFooter(PagingLoadStateAdapter(articleAdapter))
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            Log.e("hudson","线程${Thread.currentThread().name}")
+//            @OptIn(ExperimentalCoroutinesApi::class)
+//            bannerModel.getArticles().collectLatest {
+//                articleAdapter.submitData(it)
+//            }
+//        }
+
+        GlobalScope.launch (Dispatchers.IO){
+            Log.e("hudson","线程${Thread.currentThread().name}")
+            @OptIn(ExperimentalCoroutinesApi::class)
+            bannerModel.getArticles().collectLatest {
+                articleAdapter.submitData(it)
+            }
+        }
+//        AppExecutor.getInstance().networkExecutor.execute{
+//            Log.e("hudson","线程${Thread.currentThread().name}")
+//            @OptIn(ExperimentalCoroutinesApi::class)
+//            bannerModel.getArticles().collectLatest {
+//                articleAdapter.submitData(it)
+//            }
+//        }
+//        bannerModel.getArticles().observe(this, Observer {
+//            lifecycleScope.launchWhenCreated {
+//                articleAdapter.submitData(it)
+//            }
+//        })
     }
 }

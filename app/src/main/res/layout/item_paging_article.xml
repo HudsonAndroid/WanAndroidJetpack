@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.text.Html"/>
+        <import type="com.hudson.wanandroid.viewmodel.global.GlobalJumpHandler"/>
+        <variable
+            name="article"
+            type="com.hudson.wanandroid.data.entity.Article" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="@{(article == null || article.title == null)  ? null : Html.fromHtml(article.title)}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/colorText"
+            android:layout_marginLeft="@dimen/spaceNormal"
+            android:layout_marginTop="@dimen/spaceLarge"
+            android:textSize="@dimen/textSizeTitle"
+            android:onClick="@{(view)->GlobalJumpHandler.onJumpInvoked(view,article.link)}"
+            android:layout_width="0dp"
+            android:layout_height="60dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
