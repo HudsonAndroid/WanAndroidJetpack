@@ -52,7 +52,6 @@ abstract class BaseRemoteMediator<T: Any> (
                 }
             }
             nextPageKey = nextPageKey ?: 0
-            Log.e("hudson","下一页${nextPageKey}")
             // 3.使用拿到的nextPageKey获取该页数据
             val networkData = fetchNetworkData(nextPageKey)
 
@@ -65,7 +64,6 @@ abstract class BaseRemoteMediator<T: Any> (
                 pagingNextKeyDao.insert(PagingNextKey(getClazz(), getNextKey(nextPageKey)))
                 updateNetworkData(db, networkData)
             }
-
             return MediatorResult.Success(endOfPaginationReached = networkData.isNullOrEmpty())
         }catch (e: IOException){
             e.printStackTrace()
@@ -81,9 +79,12 @@ abstract class BaseRemoteMediator<T: Any> (
 
     abstract suspend fun fetchNetworkData(nextPageKey: Int?): List<T>
     abstract fun getNextKey(nextPageKey: Int?): Int?
+    // 注意对应的ROOM操作方法上需要添加suspend关键字，以确保不在主线程对ROOM操作
     abstract suspend fun updateNetworkData(db: WanAndroidDb, data: List<T>)
     abstract suspend fun cleanLocalData(db: WanAndroidDb)
-    abstract fun shouldFetch(): Boolean
+
+    // 默认每次都重新从网络上获取
+    open fun shouldFetch() = true
 
     private fun getClazz(): Class<*>{
         return Article::class.java

@@ -46,9 +46,8 @@ class HomeRepository @Inject constructor(
         }.asLiveData()
     }
 
-    fun loadArticles() = Pager(PagingConfig(pageSize = 20),
-        remoteMediator = ArticleRemoteMediator(wanAndroidApi, db, appExecutor)){
-        Log.e("hudson","当前线程${Thread.currentThread().name}")
+    fun loadArticles() = Pager(config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
+        remoteMediator = ArticleRemoteMediator(wanAndroidApi, db)){
         db.articleDao().getArticlePagingSource()
     }.flow
 //        .flowOn(Dispatchers.IO)
@@ -64,4 +63,8 @@ class HomeRepository @Inject constructor(
 //        .collectLatest {
 //            // 请求完成
 //        }
+    
+    companion object{
+        private const val NETWORK_PAGE_SIZE = 20
+    }
 }

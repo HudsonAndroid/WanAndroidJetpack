@@ -12,35 +12,40 @@ import com.hudson.wanandroid.data.entity.ArticleWrapper
 import com.hudson.wanandroid.data.entity.HomeArticle
 import com.hudson.wanandroid.data.entity.TopArticle
 import com.hudson.wanandroid.data.repository.base.wrapperCall
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Created by Hudson on 2020/7/30.
  */
 class ArticleRemoteMediator(
     api: WanAndroidApi,
-    db: WanAndroidDb,
-    val appExecutor: AppExecutor
+    db: WanAndroidDb
 ) : BaseRemoteMediator<Article>(api, db){
     private var nextKey: Int? = null
 
     override suspend fun fetchNetworkData(nextPageKey: Int?): List<Article> {
         nextPageKey?.run {
-            Log.e("hudson","开始配置${Thread.currentThread().name}")
             val topArticleCall = if(nextPageKey == 0){
                 wrapperCall(api.topArticle())
             }else{
                 null
             }
             val call = object: MergeCall<TopArticle,HomeArticle,ArticleWrapper>
-                (topArticleCall, wrapperCall(api.homeArticle(nextPageKey)), appExecutor){
+                (topArticleCall, wrapperCall(api.homeArticle(nextPageKey))){
                 override fun createTargetMergeDataInstance(
                     data1: TopArticle?,
                     data2: HomeArticle?
                 ) = ArticleWrapper(data1, data2)
             }
-            Log.e("hudson","完成构建")
-            val response = call.execute()
-            Log.e("hudson","响应$response")
+            // 由协程管理运行，不使用AppExecutor
+            // 踩坑记录，在View层（Activity或Fragment中）将整个repository获取请求的操作利用
+            // lifecycleScope或者其他协程管理执行时会出现偶发性的ChannelClosedException
+            // 类似错误信息见 https://stackoverflow.com/questions/62633502/channel-was-closed-message-when-using-paging-3-from-androidx
+//            val response = call.execute()
+            val response = withContext(Dispatchers.IO){
+                call.execute()
+            }
             if(response.isSuccessful){
                 val topArticle = response.body().data1
                 val homeArticle = response.body().data2
@@ -48,17 +53,14 @@ class ArticleRemoteMediator(
                 topArticle?.data?.apply {
                     result.addAll(this)
                 }
-                Log.e("hudson","置顶文章${result}")
                 homeArticle?.data?.datas?.apply {
                     result.addAll(this)
                 }
                 nextKey = homeArticle?.data?.curPage?.run {
-                    this /*+ 1*/  // 不需要+1，因为wanandroid api中page和实际id差1
+                    this /*+ 1*/  // 不需要+1，因为wanAndroid api中page和实际id差1
                 }
-                Log.e("hudson","数据大小${result}")
                 return result
             }else{
-                Log.e("hudson","失败")
                 throw MergeCallException(response.getErrorMsg())
             }
         }
@@ -76,7 +78,5 @@ class ArticleRemoteMediator(
     override suspend fun cleanLocalData(db: WanAndroidDb) {
         db.articleDao().cleanArticles()
     }
-
-    override fun shouldFetch() = true
 
 }

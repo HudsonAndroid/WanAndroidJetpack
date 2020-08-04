@@ -102,32 +102,11 @@ class HomeFragment: Fragment() , Injectable{
 
     private fun attachArticles(){
         homeBinding.rvList.adapter = articleAdapter.withLoadStateFooter(PagingLoadStateAdapter(articleAdapter))
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            Log.e("hudson","线程${Thread.currentThread().name}")
-//            @OptIn(ExperimentalCoroutinesApi::class)
-//            bannerModel.getArticles().collectLatest {
-//                articleAdapter.submitData(it)
-//            }
-//        }
-
-        GlobalScope.launch (Dispatchers.IO){
-            Log.e("hudson","线程${Thread.currentThread().name}")
+        lifecycleScope.launch {
             @OptIn(ExperimentalCoroutinesApi::class)
             bannerModel.getArticles().collectLatest {
                 articleAdapter.submitData(it)
             }
         }
-//        AppExecutor.getInstance().networkExecutor.execute{
-//            Log.e("hudson","线程${Thread.currentThread().name}")
-//            @OptIn(ExperimentalCoroutinesApi::class)
-//            bannerModel.getArticles().collectLatest {
-//                articleAdapter.submitData(it)
-//            }
-//        }
-//        bannerModel.getArticles().observe(this, Observer {
-//            lifecycleScope.launchWhenCreated {
-//                articleAdapter.submitData(it)
-//            }
-//        })
     }
 }
