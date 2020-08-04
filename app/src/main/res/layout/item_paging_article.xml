@@ -3,6 +3,8 @@
 
     <data>
         <import type="android.text.Html"/>
+        <import type="android.view.View"/>
+        <import type="android.text.TextUtils"/>
         <import type="com.hudson.wanandroid.viewmodel.global.GlobalJumpHandler"/>
         <variable
             name="article"
@@ -11,21 +13,98 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="@{(view)->GlobalJumpHandler.onJumpInvoked(view,article.link)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="@{(article == null || article.title == null)  ? null : Html.fromHtml(article.title)}"
+            android:id="@+id/tv_top"
+            android:textColor="@color/colorPink"
+            app:layout_constraintTop_toTopOf="@+id/tv_date"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:background="@drawable/bg_round_pink"
+            android:visibility="@{article.type == 1 ? View.VISIBLE : View.GONE }"
+            android:text="@string/article_type_top"
+            style="@style/article_tag_text" />
+
+        <TextView
+            android:id="@+id/tv_new"
+            app:layout_constraintLeft_toRightOf="@id/tv_top"
+            app:layout_constraintTop_toTopOf="@id/tv_top"
+            app:layout_constraintBottom_toBottomOf="@id/tv_top"
+            android:background="@drawable/bg_round_red"
+            android:textColor="@color/colorRed"
+            android:visibility="@{article.fresh ? View.VISIBLE: View.GONE}"
+            android:text="@string/article_type_new"
+            style="@style/article_tag_text"/>
+
+        <TextView
+            android:id="@+id/tv_author"
+            app:layout_constraintTop_toTopOf="@+id/tv_date"
+            android:layout_marginLeft="@dimen/spaceSmall"
+            android:layout_marginStart="@dimen/spaceSmall"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_date"
+            app:layout_constraintLeft_toRightOf="@id/tv_new"
+            android:text="@{TextUtils.isEmpty(article.author) ? article.shareUser : article.author}"
+            style="@style/gray_small_text" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            style="@style/gray_small_text"
+            android:layout_marginTop="@dimen/spaceBig"
+            android:text="@{article.niceDate}"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="@dimen/spaceNormal"
+            android:layout_marginEnd="@dimen/spaceNormal"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:text="@{(article == null || article.title == null)  ? null : Html.fromHtml(article.title)}"
+            app:layout_constraintTop_toBottomOf="@id/tv_top"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:textColor="@color/colorText"
             android:layout_marginLeft="@dimen/spaceNormal"
-            android:layout_marginTop="@dimen/spaceLarge"
+            android:layout_marginStart="@dimen/spaceNormal"
+            android:layout_marginTop="@dimen/spaceBig"
             android:textSize="@dimen/textSizeTitle"
-            android:onClick="@{(view)->GlobalJumpHandler.onJumpInvoked(view,article.link)}"
             android:layout_width="0dp"
-            android:layout_height="60dp"/>
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_marginTop="@dimen/spaceNormal"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintLeft_toLeftOf="@id/tv_title"
+            app:layout_constraintRight_toRightOf="@id/tv_title"
+            android:layout_width="0dp"
+            android:maxLines="3"
+            android:visibility="@{(article == null || TextUtils.isEmpty(article.desc)) ? View.GONE : View.VISIBLE}"
+            android:text="@{(article == null || article.desc == null)  ? null : Html.fromHtml(article.desc)}"
+            android:ellipsize="end"
+            style="@style/gray_small_text"/>
+
+        <TextView
+            android:id="@+id/tv_category"
+            app:layout_constraintTop_toBottomOf="@id/tv_desc"
+            app:layout_constraintLeft_toLeftOf="@id/tv_title"
+            android:layout_marginTop="@dimen/spaceSmall"
+            android:text='@{article.superChapterName + "/" + article.chapterName }'
+            style="@style/gray_small_text"/>
+
+        <View
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_category"
+            android:layout_marginTop="@dimen/spaceLarge"
+            android:layout_marginLeft="@dimen/spaceNormal"
+            android:layout_marginRight="@dimen/spaceNormal"
+            android:background="@color/colorLightGray"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/widthLine"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

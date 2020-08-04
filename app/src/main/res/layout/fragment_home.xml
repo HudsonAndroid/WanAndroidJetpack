@@ -103,22 +103,44 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent" />
 
+                    <View
+                        android:id="@+id/v_bg"
+                        app:layout_constraintLeft_toLeftOf="@id/vp_banner"
+                        app:layout_constraintRight_toRightOf="@id/vp_banner"
+                        app:layout_constraintBottom_toBottomOf="@id/vp_banner"
+                        android:background="@color/colorHalfBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/heightSmall"/>
+
                     <com.hudson.wanandroid.ui.view.indicatorviewpager.indicator.PathPointIndicator
                         android:layout_width="0dp"
-                        android:layout_height="10dp"
+                        android:layout_height="@dimen/spaceNormal"
                         android:id="@+id/pp_indicator"
                         app:indicatorCount="@{bannerCount}"
-                        app:layout_constraintBottom_toBottomOf="@id/vp_banner"
-                        app:layout_constraintRight_toRightOf="@id/vp_banner"
-                        app:layout_constraintWidth_percent="0.4" />
+                        app:layout_constraintLeft_toRightOf="@id/tv_title"
+                        app:layout_constraintTop_toTopOf="@+id/tv_title"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+                        app:layout_constraintRight_toRightOf="@id/v_bg"
+                        app:layout_constraintWidth_percent="0.25" />
 
                     <!--需要判空，否则Html.fromHtml方法会报空指针异常-->
                     <TextView
-                        app:layout_constraintLeft_toLeftOf="@id/vp_banner"
-                        app:layout_constraintBottom_toBottomOf="@id/vp_banner"
+                        android:id="@+id/tv_title"
+                        app:layout_constraintLeft_toLeftOf="@id/v_bg"
+                        app:layout_constraintTop_toTopOf="@id/v_bg"
+                        app:layout_constraintBottom_toBottomOf="@id/v_bg"
+                        android:layout_marginLeft="@dimen/spaceSmall"
+                        android:layout_marginStart="@dimen/spaceSmall"
+                        android:layout_marginRight="@dimen/spaceLittle"
+                        android:layout_marginEnd="@dimen/spaceLittle"
+                        android:textColor="@color/white"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        app:layout_constraintRight_toLeftOf="@id/pp_indicator"
                         android:text="@{bannerTitle == null ? null : Html.fromHtml(bannerTitle)}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/heightSmall"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -153,65 +175,5 @@
             android:layout_marginTop="8dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-<!--
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    &lt;!&ndash;    <com.hudson.wanandroid.ui.view.indicatorviewpager.viewpager.AutoSwitchViewPager
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="2:1"
-            android:id="@+id/vp_banner"
-            bannerAdapter="@{adapter}"
-            bannerChangeListener="@{pageChangeListener}"
-            indicator="@{indicator}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-
-        <com.hudson.wanandroid.ui.view.indicatorviewpager.indicator.PathPointIndicator
-            android:layout_width="0dp"
-            android:layout_height="10dp"
-            android:id="@+id/pp_indicator"
-            app:indicatorCount="@{bannerCount}"
-            app:layout_constraintBottom_toBottomOf="@id/vp_banner"
-            app:layout_constraintRight_toRightOf="@id/vp_banner"
-            app:layout_constraintWidth_percent="0.4" />
-
-        &lt;!&ndash;需要判空，否则Html.fromHtml方法会报空指针异常&ndash;&gt;
-        <TextView
-            app:layout_constraintLeft_toLeftOf="@id/vp_banner"
-            app:layout_constraintBottom_toBottomOf="@id/vp_banner"
-            android:text="@{bannerTitle == null ? null : Html.fromHtml(bannerTitle)}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>&ndash;&gt;
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_list"
-            app:layout_constraintTop_toBottomOf="@id/vp_banner"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"/>
-
-        &lt;!&ndash;传递的变量需要和对应layout中的一致&ndash;&gt;
-        <include
-            layout="@layout/common_load_view"
-            app:resource="@{(Resource) banners}"
-            app:retry="@{() -> retry.retry()}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 </layout>

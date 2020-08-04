@@ -10,4 +10,7 @@
 
     <string name="action_retry">重试</string>
     <string name="tips_unknown_error">未知错误</string>
+
+    <string name="article_type_top">置顶</string>
+    <string name="article_type_new">新</string>
 </resources>
