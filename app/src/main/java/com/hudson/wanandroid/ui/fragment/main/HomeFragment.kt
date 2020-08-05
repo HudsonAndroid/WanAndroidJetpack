@@ -104,7 +104,7 @@ class HomeFragment: Fragment() , Injectable{
         homeBinding.rvList.adapter = articleAdapter.withLoadStateFooter(PagingLoadStateAdapter(articleAdapter))
         lifecycleScope.launch {
             @OptIn(ExperimentalCoroutinesApi::class)
-            bannerModel.getArticles().collectLatest {
+            bannerModel.getArticles().collectLatest { // collectLatest主要是为了背压处理
                 articleAdapter.submitData(it)
             }
         }

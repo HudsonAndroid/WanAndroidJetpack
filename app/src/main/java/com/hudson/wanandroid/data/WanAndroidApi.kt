@@ -1,6 +1,8 @@
 package com.hudson.wanandroid.data
 
 import com.hudson.wanandroid.data.entity.*
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -12,7 +14,14 @@ import retrofit2.http.Path
  */
 interface WanAndroidApi {
     private object Inner{
+        val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
+
+        val okHttpClient: OkHttpClient = OkHttpClient.Builder()
+            .addInterceptor(logger)
+            .build()
+
         val singleTon: WanAndroidApi = Retrofit.Builder()
+            .client(okHttpClient)
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build().create(WanAndroidApi::class.java)

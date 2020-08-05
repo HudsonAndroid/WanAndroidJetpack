@@ -15,6 +15,11 @@ import java.io.IOException
 import java.lang.Exception
 
 /**
+ * 第一步判断忽略，原因是如果优先判断本地
+ * 数据是否失效，再决定从网络获取的话，
+ * 各页数据需要单独管理其缓存的生命周期，
+ * 因此有可能出现各页数据周期不相符合的
+ * 问题。
  * Created by Hudson on 2020/7/29.
  */
 @OptIn(ExperimentalPagingApi::class)
@@ -24,11 +29,10 @@ abstract class BaseRemoteMediator<T: Any> (
 ): RemoteMediator<Int, T>(){
     override suspend fun load(loadType: LoadType, state: PagingState<Int, T>): MediatorResult {
         try{
-            // TODO: 2020/7/30 0030 如果用户下拉刷新怎么办
             // 1.判断是否需要从网络获取,如果不需要则直接使用本地数据
-            if(!shouldFetch()){
-                return MediatorResult.Success(endOfPaginationReached = true)
-            }
+//            if(!shouldFetch()){
+//                return MediatorResult.Success(endOfPaginationReached = true)
+//            }
             // 2.获取从网络获取的数据的下标，相对于本地数据库而言是nextPageKey
             // 方案上：如果服务端返回的数据中包含了page信息的情况下，可以直接通过PagingState来获取上次
             // 请求的最后一页数据下标，并增加1得到；另一种更加通用的方案是利用PagingNextKey本地存储方式
@@ -83,8 +87,8 @@ abstract class BaseRemoteMediator<T: Any> (
     abstract suspend fun updateNetworkData(db: WanAndroidDb, data: List<T>)
     abstract suspend fun cleanLocalData(db: WanAndroidDb)
 
-    // 默认每次都重新从网络上获取
-    open fun shouldFetch() = true
+//    // 默认每次都重新从网络上获取
+//    open fun shouldFetch() = true
 
     private fun getClazz(): Class<*>{
         return Article::class.java

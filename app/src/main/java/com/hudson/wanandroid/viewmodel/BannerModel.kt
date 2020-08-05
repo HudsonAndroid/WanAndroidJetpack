@@ -1,6 +1,7 @@
 package com.hudson.wanandroid.viewmodel
 
 import androidx.lifecycle.*
+import androidx.paging.cachedIn
 import com.hudson.wanandroid.data.entity.BannerItem
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.HomeRepository
@@ -23,7 +24,8 @@ class BannerModel @Inject constructor(private val repository: HomeRepository): V
         }
     }
 
-    fun getArticles() = repository.loadArticles()
+    // cachedIn限定其范围，避免泄漏
+    fun getArticles() = repository.loadArticles().cachedIn(viewModelScope)
 
     fun onPageChanged(position: Int){
         bannerTitle.value = bannersLiveData.value?.data?.get(position)?.title

@@ -50,19 +50,6 @@ class HomeRepository @Inject constructor(
         remoteMediator = ArticleRemoteMediator(wanAndroidApi, db)){
         db.articleDao().getArticlePagingSource()
     }.flow
-//        .flowOn(Dispatchers.IO)
-//        .onStart {
-//            // 在调用flow请求数据前，做一些准备工作，例如显示正在加载数据的按钮
-//        }
-//        .catch {
-//            // 捕获上游异常
-//        }
-//        .onCompletion {
-//            //请求完成
-//        }
-//        .collectLatest {
-//            // 请求完成
-//        }
     
     companion object{
         private const val NETWORK_PAGE_SIZE = 20
