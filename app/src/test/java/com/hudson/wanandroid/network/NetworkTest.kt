@@ -92,10 +92,8 @@ class NetworkTest {
                 bannerProvider = EmptySuccessBannerProvider()
             ))
             .create(WanAndroidApi::class.java)
-        val dataWrapperDao =
-            WanAndroidDb.getInstance(RuntimeEnvironment.application).dataWrapperDao()
-
-        HomeRepository(appExecutor, wanAndroidApi, dataWrapperDao)
+        val db = WanAndroidDb.getInstance(RuntimeEnvironment.application)
+        HomeRepository(appExecutor, wanAndroidApi, db)
             .loadBanners()
             .observeForever(Observer {
                 println("fetch network state: $it")
