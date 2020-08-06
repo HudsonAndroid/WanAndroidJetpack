@@ -10,6 +10,9 @@ import javax.inject.Inject
 
 /**
  * 创建方式由Dagger注入
+ *
+ * API数据由BannerModel缓存，Fragment
+ * 本身生命周期不受约束（即按照Navigation的replace fragment方式）
  * Created by Hudson on 2020/7/11.
  */
 class BannerModel @Inject constructor(private val repository: HomeRepository): ViewModel() {
@@ -18,15 +21,15 @@ class BannerModel @Inject constructor(private val repository: HomeRepository): V
     val bannersLiveData: MediatorLiveData<Resource<List<BannerItem>>> = MediatorLiveData()
     var oldData: LiveData<Resource<List<BannerItem>>>? = null
     val articleLoadState = MutableLiveData<PagingRetryLoad>()
+    // cachedIn限定其范围，避免泄漏
+    // 不依赖fragment触发加载，因为本身viewModel生命周期长于fragment(生命周期更长的主要原因是tab切换避免重复加载)
+    val articles = repository.loadArticles().cachedIn(viewModelScope)
 
     init {
         bannersLiveData.addSource(repository.loadBanners()){
             bannersLiveData.value = it
         }
     }
-
-    // cachedIn限定其范围，避免泄漏
-    fun getArticles() = repository.loadArticles().cachedIn(viewModelScope)
 
     fun onPageChanged(position: Int){
         bannerTitle.value = bannersLiveData.value?.data?.get(position)?.title
@@ -42,7 +45,7 @@ class BannerModel @Inject constructor(private val repository: HomeRepository): V
     }
 
     //data load in, invoke
-    fun refresh(){
+    fun update(){
         bannersLiveData.value?.data?.apply {
             if(isNotEmpty()){
                 bannerTitle.value = this[0].title //title for first time
