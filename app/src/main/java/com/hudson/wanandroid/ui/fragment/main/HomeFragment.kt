@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.entity.BannerItem
+import com.hudson.wanandroid.data.entity.PagingRetryLoad
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.databinding.FragmentHomeBinding
 import com.hudson.wanandroid.di.Injectable
@@ -22,11 +22,8 @@ import com.hudson.wanandroid.ui.common.RetryCallback
 import com.hudson.wanandroid.ui.util.autoCleared
 import com.hudson.wanandroid.ui.view.indicatorviewpager.listener.SimplePageChangeListener
 import com.hudson.wanandroid.viewmodel.BannerModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.observeOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -87,6 +84,7 @@ class HomeFragment: Fragment() , Injectable{
             }
         }
         homeBinding.banners = bannerModel.bannersLiveData
+        homeBinding.pagingRetry = bannerModel.articleLoadState
         homeBinding.lifecycleOwner = this //自动为LiveData设置数据观察绑定，相当于liveData.observe自动完成
 
         bannerModel.bannersLiveData.observe(this,
@@ -101,11 +99,18 @@ class HomeFragment: Fragment() , Injectable{
     }
 
     private fun attachArticles(){
+        val retryLoad: PagingRetryLoad = PagingRetryLoad()
+        articleAdapter.addLoadStateListener { loadState ->
+            retryLoad.loadStates = loadState.mediator
+            retryLoad.hasShowData = articleAdapter.itemCount != 0
+            bannerModel.articleLoadState.value = retryLoad
+        }
         homeBinding.rvList.adapter = articleAdapter.withLoadStateFooter(PagingLoadStateAdapter(articleAdapter))
         lifecycleScope.launch {
             @OptIn(ExperimentalCoroutinesApi::class)
-            bannerModel.getArticles().collectLatest { // collectLatest主要是为了背压处理
-                articleAdapter.submitData(it)
+            bannerModel.getArticles()
+                .collectLatest { // collectLatest主要是为了背压处理
+                    articleAdapter.submitData(it)
             }
         }
     }

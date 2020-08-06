@@ -7,6 +7,7 @@
         <import type="java.util.List"/>
         <import type="com.hudson.wanandroid.data.entity.wrapper.Resource"/>
         <import type="com.hudson.wanandroid.data.entity.BannerItem"/>
+        <import type="com.hudson.wanandroid.data.entity.PagingRetryLoad"/>
         <import type="androidx.lifecycle.LiveData"/>
 
         <variable
@@ -41,14 +42,16 @@
             name="bannerTitle"
             type="LiveData&lt;String>" />
 
+        <variable
+            name="pagingRetry"
+            type="LiveData&lt;PagingRetryLoad>" />
+
     </data>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--发现了一个问题，如果下面的height设置成了wrap_content，会莫名出现一个空白有颜色填充的部分，应该
-        是fitSystemWindows导致，需要设置具体值，这样才不会出现-->
         <com.google.android.material.appbar.AppBarLayout
             android:background="@color/transparent"
             android:layout_width="match_parent"
@@ -61,35 +64,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-              <!--  <ImageView
-                    android:scaleType="centerCrop"
-                    android:fitsSystemWindows="true"
-                    android:src="@drawable/bg_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"/>-->
-                <!--<TextView
-                    android:id="@+id/tv_tmp"
-                    android:text="我是一个"
-                    android:fitsSystemWindows="true"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:background="#5f00"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"/>-->
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-                    <!--<TextView
-                        android:id="@+id/tv_tmp"
-                        android:text="我是一个"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"/>-->
 
                     <com.hudson.wanandroid.ui.view.indicatorviewpager.viewpager.AutoSwitchViewPager
                         android:layout_width="match_parent"
@@ -142,6 +119,14 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/heightSmall"/>
 
+                    <!--传递的变量需要和对应layout中的一致-->
+                    <include
+                        layout="@layout/common_load_view"
+                        app:resource="@{(Resource) banners}"
+                        app:retry="@{() -> retry.retry()}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -158,21 +143,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <!--传递的变量需要和对应layout中的一致-->
         <include
-            layout="@layout/common_load_view"
-            app:resource="@{(Resource) banners}"
+            layout="@layout/common_paging_load_view"
+            app:pagingRetry="@{(PagingRetryLoad)pagingRetry}"
             app:retry="@{() -> retry.retry()}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

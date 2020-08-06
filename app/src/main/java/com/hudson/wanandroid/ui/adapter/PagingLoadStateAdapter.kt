@@ -12,6 +12,7 @@ import com.hudson.wanandroid.ui.adapter.viewholder.LoadStateViewHolder
 class PagingLoadStateAdapter<T: PagingDataAdapter<*,*>>(
     private val adapter: T
 ): LoadStateAdapter<LoadStateViewHolder>(){
+
     override fun onBindViewHolder(holder: LoadStateViewHolder, loadState: LoadState) {
         holder.synchronizeLoadState(loadState)
     }

@@ -3,9 +3,9 @@ package com.hudson.wanandroid.viewmodel
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import com.hudson.wanandroid.data.entity.BannerItem
+import com.hudson.wanandroid.data.entity.PagingRetryLoad
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.HomeRepository
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -17,6 +17,7 @@ class BannerModel @Inject constructor(private val repository: HomeRepository): V
     val bannerCount = MutableLiveData<Int>()
     val bannersLiveData: MediatorLiveData<Resource<List<BannerItem>>> = MediatorLiveData()
     var oldData: LiveData<Resource<List<BannerItem>>>? = null
+    val articleLoadState = MutableLiveData<PagingRetryLoad>()
 
     init {
         bannersLiveData.addSource(repository.loadBanners()){
