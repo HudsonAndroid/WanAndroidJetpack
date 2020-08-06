@@ -1,6 +1,7 @@
 package com.hudson.wanandroid.data.common.mergecall
 
 import com.hudson.wanandroid.data.common.AppExecutor
+import com.hudson.wanandroid.data.common.NiceHttpException
 import com.hudson.wanandroid.data.common.getErrorMsg
 import com.hudson.wanandroid.data.entity.wrapper.BaseResult
 import okhttp3.MediaType
@@ -207,12 +208,10 @@ abstract class MergeCall<Data1, Data2, T : MergeData<Data1,Data2>>
                             callback.onResponse(this, response)
                         }
                     }else{
-                        failure = MergeCallException(
-                            collectErrorInfo(response2!!.getErrorMsg(),call2))
+                        failure = NiceHttpException(response2)
                     }
                 }else{
-                    failure = MergeCallException(
-                        collectErrorInfo(response1!!.getErrorMsg(), call1))
+                    failure = NiceHttpException(response1)
                 }
             } catch (e: Exception){
                 failure = e

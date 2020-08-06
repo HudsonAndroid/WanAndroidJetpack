@@ -1,7 +1,6 @@
 package com.hudson.wanandroid.data.common
 
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import retrofit2.Response
 
 /**
