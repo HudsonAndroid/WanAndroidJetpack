@@ -1,6 +1,6 @@
 package com.hudson.wanandroid.di.module
 
-import com.hudson.wanandroid.MainActivity
+import com.hudson.wanandroid.ui.activity.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
