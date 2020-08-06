@@ -99,7 +99,7 @@ class HomeFragment: Fragment() , Injectable{
     }
 
     private fun attachArticles(){
-        val retryLoad: PagingRetryLoad = PagingRetryLoad()
+        val retryLoad = PagingRetryLoad()
         articleAdapter.addLoadStateListener { loadState ->
             retryLoad.loadStates = loadState.mediator
             retryLoad.hasShowData = articleAdapter.itemCount != 0
