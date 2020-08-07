@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -41,9 +42,10 @@ import javax.inject.Inject
  * https://github.com/android/architecture-components-samples/issues/530
  *
  * 这是一个待处理的问题
+ *
+ * 2020-8-7 自定义Navigator，使用hide/show替换系统replace方案
  * Created by Hudson on 2020/7/12.
  */
-// TODO: 2020/8/6 视图信息的保存
 class HomeFragment: Fragment() , Injectable{
     private var homeBinding by autoCleared<FragmentHomeBinding>()
 
@@ -55,7 +57,10 @@ class HomeFragment: Fragment() , Injectable{
     // 2020-8-6 由viewModels修改为activityViewModels，原因是：
     // fragment作为activity内部的一个tab页面，重新切换到该页面时不应该重新获取数据
     // 因此需要提高ViewModel的Lifecycle级别至activity级别
-    val bannerModel: BannerModel by activityViewModels {
+
+    // 2020-8-7 由于自定义了Navigator，修改了系统Navigation的replace方案，因此改回
+    // viewModels
+    val bannerModel: BannerModel by viewModels {
         viewModelFactory
     }
 

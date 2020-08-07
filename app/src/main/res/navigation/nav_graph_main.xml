@@ -5,7 +5,7 @@
     android:id="@+id/nav_graph_main"
     app:startDestination="@id/homeFragment">
 
-    <fragment
+    <wanFragment
         android:id="@+id/homeFragment"
         android:name="com.hudson.wanandroid.ui.fragment.main.HomeFragment"
         android:label="HomeFragment" >
@@ -18,18 +18,18 @@
         <action
             android:id="@+id/action_homeFragment_to_projectsFragment"
             app:destination="@id/projectsFragment" />
-    </fragment>
-    <fragment
+    </wanFragment>
+    <wanFragment
         android:id="@+id/treeFragment"
         android:name="com.hudson.wanandroid.ui.fragment.main.TreeFragment"
         android:label="fragment_tree"
         tools:layout="@layout/fragment_tree" />
-    <fragment
+    <wanFragment
         android:id="@+id/navigationFragment"
         android:name="com.hudson.wanandroid.ui.fragment.main.NavigationFragment"
         android:label="fragment_navigation"
         tools:layout="@layout/fragment_navigation" />
-    <fragment
+    <wanFragment
         android:id="@+id/projectsFragment"
         android:name="com.hudson.wanandroid.ui.fragment.main.ProjectsFragment"
         android:label="fragment_projects"

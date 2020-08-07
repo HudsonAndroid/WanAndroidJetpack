@@ -19,17 +19,6 @@ class NavigationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val navigationBinding = FragmentNavigationBinding.inflate(inflater, container, false)
-        val liveData1 = MutableLiveData<String>()
-        liveData1.value = "额"
-        val liveData2 = Transformations.map(liveData1) {
-            it.length
-        }
-        liveData2.observe(this, Observer {
-            Log.e("hudson","数据${it}")
-        })
-        navigationBinding.tvTest.setOnClickListener(View.OnClickListener {
-            liveData1.value = "我是新的"
-        })
         return navigationBinding.root
     }
 }

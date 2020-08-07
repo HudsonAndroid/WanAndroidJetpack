@@ -1,6 +1,5 @@
 package com.hudson.wanandroid.data.db
 
-import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
