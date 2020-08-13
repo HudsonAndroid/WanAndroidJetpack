@@ -35,7 +35,7 @@ import java.util.ArrayDeque;
  *
  *
  * 注意：
- *  删除掉NavHostFragment标签中的app:NavGraph属性，并代码调用setGraph
+ *  删除掉NavHostFragment标签中的app:navGraph属性，并代码调用setGraph
  *  详见 {@link com.hudson.wanandroid.ui.activity.MainActivity}
  *
  */
@@ -185,7 +185,6 @@ public class WanAndroidNavigator extends Navigator<androidx.navigation.fragment.
 
 //        final @IdRes int destId = destination.getId();
 //        final boolean initialNavigation = mBackStack.isEmpty();
-//        // TODO Build first class singleTop behavior for fragments
 //        final boolean isSingleTopReplacement = navOptions != null && !initialNavigation
 //                && navOptions.shouldLaunchSingleTop()
 //                && mBackStack.peekLast() == destId;

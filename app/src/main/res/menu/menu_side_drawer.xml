@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/nav_score"
+        android:icon="@drawable/icon_score"
+        android:title="@string/menu_score"/>
+
+    <item android:id="@+id/nav_star"
+        android:icon="@drawable/icon_star"
+        android:title="@string/menu_star"/>
+
+    <item android:id="@+id/nav_share"
+        android:icon="@drawable/icon_share"
+        android:title="@string/menu_share"/>
+
+    <item android:id="@+id/nav_todo"
+        android:icon="@drawable/icon_todo"
+        android:title="@string/menu_todo"/>
+
+</menu>

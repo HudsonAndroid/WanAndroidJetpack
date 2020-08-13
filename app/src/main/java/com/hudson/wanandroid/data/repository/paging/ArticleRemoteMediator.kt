@@ -1,8 +1,6 @@
 package com.hudson.wanandroid.data.repository.paging
 
-import android.util.Log
 import com.hudson.wanandroid.data.WanAndroidApi
-import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.common.getErrorMsg
 import com.hudson.wanandroid.data.common.mergecall.MergeCall
 import com.hudson.wanandroid.data.common.mergecall.MergeCallException
@@ -47,8 +45,8 @@ class ArticleRemoteMediator(
                 call.execute()
             }
             if(response.isSuccessful){
-                val topArticle = response.body().data1
-                val homeArticle = response.body().data2
+                val topArticle = response.body()?.data1
+                val homeArticle = response.body()?.data2
                 val result = mutableListOf<Article>()
                 topArticle?.data?.apply {
                     result.addAll(this)

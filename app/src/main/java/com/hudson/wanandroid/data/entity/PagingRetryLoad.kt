@@ -1,5 +1,6 @@
 package com.hudson.wanandroid.data.entity
 
+import android.util.Log
 import androidx.paging.LoadState
 import androidx.paging.LoadStates
 import com.hudson.wanandroid.data.entity.wrapper.Status
@@ -19,6 +20,10 @@ class PagingRetryLoad{
     var canShowRetry = false
     var hasShowData = false
 
+
+    fun isEmptyPaging(): Boolean {
+        return status == Status.SUCCESS && !hasShowData
+    }
 
     private fun judgeShowState(loadStates: LoadStates?){
         loadStates?.run {
