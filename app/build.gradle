@@ -3,13 +3,16 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'//for kotlin dataBinding
 
+apply plugin: "androidx.navigation.safeargs" // 适用于java和kotlin混合的
+//apply plugin: "androidx.navigation.safeargs.kotlin" // for navigation safe args param
+
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.2"
 
     defaultConfig {
         applicationId "com.hudson.wanandroid"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -62,8 +65,8 @@ dependencies {
     //kotlin for dataBinding
     kapt "com.android.databinding:compiler:$rootProject.ext.gradle_version"
     // retrofit and glide
-    implementation 'com.squareup.retrofit2:retrofit:2.2.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.2.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     // okHttp loggingInterceptor
     def okhttpLoggingVersion = '3.6.0'
@@ -120,6 +123,10 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     // android support compiler
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    // work manager
+    def work_version = "2.3.4"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 
     // AgentWebView 主要目的简化WebView的使用
     implementation 'com.just.agentweb:agentweb:4.1.3'
