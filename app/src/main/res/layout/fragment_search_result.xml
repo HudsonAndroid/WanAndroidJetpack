@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="com.hudson.wanandroid.data.entity.PagingRetryLoad"/>
+        <import type="androidx.lifecycle.LiveData"/>
+        <import type="com.hudson.wanandroid.data.entity.wrapper.Status"/>
+
+        <variable
+            name="retry"
+            type="com.hudson.wanandroid.ui.common.RetryCallback" />
+
+        <variable
+            name="pagingRetry"
+            type="LiveData&lt;PagingRetryLoad>" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.search.SearchResultFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:overScrollMode="never"
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include
+            app:pagingRetry="@{(PagingRetryLoad)pagingRetry}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/common_empty_view"
+            app:layout_constraintTop_toTopOf="@id/rv_list"
+            app:layout_constraintBottom_toBottomOf="@id/rv_list"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <include
+            layout="@layout/common_paging_load_view"
+            app:pagingRetry="@{(PagingRetryLoad)pagingRetry}"
+            app:retry="@{() -> retry.retry()}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

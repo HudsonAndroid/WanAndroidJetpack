@@ -1,6 +1,8 @@
 package com.hudson.wanandroid.viewmodel.global
 
+import android.app.Activity
 import android.view.View
+import com.hudson.wanandroid.data.common.contextToActivity
 import com.hudson.wanandroid.ui.activity.WebDetailActivity
 
 /**
@@ -12,6 +14,13 @@ class GlobalJumpHandler{
         @JvmStatic
         fun onJumpInvoked(view: View, url:String){
             WebDetailActivity.start(view.context,url)
+        }
+
+        @JvmStatic
+        fun backPage(view: View){
+            val activity = view.context.contextToActivity()
+            activity.setResult(Activity.RESULT_CANCELED)
+            activity.finish()
         }
 
     }

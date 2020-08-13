@@ -1,5 +1,8 @@
 package com.hudson.wanandroid.data.common
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import retrofit2.Response
@@ -28,3 +31,18 @@ inline fun <reified T: Any> Gson.fromJson(json: String):T = fromJson(json, objec
 // https://stackoverflow.com/questions/27253555/com-google-gson-internal-linkedtreemap-cannot-be-cast-to-my-class/27271365
 // 以及测试用例 src/test/java/com/hudson/wanandroid/data/ConvertersTest.kt
 //inline fun <reified T: Any> Gson.fromJson(json: String):T = fromJson(json, T::class.java)
+
+
+fun Context.contextToActivity(): Activity {
+    return when (this) {
+        is Activity -> {
+            this
+        }
+        is ContextWrapper -> {
+            this.baseContext.contextToActivity()
+        }
+        else -> {
+            throw IllegalArgumentException()
+        }
+    }
+}

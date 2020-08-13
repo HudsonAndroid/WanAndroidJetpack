@@ -4,6 +4,7 @@ import android.app.Application
 import com.hudson.wanandroid.WanAndroidApp
 import com.hudson.wanandroid.di.module.AppModule
 import com.hudson.wanandroid.di.module.MainActivityModule
+import com.hudson.wanandroid.di.module.SearchActivityModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -16,7 +17,8 @@ import javax.inject.Singleton
 @Component(modules = [
     AndroidInjectionModule::class,
     AppModule::class, //应用层级的
-    MainActivityModule::class //activity注入
+    MainActivityModule::class, //activity注入
+    SearchActivityModule::class
 ])
 interface AppComponent {
 

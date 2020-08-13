@@ -6,8 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
 /**
  * Created by Hudson on 2020/7/11.
@@ -49,4 +48,9 @@ interface WanAndroidApi {
 
     @GET("hotkey/json")
     fun searchHotWordApi(): Call<SearchHotWord>
+
+    @POST("article/query/{pageNo}/json")
+    @FormUrlEncoded
+    suspend fun searchHotResult(@Path("pageNo") pageNo: Int,
+                                @Field("k") searchWord: String): HomeArticle
 }

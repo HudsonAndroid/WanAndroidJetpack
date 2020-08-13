@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="word"
+            type="com.hudson.wanandroid.data.entity.HotWord" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@drawable/search_word_bg"
+        android:layout_marginTop="@dimen/spaceSmall"
+        android:layout_marginBottom="@dimen/spaceSmall"
+        android:layout_marginLeft="@dimen/spaceNormal"
+        android:layout_marginRight="@dimen/spaceNormal"
+        android:onClick="@{clickListener}"
+        android:text="@{word.name}"
+        android:textSize="@dimen/textSizeNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</layout>

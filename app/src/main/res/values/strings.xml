@@ -9,8 +9,22 @@
     <string name="fragment_tree">体系</string>
 
     <string name="action_retry">加载失败了，点我重试</string>
+    <string name="action_search">搜索</string>
+    <string name="action_back">返回</string>
+
     <string name="tips_unknown_error">未知错误</string>
+    <string name="tips_empty_data">没有任何数据</string>
+    <string name="action_clean_record">清空记录</string>
 
     <string name="article_type_top">置顶</string>
     <string name="article_type_new">新</string>
+    <string name="menu_open">打开菜单</string>
+    <string name="menu_close">关闭菜单</string>
+    <string name="menu_score">我的积分</string>
+    <string name="menu_star">我的收藏</string>
+    <string name="menu_share">我的分享</string>
+    <string name="menu_todo">TODO</string>
+    <string name="search_hot">热门搜索</string>
+    <string name="search_history">历史搜索</string>
+    <string name="search_input_hint">输入关键字，多个关键字空格隔开</string>
 </resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_search"
+    app:startDestination="@id/searchDefaultFragment">
+
+    <fragment
+        android:id="@+id/searchDefaultFragment"
+        android:name="com.hudson.wanandroid.ui.fragment.search.SearchDefaultFragment"
+        android:label="SearchDefaultFragment" >
+        <action
+            android:id="@+id/action_searchDefaultFragment_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.hudson.wanandroid.ui.fragment.search.SearchResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result" >
+        <argument
+            android:name="searchWord"
+            app:argType="string" />
+    </fragment>
+</navigation>

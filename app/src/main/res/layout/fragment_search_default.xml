@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="java.util.List"/>
+        <import type="android.view.View"/>
+        <import type="androidx.lifecycle.LiveData"/>
+        <import type="com.hudson.wanandroid.data.entity.wrapper.Resource"/>
+        <import type="com.hudson.wanandroid.data.entity.HotWord"/>
+        <variable
+            name="hotWords"
+            type="LiveData&lt;Resource&lt;List&lt;HotWord>>>" />
+        <variable
+            name="historyWords"
+            type="LiveData&lt;List&lt;HotWord>>" />
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="cleanListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.SearchActivity">
+
+        <TextView
+            android:id="@+id/tv_hot_title"
+            visibleOrGone="@{hotWords.data}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="@dimen/spaceNormal"
+            android:layout_marginTop="@dimen/spaceNormal"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/textSizeTitle"
+            android:textColor="@color/colorText"
+            android:text="@string/search_hot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.hudson.wanandroid.ui.view.AutoAdaptLayout
+            android:id="@+id/al_hot"
+            visibleOrGone="@{hotWords.data}"
+            app:layout_constraintLeft_toLeftOf="@id/tv_hot_title"
+            android:layout_marginRight="@dimen/spaceNormal"
+            android:layout_marginTop="@dimen/spaceNormal"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_hot_title"
+            app:hotWords="@{hotWords.data}"
+            wordClickListener="@{clickListener}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_history_title"
+            visibleOrGone="@{historyWords}"
+            app:layout_constraintLeft_toLeftOf="@id/tv_hot_title"
+            app:layout_constraintTop_toBottomOf="@id/al_hot"
+            android:textSize="@dimen/textSizeTitle"
+            android:textColor="@color/colorText"
+            android:layout_marginTop="@dimen/spaceLarge"
+            android:text="@string/search_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_clean"
+            visibleOrGone="@{historyWords}"
+            android:textSize="@dimen/textSizeSmall"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_history_title"
+            app:layout_constraintBottom_toBottomOf="@id/tv_history_title"
+            android:text="@string/action_clean_record"
+            android:layout_marginRight="@dimen/spaceBig"
+            android:layout_marginEnd="@dimen/spaceBig"
+            android:onClick="@{cleanListener}"
+            android:background="@drawable/bg_round_button_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <!-- BindingAdapter方式的传递boolean值需要@{true/false}传递-->
+        <com.hudson.wanandroid.ui.view.AutoAdaptLayout
+            android:id="@+id/al_history"
+            visibleOrGone="@{historyWords}"
+            wordClickListener="@{clickListener}"
+            reversed="@{true}"
+            app:hotWords="@{historyWords}"
+            android:layout_marginTop="@dimen/spaceNormal"
+            app:layout_constraintLeft_toLeftOf="@id/al_hot"
+            app:layout_constraintRight_toRightOf="@id/al_hot"
+            app:layout_constraintTop_toBottomOf="@id/tv_history_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

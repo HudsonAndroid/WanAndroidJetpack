@@ -44,6 +44,11 @@ import javax.inject.Inject
  * 这是一个待处理的问题
  *
  * 2020-8-7 自定义Navigator，使用hide/show替换系统replace方案
+ *
+ * 2020-8-10 实践发现，在Navigation结合BottomNavigationView时，使用
+ * 默认的Navigator是会重新创建Fragment，而在SearchActivity导航中，
+ * 默认Fragment不会重新创建（init不会调用），但会重新调用onCreateView
+ * 和onViewCreated
  * Created by Hudson on 2020/7/12.
  */
 class HomeFragment: Fragment() , Injectable{
@@ -79,6 +84,7 @@ class HomeFragment: Fragment() , Injectable{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e("hudson","首页布局被创建")
         //注释的内容将通过Dagger注入得到ViewModelProvider.Factory，然后根据它创建BannerModel
         //因此外界并不知道BannerModel如何实现的，BannerModel如果要修改，不会影响到HomeFragment
 //        //应该使用ViewModelProvider来构建
