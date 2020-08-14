@@ -84,7 +84,6 @@ class HomeFragment: Fragment() , Injectable{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.e("hudson","首页布局被创建")
         //注释的内容将通过Dagger注入得到ViewModelProvider.Factory，然后根据它创建BannerModel
         //因此外界并不知道BannerModel如何实现的，BannerModel如果要修改，不会影响到HomeFragment
 //        //应该使用ViewModelProvider来构建

@@ -49,6 +49,9 @@ interface WanAndroidApi {
     @GET("hotkey/json")
     fun searchHotWordApi(): Call<SearchHotWord>
 
+    @GET("project/tree/json")
+    fun projectsCategory(): Call<Projects>
+
     @POST("article/query/{pageNo}/json")
     @FormUrlEncoded
     suspend fun searchHotResult(@Path("pageNo") pageNo: Int,
