@@ -41,7 +41,7 @@ interface WanAndroidApi {
     fun topArticle(): Call<TopArticle>
 
     @GET("article/list/{pageNo}/json")
-    fun homeArticle(@Path("pageNo") pageNo: Int): Call<HomeArticle>
+    fun homeArticle(@Path("pageNo") pageNo: Int): Call<ArticleResultWrapper>
 
     @GET("friend/json")
     fun websiteApi(): Call<Website>
@@ -52,8 +52,14 @@ interface WanAndroidApi {
     @GET("project/tree/json")
     fun projectsCategory(): Call<Projects>
 
+    // Method注解中是路径，不要携带参数
+    // @Path 和 @Query是不同的针对目标，不可混用
+    @GET("project/list/{pageNo}/json")
+    suspend fun projectItemList(@Path("pageNo")pageNo: Int,
+                        @Query("cid")projectId: Int): ArticleResultWrapper
+
     @POST("article/query/{pageNo}/json")
     @FormUrlEncoded
     suspend fun searchHotResult(@Path("pageNo") pageNo: Int,
-                                @Field("k") searchWord: String): HomeArticle
+                                @Field("k") searchWord: String): ArticleResultWrapper
 }

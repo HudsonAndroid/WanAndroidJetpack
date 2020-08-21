@@ -60,11 +60,26 @@
             android:layout_marginRight="@dimen/spaceNormal"
             android:layout_marginEnd="@dimen/spaceNormal"/>
 
+        <ImageView
+            android:id="@+id/iv_img"
+            showOrHide="@{!TextUtils.isEmpty(article.envelopePic)}"
+            imageUrl="@{article.envelopePic}"
+            style='@{"round"}'
+            portrait="@{true}"
+            app:layout_constraintTop_toBottomOf="@id/tv_top"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="@dimen/spaceNormal"
+            android:layout_marginTop="@dimen/spaceLarge"
+            app:layout_constraintDimensionRatio="2:3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightArticleImg"/>
+
         <TextView
             android:id="@+id/tv_title"
             android:text="@{(article == null || article.title == null)  ? null : Html.fromHtml(article.title)}"
             app:layout_constraintTop_toBottomOf="@id/tv_top"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tv_desc"
+            app:layout_constraintLeft_toRightOf="@id/iv_img"
             app:layout_constraintRight_toRightOf="parent"
             android:textColor="@color/colorText"
             android:layout_marginLeft="@dimen/spaceNormal"
@@ -96,9 +111,22 @@
             style="@style/gray_small_text"/>
 
         <View
+            showOrHide="@{TextUtils.isEmpty(article.envelopePic)}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_category"
+            android:layout_marginTop="@dimen/spaceLarge"
+            android:layout_marginLeft="@dimen/spaceNormal"
+            android:layout_marginRight="@dimen/spaceNormal"
+            android:background="@color/colorLightGray"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/widthLine"/>
+
+        <View
+            showOrHide="@{!TextUtils.isEmpty(article.envelopePic)}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_img"
             android:layout_marginTop="@dimen/spaceLarge"
             android:layout_marginLeft="@dimen/spaceNormal"
             android:layout_marginRight="@dimen/spaceNormal"

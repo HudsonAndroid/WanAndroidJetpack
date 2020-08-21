@@ -12,17 +12,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/view_pager"
             android:id="@+id/tabs"
-            style="@style/Widget.MaterialComponents.TabLayout.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:tabTextColor="?attr/colorPrimaryDark"/>
+            android:layout_width="0dp"
+            app:tabMode="scrollable"
+            android:layout_height="?attr/actionBarSize" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
             app:layout_constraintTop_toBottomOf="@id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

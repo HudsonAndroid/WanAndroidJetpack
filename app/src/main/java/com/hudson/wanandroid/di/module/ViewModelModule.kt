@@ -3,6 +3,8 @@ package com.hudson.wanandroid.di.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.hudson.wanandroid.viewmodel.BannerModel
+import com.hudson.wanandroid.viewmodel.ProjectItemModel
+import com.hudson.wanandroid.viewmodel.ProjectsModel
 import com.hudson.wanandroid.viewmodel.SearchModel
 import com.hudson.wanandroid.viewmodel.provider.ViewModelFactory
 import dagger.Binds
@@ -33,6 +35,16 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SearchModel::class)
     abstract fun bindSearchModel(searchModel: SearchModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProjectsModel::class)
+    abstract fun bindProjectsModel(projectsModel: ProjectsModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProjectItemModel::class)
+    abstract fun bindProjctItemModel(projectItemModel: ProjectItemModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory

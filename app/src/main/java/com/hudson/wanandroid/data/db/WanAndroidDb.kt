@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.HotWord
+import com.hudson.wanandroid.data.entity.PagingNextKey
 import com.hudson.wanandroid.data.entity.wrapper.DataWrapper
 
 /**

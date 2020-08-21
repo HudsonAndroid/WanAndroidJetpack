@@ -5,15 +5,15 @@ import com.hudson.wanandroid.data.entity.wrapper.BaseResult
 /**
  * Created by Hudson on 2020/7/21.
  */
-data class HomeArticle(
-    val data: HomeArticleWrapper
+data class ArticleResultWrapper(
+    val data: ArticleWrapper
 ): BaseResult(){
     override fun toString(): String {
         return "HomeArticle(data=$data)"
     }
 }
 
-data class HomeArticleWrapper(
+data class ArticleWrapper(
     val curPage: Int,
     val offset: Int,
     val over: Boolean,

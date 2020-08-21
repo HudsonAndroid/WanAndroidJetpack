@@ -3,6 +3,7 @@ package com.hudson.wanandroid.data.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+// TODO: 2020/8/20 0020 maybe should keep a tag for entity
 /**
  * Created by Hudson on 2020/7/21.
  */

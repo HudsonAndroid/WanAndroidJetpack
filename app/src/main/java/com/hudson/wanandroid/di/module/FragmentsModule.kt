@@ -4,6 +4,7 @@ import com.hudson.wanandroid.ui.fragment.main.HomeFragment
 import com.hudson.wanandroid.ui.fragment.main.NavigationFragment
 import com.hudson.wanandroid.ui.fragment.main.ProjectsFragment
 import com.hudson.wanandroid.ui.fragment.main.TreeFragment
+import com.hudson.wanandroid.ui.fragment.projects.ProjectItemFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -26,4 +27,7 @@ abstract class FragmentsModule {
 
     @ContributesAndroidInjector
     abstract fun treeFragmentInjector(): TreeFragment
+
+    @ContributesAndroidInjector
+    abstract fun projectItemFragmentInjector(): ProjectItemFragment
 }

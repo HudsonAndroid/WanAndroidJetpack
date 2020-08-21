@@ -7,7 +7,7 @@ import com.hudson.wanandroid.data.common.mergecall.Call
 import com.hudson.wanandroid.data.common.mergecall.MergeCall
 import com.hudson.wanandroid.data.db.DataWrapperDao
 import com.hudson.wanandroid.data.entity.Article
-import com.hudson.wanandroid.data.entity.HomeArticle
+import com.hudson.wanandroid.data.entity.ArticleResultWrapper
 import com.hudson.wanandroid.data.entity.TopArticle
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.base.BaseSimpleMergeDataSource
@@ -58,11 +58,11 @@ class ArticleRepository @Inject constructor(
                 }else{
                     null
                 }
-                return object: MergeCall<TopArticle, HomeArticle, ArticleWrapper>(topArticleCall,
+                return object: MergeCall<TopArticle, ArticleResultWrapper, ArticleWrapper>(topArticleCall,
                     wrapperCall(wanAndroidApi.homeArticle(pageNo)),appExecutor){
                     override fun createTargetMergeDataInstance(
                         data1: TopArticle?,
-                        data2: HomeArticle?
+                        data2: ArticleResultWrapper?
                     ): ArticleWrapper {
                         return ArticleWrapper(data1, data2)
                     }

@@ -6,10 +6,12 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
+import com.hudson.wanandroid.R
 import com.hudson.wanandroid.ui.view.indicatorviewpager.indicator.CirclePointIndicator
 import com.hudson.wanandroid.ui.view.indicatorviewpager.indicator.IPagerIndicator
 import com.hudson.wanandroid.ui.view.indicatorviewpager.listener.SimplePageChangeListener
 import com.hudson.wanandroid.ui.view.indicatorviewpager.viewpager.AutoSwitchViewPager
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 /**
  * 注意BindingAdapter第一个参数类型必须属于view类型
@@ -32,9 +34,20 @@ fun bannerChangeListener(autoSwitchViewPager: AutoSwitchViewPager, oldListener: 
     }
 }
 
-@BindingAdapter(value = ["imageUrl","errorDrawable"], requireAll = false)
-fun imageUrl(imageView: ImageView, url:String?, error:Drawable?){
-    Glide.with(imageView.context).load(url).error(error).into(imageView)
+@BindingAdapter(value = ["imageUrl","errorDrawable","style","portrait"], requireAll = false)
+fun imageUrl(imageView: ImageView, url:String?, error:Drawable?, style: String?, isPortrait: Boolean?){
+    val builder = Glide.with(imageView.context).load(url).error(error)
+    if(isPortrait == true){
+        builder.placeholder(R.drawable.default_project_img)
+    }
+    if(style != null){
+        when(style){
+            "round" -> {
+                builder.bitmapTransform(RoundedCornersTransformation(imageView.context,10, 0))
+            }
+        }
+    }
+    builder.into(imageView)
 }
 
 //指示器圆点个数

@@ -9,7 +9,7 @@ import com.hudson.wanandroid.ui.adapter.viewholder.LoadStateViewHolder
 /**
  * Created by Hudson on 2020/7/30.
  */
-class PagingLoadStateAdapter<T: PagingDataAdapter<*,*>>(
+open class PagingLoadStateAdapter<T: PagingDataAdapter<*,*>>(
     private val adapter: T
 ): LoadStateAdapter<LoadStateViewHolder>(){
 

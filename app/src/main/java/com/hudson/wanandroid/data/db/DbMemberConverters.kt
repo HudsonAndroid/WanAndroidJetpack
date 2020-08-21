@@ -10,11 +10,11 @@ import com.hudson.wanandroid.data.entity.Tag
  * Created by Hudson on 2020/7/29.
  */
 class DbMemberConverters {
-    @TypeConverter
-    fun class2String(clazz: Class<*>) : String = clazz.name
-
-    @TypeConverter
-    fun string2Class(input: String): Class<*> = Class.forName(input)
+//    @TypeConverter
+//    fun class2String(clazz: Class<*>) : String = clazz.name
+//
+//    @TypeConverter
+//    fun string2Class(input: String): Class<*> = Class.forName(input)
 
     @TypeConverter
     fun articleTag2Json(input: List<Tag>) : String =

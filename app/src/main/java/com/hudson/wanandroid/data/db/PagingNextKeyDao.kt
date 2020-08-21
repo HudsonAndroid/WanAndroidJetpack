@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.hudson.wanandroid.data.entity.PagingNextKey
 
 /**
  * Created by Hudson on 2020/7/29.
@@ -15,8 +16,8 @@ interface PagingNextKeyDao {
     suspend fun insert(pagingNextKey: PagingNextKey)
 
     @Query("SELECT * FROM PagingNextKey where type = :type")
-    suspend fun getNextKey(type: Class<*>): PagingNextKey?
+    suspend fun getNextKey(type: String): PagingNextKey?
 
     @Query("DELETE FROM PagingNextKey where type = :type")
-    suspend fun clearTargetKeyCache(type: Class<*>)
+    suspend fun clearTargetKeyCache(type: String)
 }

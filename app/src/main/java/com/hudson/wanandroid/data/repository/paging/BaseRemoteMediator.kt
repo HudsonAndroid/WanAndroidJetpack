@@ -7,7 +7,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.hudson.wanandroid.data.WanAndroidApi
-import com.hudson.wanandroid.data.db.PagingNextKey
+import com.hudson.wanandroid.data.entity.PagingNextKey
 import com.hudson.wanandroid.data.db.WanAndroidDb
 import com.hudson.wanandroid.data.entity.Article
 import retrofit2.HttpException
@@ -44,7 +44,7 @@ abstract class BaseRemoteMediator<T: Any> (
                 LoadType.APPEND -> {
                     // 通过数据库缓存获取NextPageKey
                     val cacheKey = db.withTransaction {
-                        pagingNextKeyDao.getNextKey(getClazz())
+                        pagingNextKeyDao.getNextKey(getPageKeyType())
                     }
 
                     if(cacheKey?.nextKey == null){
@@ -62,10 +62,15 @@ abstract class BaseRemoteMediator<T: Any> (
             db.withTransaction {
                 if(loadType == LoadType.REFRESH){
                     // 如果是刷新加载或首次访问，那么清空
-                    pagingNextKeyDao.clearTargetKeyCache(getClazz())
+                    pagingNextKeyDao.clearTargetKeyCache(getPageKeyType())
                     cleanLocalData(db)
                 }
-                pagingNextKeyDao.insert(PagingNextKey(getClazz(), getNextKey(nextPageKey)))
+                pagingNextKeyDao.insert(
+                    PagingNextKey(
+                        getPageKeyType(),
+                        getNextKey(nextPageKey)
+                    )
+                )
                 updateNetworkData(db, networkData)
             }
             return MediatorResult.Success(endOfPaginationReached = networkData.isNullOrEmpty())
@@ -90,8 +95,8 @@ abstract class BaseRemoteMediator<T: Any> (
 //    // 默认每次都重新从网络上获取
 //    open fun shouldFetch() = true
 
-    private fun getClazz(): Class<*>{
-        return Article::class.java
+    protected open fun getPageKeyType(): String{
+        return Article::class.java.name
     }
 
 }

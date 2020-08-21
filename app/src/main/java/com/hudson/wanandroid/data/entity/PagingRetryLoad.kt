@@ -1,6 +1,5 @@
 package com.hudson.wanandroid.data.entity
 
-import android.util.Log
 import androidx.paging.LoadState
 import androidx.paging.LoadStates
 import com.hudson.wanandroid.data.entity.wrapper.Status

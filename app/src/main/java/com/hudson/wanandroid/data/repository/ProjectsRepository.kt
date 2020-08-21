@@ -1,6 +1,9 @@
 package com.hudson.wanandroid.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.hudson.wanandroid.data.WanAndroidApi
 import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.common.mergecall.Call
@@ -10,6 +13,7 @@ import com.hudson.wanandroid.data.entity.ProjectInfo
 import com.hudson.wanandroid.data.entity.Projects
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.base.BaseNetworkBoundResource
+import com.hudson.wanandroid.data.repository.paging.ProjectItemRemoteMediator
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -36,5 +40,14 @@ class ProjectsRepository @Inject constructor(
             override fun createCall() = RetrofitCall(wanAndroidApi.projectsCategory())
 
         }.asLiveData()
+    }
+
+    fun loadProjectItemArticles(projectId: Int) = Pager(config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
+        remoteMediator = ProjectItemRemoteMediator(wanAndroidApi, db, projectId)){
+        db.articleDao().getProjectPagingSource(projectId)
+    }.flow
+
+    companion object{
+        private const val NETWORK_PAGE_SIZE = 20
     }
 }

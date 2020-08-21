@@ -20,6 +20,12 @@ interface ArticleDao {
     @Query("SELECT * FROM article")
     fun getArticlePagingSource(): PagingSource<Int, Article>
 
+    @Query("SELECT * FROM article WHERE chapterId = :projectId")
+    fun getProjectPagingSource(projectId: Int): PagingSource<Int, Article>
+
     @Query("DELETE FROM article")
     suspend fun cleanArticles()
+
+    @Query("DELETE FROM article WHERE chapterId = :projectId")
+    suspend fun cleanTargetArticles(projectId: Int)
 }

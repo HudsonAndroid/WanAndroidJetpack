@@ -6,8 +6,8 @@ import com.hudson.wanandroid.data.common.mergecall.MergeCall
 import com.hudson.wanandroid.data.common.mergecall.MergeCallException
 import com.hudson.wanandroid.data.db.WanAndroidDb
 import com.hudson.wanandroid.data.entity.Article
-import com.hudson.wanandroid.data.entity.ArticleWrapper
-import com.hudson.wanandroid.data.entity.HomeArticle
+import com.hudson.wanandroid.data.entity.MergeArticle
+import com.hudson.wanandroid.data.entity.ArticleResultWrapper
 import com.hudson.wanandroid.data.entity.TopArticle
 import com.hudson.wanandroid.data.repository.base.wrapperCall
 import kotlinx.coroutines.Dispatchers
@@ -23,18 +23,18 @@ class ArticleRemoteMediator(
     private var nextKey: Int? = null
 
     override suspend fun fetchNetworkData(nextPageKey: Int?): List<Article> {
-        nextPageKey?.run {
+        return nextPageKey?.run {
             val topArticleCall = if(nextPageKey == 0){
                 wrapperCall(api.topArticle())
             }else{
                 null
             }
-            val call = object: MergeCall<TopArticle,HomeArticle,ArticleWrapper>
+            val call = object: MergeCall<TopArticle,ArticleResultWrapper,MergeArticle>
                 (topArticleCall, wrapperCall(api.homeArticle(nextPageKey))){
                 override fun createTargetMergeDataInstance(
                     data1: TopArticle?,
-                    data2: HomeArticle?
-                ) = ArticleWrapper(data1, data2)
+                    data2: ArticleResultWrapper?
+                ) = MergeArticle(data1, data2)
             }
             // 由协程管理运行，不使用AppExecutor
             // 踩坑记录，在View层（Activity或Fragment中）将整个repository获取请求的操作利用
@@ -61,8 +61,7 @@ class ArticleRemoteMediator(
             }else{
                 throw MergeCallException(response.getErrorMsg())
             }
-        }
-        return mutableListOf()
+        } ?: mutableListOf()
     }
 
     override fun getNextKey(nextPageKey: Int?): Int? {
@@ -75,6 +74,10 @@ class ArticleRemoteMediator(
 
     override suspend fun cleanLocalData(db: WanAndroidDb) {
         db.articleDao().cleanArticles()
+    }
+
+    override fun getPageKeyType(): String {
+        return super.getPageKeyType() + "home"
     }
 
 }

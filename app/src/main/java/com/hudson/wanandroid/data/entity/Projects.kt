@@ -18,4 +18,8 @@ data class ProjectInfo(
     val parentChapterId: Int,
     val userControlSetTop: Boolean,
     val visible: Int
-)
+){
+    override fun toString(): String {
+        return "ProjectInfo(courseId=$courseId, id=$id, name='$name', order=$order, parentChapterId=$parentChapterId, userControlSetTop=$userControlSetTop, visible=$visible)"
+    }
+}
