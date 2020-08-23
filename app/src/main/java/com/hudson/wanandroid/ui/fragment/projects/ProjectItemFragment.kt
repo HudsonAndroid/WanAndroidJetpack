@@ -40,6 +40,7 @@ import javax.inject.Inject
 class ProjectItemFragment(private val projectInfo: ProjectInfo) : Fragment(), Injectable {
     private var binding by autoCleared<FragmentProjectItemBinding>()
 
+     // todo 处理加载失败的显示问题，分析LiveData确实已经notify了，但是没有展示刷新
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
