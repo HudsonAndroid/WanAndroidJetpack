@@ -12,7 +12,7 @@
 
         <variable
             name="banner"
-            type="com.hudson.wanandroid.viewmodel.BannerModel" />
+            type="com.hudson.wanandroid.viewmodel.HomeModel" />
 
         <variable
             name="retry"
