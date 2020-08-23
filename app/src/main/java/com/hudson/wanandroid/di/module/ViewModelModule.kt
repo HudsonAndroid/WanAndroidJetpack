@@ -2,7 +2,7 @@ package com.hudson.wanandroid.di.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.hudson.wanandroid.viewmodel.BannerModel
+import com.hudson.wanandroid.viewmodel.HomeModel
 import com.hudson.wanandroid.viewmodel.ProjectItemModel
 import com.hudson.wanandroid.viewmodel.ProjectsModel
 import com.hudson.wanandroid.viewmodel.SearchModel
@@ -28,8 +28,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(BannerModel::class)
-    abstract fun bindBannerModel(bannerModel: BannerModel): ViewModel
+    @ViewModelKey(HomeModel::class)
+    abstract fun bindBannerModel(homeModel: HomeModel): ViewModel
 
     @Binds
     @IntoMap

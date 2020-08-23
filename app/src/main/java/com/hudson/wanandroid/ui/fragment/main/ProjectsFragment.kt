@@ -17,13 +17,14 @@ import com.hudson.wanandroid.databinding.FragmentHomeBinding
 import com.hudson.wanandroid.databinding.FragmentProjectsBinding
 import com.hudson.wanandroid.di.Injectable
 import com.hudson.wanandroid.ui.adapter.ProjectsPagerAdapter
+import com.hudson.wanandroid.ui.common.RetryCallback
 import com.hudson.wanandroid.ui.util.autoCleared
 import com.hudson.wanandroid.viewmodel.ProjectsModel
 import javax.inject.Inject
 
 class ProjectsFragment : Fragment(), Injectable {
     companion object{
-        const val CACHE_FRAGMENT_SIZE = 6;
+        const val CACHE_FRAGMENT_SIZE = 6
     }
     private var projectsBinding by autoCleared<FragmentProjectsBinding>()
 
@@ -45,6 +46,14 @@ class ProjectsFragment : Fragment(), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        projectsBinding.category = projectsModel.projectCategory
+        projectsBinding.lifecycleOwner = this
+        projectsBinding.retry = object : RetryCallback{
+            override fun retry() {
+                projectsModel.retry()
+            }
+        }
 
         projectsModel.projectCategory.observe(viewLifecycleOwner, Observer {
             if(it.status == Status.SUCCESS && it.data != null){

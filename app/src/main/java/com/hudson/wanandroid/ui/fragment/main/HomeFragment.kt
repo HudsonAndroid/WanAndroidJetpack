@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,7 +21,7 @@ import com.hudson.wanandroid.ui.adapter.PagingLoadStateAdapter
 import com.hudson.wanandroid.ui.common.RetryCallback
 import com.hudson.wanandroid.ui.util.autoCleared
 import com.hudson.wanandroid.ui.view.indicatorviewpager.listener.SimplePageChangeListener
-import com.hudson.wanandroid.viewmodel.BannerModel
+import com.hudson.wanandroid.viewmodel.HomeModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -65,7 +64,7 @@ class HomeFragment: Fragment() , Injectable{
 
     // 2020-8-7 由于自定义了Navigator，修改了系统Navigation的replace方案，因此改回
     // viewModels
-    val bannerModel: BannerModel by viewModels {
+    val homeModel: HomeModel by viewModels {
         viewModelFactory
     }
 
@@ -93,30 +92,29 @@ class HomeFragment: Fragment() , Injectable{
 //                WanAndroidDb.getInstance(context!!).dataWrapperDao()
 //            )
 //        )
-        homeBinding.banner = bannerModel
         homeBinding.adapter = BannerAdapter()
-        homeBinding.bannerCount = bannerModel.bannerCount
-        homeBinding.bannerTitle = bannerModel.bannerTitle
+        homeBinding.bannerCount = homeModel.bannerCount
+        homeBinding.bannerTitle = homeModel.bannerTitle
         homeBinding.indicator = homeBinding.ppIndicator // can we simplify?
         homeBinding.pageChangeListener = object : SimplePageChangeListener(){
             override fun onPageSelected(position: Int) {
-                bannerModel.onPageChanged(position)
+                homeModel.onPageChanged(position)
             }
         }
         homeBinding.retry = object : RetryCallback {
             override fun retry() {
-                bannerModel.retry()
+                homeModel.retry()
                 articleAdapter.retry()
             }
         }
-        homeBinding.banners = bannerModel.bannersLiveData
-        homeBinding.pagingRetry = bannerModel.articleLoadState
+        homeBinding.banners = homeModel.bannersLiveData
+        homeBinding.pagingRetry = homeModel.articleLoadState
         homeBinding.lifecycleOwner = this //自动为LiveData设置数据观察绑定，相当于liveData.observe自动完成
 
-        bannerModel.bannersLiveData.observe(this,
+        homeModel.bannersLiveData.observe(this,
             Observer<Resource<List<BannerItem>>> {
                 homeBinding.adapter!!.refresh(homeBinding.vpBanner,it.data)
-                bannerModel.update()
+                homeModel.update()
                 homeBinding.vpBanner.startAutoSwitch()
                 Log.d(javaClass.simpleName,"${it.status}, ${it.data}, ${it.msg}")
             })
@@ -129,12 +127,12 @@ class HomeFragment: Fragment() , Injectable{
         articleAdapter.addLoadStateListener { loadState ->
             retryLoad.loadStates = loadState.mediator
             retryLoad.hasShowData = articleAdapter.itemCount != 0
-            bannerModel.articleLoadState.value = retryLoad
+            homeModel.articleLoadState.value = retryLoad
         }
         homeBinding.rvList.adapter = articleAdapter.withLoadStateFooter(PagingLoadStateAdapter(articleAdapter))
         lifecycleScope.launch {
             @OptIn(ExperimentalCoroutinesApi::class)
-            bannerModel.articles.collectLatest { // collectLatest主要是为了背压处理
+            homeModel.articles.collectLatest { // collectLatest主要是为了背压处理
                     articleAdapter.submitData(it)
             }
         }

@@ -10,4 +10,8 @@ import javax.inject.Inject
 class ProjectsModel @Inject constructor(private val repository: ProjectsRepository): ViewModel(){
 
     val projectCategory = repository.loadProjectsCategory()
+
+    fun retry(){
+        repository.retry()
+    }
 }

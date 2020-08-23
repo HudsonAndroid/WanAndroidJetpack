@@ -24,6 +24,7 @@ import com.hudson.wanandroid.data.common.mergecall.Call
 import com.hudson.wanandroid.data.common.mergecall.Callback
 import com.hudson.wanandroid.data.entity.wrapper.BaseResult
 import com.hudson.wanandroid.data.entity.wrapper.Resource
+import com.hudson.wanandroid.data.entity.wrapper.Status
 import retrofit2.Response
 
 /**
@@ -156,4 +157,10 @@ abstract class NetworkBoundResource<ResultType, RequestType>
 
     @MainThread
     protected abstract fun createCall(): Call<RequestType>
+
+    fun retry(){
+        if(result.value != null && result.value!!.status == Status.ERROR){
+            load()
+        }
+    }
 }

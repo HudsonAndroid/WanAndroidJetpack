@@ -11,10 +11,6 @@
         <import type="androidx.lifecycle.LiveData"/>
 
         <variable
-            name="banner"
-            type="com.hudson.wanandroid.viewmodel.BannerModel" />
-
-        <variable
             name="retry"
             type="com.hudson.wanandroid.ui.common.RetryCallback" />
 
