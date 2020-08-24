@@ -1,6 +1,7 @@
 package com.hudson.wanandroid.ui.fragment.main
 
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -68,7 +69,8 @@ class ProjectsFragment : Fragment(), Injectable {
                     if(position < it.data.size){
                         text = it.data[position].name
                     }
-                    tab.text = text
+                    // tab title maybe contain html string
+                    tab.text = text?.run { Html.fromHtml(this) }
                 }.attach()
             }
         })

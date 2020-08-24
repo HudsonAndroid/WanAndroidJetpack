@@ -11,6 +11,11 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <!--去除Tab Title 默认大写的属性-->
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+
     <style name="gray_small_text">
         <item name="android:textSize">@dimen/textSizeSmall</item>
         <item name="android:textColor">@color/colorGray</item>
