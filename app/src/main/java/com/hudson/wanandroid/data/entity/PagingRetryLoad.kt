@@ -18,6 +18,10 @@ class PagingRetryLoad{
     var msg: Throwable? = null
     var canShowRetry = false
     var hasShowData = false
+        set(value){
+            canShowRetry = !field
+            field = value
+        }
 
 
     fun isEmptyPaging(): Boolean {
