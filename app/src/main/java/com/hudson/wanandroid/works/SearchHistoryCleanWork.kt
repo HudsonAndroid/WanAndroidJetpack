@@ -2,8 +2,11 @@ package com.hudson.wanandroid.works
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.hudson.wanandroid.BuildConfig
+import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.db.WanAndroidDb
 import com.hudson.wanandroid.viewmodel.bindingadapter.MAX_SHOW_WORD_COUNT
 
@@ -26,6 +29,7 @@ class SearchHistoryCleanWork(val context: Context, workerParams: WorkerParameter
         val value = hotWordDao.queryHistoryDirectly()
 
         if(value.size > MAX_SHOW_WORD_COUNT * 2){
+            debugCleanTips()
             Log.d("SearchCleanWorker", "need cleaning search history data, current size ${value.size}")
             db.runInTransaction {
                 // 清理部分多余数据
@@ -38,6 +42,14 @@ class SearchHistoryCleanWork(val context: Context, workerParams: WorkerParameter
             }
         }
         return Result.success()
+    }
+
+    private fun debugCleanTips(){
+        if(BuildConfig.DEBUG){
+            AppExecutor.getInstance().mainThreadExecutor.execute {
+                Toast.makeText(context, "clean work started for wan android jetpack", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
 }
