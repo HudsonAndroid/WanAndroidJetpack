@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="navigation"
+            type="com.hudson.wanandroid.data.entity.NavigationItem" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/textSizeTitle"
+            android:layout_marginTop="@dimen/spaceBig"
+            android:layout_marginLeft="@dimen/spaceSmall"
+            android:text="@{navigation.name}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.hudson.wanandroid.ui.view.AutoAdaptLayout
+            android:id="@+id/al_tree"
+            app:layout_constraintLeft_toLeftOf="@id/tv_title"
+            android:layout_marginRight="@dimen/spaceNormal"
+            android:layout_marginTop="@dimen/spaceNormal"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            navigationList="@{navigation.articles}"
+            navigationClickListener="@{clickListener}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

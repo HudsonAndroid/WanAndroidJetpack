@@ -52,6 +52,16 @@ interface WanAndroidApi {
     @GET("project/tree/json")
     fun projectsCategory(): Call<Projects>
 
+    @GET("tree/json")
+    fun treeCategory(): Call<TreeWrapper>
+
+    @GET("navi/json")
+    fun navigation(): Call<NavigationWrapper>
+
+    @GET("article/list/{pageNo}/json")
+    suspend fun treeItemList(@Path("pageNo")pageNo: Int,
+                             @Query("cid")treeId: Int): ArticleResultWrapper
+
     // Method注解中是路径，不要携带参数
     // @Path 和 @Query是不同的针对目标，不可混用
     @GET("project/list/{pageNo}/json")
