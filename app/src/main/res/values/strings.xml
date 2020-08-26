@@ -27,4 +27,6 @@
     <string name="search_hot">热门搜索</string>
     <string name="search_history">历史搜索</string>
     <string name="search_input_hint">输入关键字，多个关键字空格隔开</string>
+
+    <string name="error_invalid_params">参数不正确</string>
 </resources>

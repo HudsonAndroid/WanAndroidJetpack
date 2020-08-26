@@ -50,6 +50,11 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(TreeItemModel::class)
+    abstract fun bindTreeItemModel(treeItemModel: TreeItemModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(NavigationModel::class)
     abstract fun bindNavigationModel(navigationModel: NavigationModel): ViewModel
 

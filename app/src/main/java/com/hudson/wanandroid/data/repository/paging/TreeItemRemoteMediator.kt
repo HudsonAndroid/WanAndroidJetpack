@@ -5,18 +5,19 @@ import com.hudson.wanandroid.data.db.WanAndroidDb
 import com.hudson.wanandroid.data.entity.Article
 
 /**
- * Created by Hudson on 2020/8/17.
+ * Created by Hudson on 2020/8/25.
  */
-class ProjectItemRemoteMediator(
+class TreeItemRemoteMediator(
     api: WanAndroidApi,
     db: WanAndroidDb,
-    private val projectId: Int
-): BaseRemoteMediator<Article>(api, db){
+    private val treeId: Int,
+    private val superId: Int
+) : BaseRemoteMediator<Article>(api,db){
     private var nextKey: Int? = null
 
     override suspend fun fetchNetworkData(nextPageKey: Int?): List<Article> {
         return nextPageKey?.run {
-            val result = api.projectItemList(nextPageKey, projectId)
+            val result = api.treeItemList(nextPageKey, treeId)
             nextKey = result.data.curPage + 1
             result.data.datas
         } ?: mutableListOf()
@@ -24,12 +25,14 @@ class ProjectItemRemoteMediator(
 
     override fun getNextKey(nextPageKey: Int?) = nextKey
 
-    override suspend fun updateNetworkData(db: WanAndroidDb, data: List<Article>) = db.articleDao().insertArticles(data)
+    override suspend fun updateNetworkData(db: WanAndroidDb, data: List<Article>)
+            = db.articleDao().insertArticles(data)
 
-    override suspend fun cleanLocalData(db: WanAndroidDb) = db.articleDao().cleanTargetArticles(projectId)
+    override suspend fun cleanLocalData(db: WanAndroidDb)
+            = db.articleDao().cleanTargetArticles(treeId, superId)
 
     override fun getPageKeyType(): String {
-        return super.getPageKeyType() + projectId
+        return super.getPageKeyType() + "_tree_$treeId"
     }
 
 }

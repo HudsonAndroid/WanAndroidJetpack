@@ -23,9 +23,15 @@ interface ArticleDao {
     @Query("SELECT * FROM article WHERE chapterId = :projectId")
     fun getProjectPagingSource(projectId: Int): PagingSource<Int, Article>
 
+    @Query("SELECT * FROM article WHERE chapterId = :treeId AND realSuperChapterId = :superId")
+    fun getTreePagingSource(treeId: Int, superId: Int): PagingSource<Int, Article>
+
     @Query("DELETE FROM article")
     suspend fun cleanArticles()
 
     @Query("DELETE FROM article WHERE chapterId = :projectId")
     suspend fun cleanTargetArticles(projectId: Int)
+
+    @Query("DELETE FROM article WHERE chapterId = :treeId AND realSuperChapterId = :superId")
+    suspend fun cleanTargetArticles(treeId: Int, superId: Int)
 }

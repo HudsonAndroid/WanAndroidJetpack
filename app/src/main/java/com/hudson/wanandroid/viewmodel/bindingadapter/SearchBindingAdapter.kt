@@ -6,7 +6,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.databinding.BindingAdapter
 import com.hudson.wanandroid.data.entity.HotWord
-import com.hudson.wanandroid.databinding.ItemSearchWordBinding
+import com.hudson.wanandroid.databinding.ItemRoundWordBinding
 import com.hudson.wanandroid.ui.view.AutoAdaptLayout
 
 // 最多显示的个数
@@ -28,9 +28,9 @@ fun hotWords(container: AutoAdaptLayout, hotWords: List<HotWord>?,
         }
         target.forEach {
             val binding =
-                ItemSearchWordBinding.inflate(LayoutInflater.from(container.context), container, true)
+                ItemRoundWordBinding.inflate(LayoutInflater.from(container.context), container, true)
             binding.clickListener = wordClickListener
-            binding.word = it
+            binding.word = it.name
         }
     }
 }

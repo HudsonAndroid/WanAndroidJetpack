@@ -5,6 +5,7 @@ import android.app.Application
 import com.hudson.wanandroid.di.AppInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -18,6 +19,10 @@ class WanAndroidApp : Application(), HasActivityInjector{
     override fun onCreate() {
         super.onCreate()
         AppInjector.init(this)
+        // config timber
+        if(BuildConfig.DEBUG){
+            Timber.plant(Timber.DebugTree())
+        }
     }
 
     override fun activityInjector() = dispatchingAndroidInjector
