@@ -1,7 +1,7 @@
 package com.hudson.wanandroid.di.module
 
 import com.hudson.wanandroid.ui.fragment.main.HomeFragment
-import com.hudson.wanandroid.ui.fragment.main.NavigationFragment
+import com.hudson.wanandroid.ui.fragment.main.WechatFragment
 import com.hudson.wanandroid.ui.fragment.main.ProjectsFragment
 import com.hudson.wanandroid.ui.fragment.main.TreeFragment
 import com.hudson.wanandroid.ui.fragment.projects.ProjectItemFragment
@@ -22,7 +22,7 @@ abstract class FragmentsModule {
     abstract fun homeFragmentInjector(): HomeFragment
 
     @ContributesAndroidInjector
-    abstract fun navigationFragmentInjector(): NavigationFragment
+    abstract fun navigationFragmentInjector(): WechatFragment
 
     @ContributesAndroidInjector
     abstract fun projectFragmentInjector(): ProjectsFragment

@@ -3,7 +3,7 @@ package com.hudson.wanandroid.viewmodel.bindingadapter
 import android.view.LayoutInflater
 import android.view.View
 import androidx.databinding.BindingAdapter
-import com.hudson.wanandroid.data.entity.TreeItem
+import com.hudson.wanandroid.data.entity.Subject
 import com.hudson.wanandroid.databinding.ItemRoundWordBinding
 import com.hudson.wanandroid.ui.view.AutoAdaptLayout
 
@@ -11,8 +11,8 @@ import com.hudson.wanandroid.ui.view.AutoAdaptLayout
  * Created by Hudson on 2020/8/25.
  */
 @BindingAdapter(value = ["targetTree","treeClickListener"], requireAll = false)
-fun targetTree(container: AutoAdaptLayout, tree: TreeItem?,
-        clickListener: TreeClickListener?){
+fun targetTree(container: AutoAdaptLayout, tree: Subject?,
+               clickListener: TreeClickListener?){
     if(tree != null && tree.children.isNotEmpty()){
         container.removeAllViews()
         tree.children.forEachIndexed { index, treeItem ->
@@ -29,5 +29,5 @@ fun targetTree(container: AutoAdaptLayout, tree: TreeItem?,
 }
 
 interface TreeClickListener{
-    fun onClick(targetTree: TreeItem, selectedIndex: Int)
+    fun onClick(targetTree: Subject, selectedIndex: Int)
 }

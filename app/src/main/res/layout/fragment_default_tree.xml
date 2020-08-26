@@ -6,7 +6,7 @@
     <data>
         <import type="java.util.List"/>
         <import type="com.hudson.wanandroid.data.entity.wrapper.Resource"/>
-        <import type="com.hudson.wanandroid.data.entity.TreeItem"/>
+        <import type="com.hudson.wanandroid.data.entity.Subject"/>
         <import type="androidx.lifecycle.LiveData"/>
 
         <variable
@@ -15,7 +15,7 @@
 
         <variable
             name="trees"
-            type="LiveData&lt;Resource&lt;List&lt;TreeItem>>>" />
+            type="LiveData&lt;Resource&lt;List&lt;Subject>>>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

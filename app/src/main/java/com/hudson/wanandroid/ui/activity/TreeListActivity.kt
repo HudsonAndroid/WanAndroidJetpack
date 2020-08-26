@@ -11,7 +11,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.hudson.wanandroid.R
 import com.hudson.wanandroid.data.common.fromJson
-import com.hudson.wanandroid.data.entity.TreeItem
+import com.hudson.wanandroid.data.entity.Subject
 import com.hudson.wanandroid.databinding.ActivityTreeListBinding
 import com.hudson.wanandroid.ui.adapter.TreeListPagerAdapter
 import dagger.android.DispatchingAndroidInjector
@@ -27,8 +27,8 @@ class TreeListActivity : FragmentActivity(), HasSupportFragmentInjector {
         if(intent != null){
             val treeItemStr = intent.getStringExtra(KEY_TREE_LIST)
             try {
-                val treeItem: TreeItem = Gson().fromJson(treeItemStr)
-                val trees = treeItem.children
+                val subject: Subject = Gson().fromJson(treeItemStr)
+                val trees = subject.children
                 val selectedIndex = intent.getIntExtra(KEY_SELECT_INDEX, -1)
                 if(selectedIndex < 0 || selectedIndex >= trees.size){
                     throw IllegalArgumentException("the input param is invalid: $selectedIndex, must in 0 ~ ${trees.size}")
@@ -39,7 +39,7 @@ class TreeListActivity : FragmentActivity(), HasSupportFragmentInjector {
                 )
                 binding.viewPager.adapter = TreeListPagerAdapter(this, trees)
                 binding.viewPager.currentItem = selectedIndex
-                binding.tvTitle.text = treeItem.name
+                binding.tvTitle.text = subject.name
                 TabLayoutMediator(binding.tabs, binding.viewPager){ tab, position ->
                     val text = trees[position].name
                     tab.text = text.run{ Html.fromHtml(text) }

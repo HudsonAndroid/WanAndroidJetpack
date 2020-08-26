@@ -1,10 +1,9 @@
 package com.hudson.wanandroid.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.hudson.wanandroid.data.entity.TreeItem
+import com.hudson.wanandroid.data.entity.Subject
 import com.hudson.wanandroid.databinding.ItemTreeItemBinding
 import com.hudson.wanandroid.ui.adapter.viewholder.TreeItemViewHolder
 import com.hudson.wanandroid.viewmodel.bindingadapter.TreeClickListener
@@ -14,9 +13,9 @@ import com.hudson.wanandroid.viewmodel.bindingadapter.TreeClickListener
  */
 class TreeListAdapter(private val itemClickListener: TreeClickListener)
     : RecyclerView.Adapter<TreeItemViewHolder>(){
-    private val treeList = mutableListOf<TreeItem>()
+    private val treeList = mutableListOf<Subject>()
 
-    fun refresh(trees: List<TreeItem>){
+    fun refresh(trees: List<Subject>){
         treeList.clear()
         treeList.addAll(trees)
         notifyDataSetChanged()

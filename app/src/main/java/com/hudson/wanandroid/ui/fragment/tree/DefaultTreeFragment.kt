@@ -1,7 +1,6 @@
 package com.hudson.wanandroid.ui.fragment.tree
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import com.hudson.wanandroid.R
-import com.hudson.wanandroid.data.entity.TreeItem
+import com.hudson.wanandroid.data.entity.Subject
 import com.hudson.wanandroid.data.entity.wrapper.Status
 import com.hudson.wanandroid.databinding.FragmentDefaultTreeBinding
 import com.hudson.wanandroid.di.Injectable
@@ -46,7 +43,7 @@ class DefaultTreeFragment : Fragment(), Injectable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val clickListener = object: TreeClickListener {
-            override fun onClick(targetTree: TreeItem, selectedIndex: Int) {
+            override fun onClick(targetTree: Subject, selectedIndex: Int) {
                 // invoke while click the tree item
                 TreeListActivity.start(view.context, Gson().toJson(targetTree), selectedIndex)
             }

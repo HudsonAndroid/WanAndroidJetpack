@@ -5,10 +5,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.hudson.wanandroid.data.WanAndroidApi
 import com.hudson.wanandroid.data.common.AppExecutor
-import com.hudson.wanandroid.data.common.mergecall.Call
 import com.hudson.wanandroid.data.common.mergecall.RetrofitCall
 import com.hudson.wanandroid.data.db.WanAndroidDb
-import com.hudson.wanandroid.data.entity.TreeItem
+import com.hudson.wanandroid.data.entity.Subject
 import com.hudson.wanandroid.data.entity.TreeWrapper
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.base.BaseNetworkBoundResource
@@ -26,16 +25,16 @@ class TreeRepository @Inject constructor(
     private val wanAndroidApi: WanAndroidApi,
     private val db:WanAndroidDb
 ){
-    private var resource: NetworkBoundResource<List<TreeItem>, TreeWrapper>? = null
+    private var resource: NetworkBoundResource<List<Subject>, TreeWrapper>? = null
 
-    fun loadTree(): LiveData<Resource<List<TreeItem>>>{
+    fun loadTree(): LiveData<Resource<List<Subject>>>{
         resource = object :
-            BaseNetworkBoundResource<List<TreeItem>, TreeWrapper>(db.dataWrapperDao(), appExecutor) {
-            override fun shouldFetch(data: List<TreeItem>?): Boolean {
+            BaseNetworkBoundResource<List<Subject>, TreeWrapper>(db.dataWrapperDao(), appExecutor) {
+            override fun shouldFetch(data: List<Subject>?): Boolean {
                 return super.shouldFetch(data) || data == null || data.isEmpty()
             }
 
-            override fun transform(requestType: TreeWrapper): List<TreeItem>? {
+            override fun transform(requestType: TreeWrapper): List<Subject>? {
                 return requestType.data
             }
 

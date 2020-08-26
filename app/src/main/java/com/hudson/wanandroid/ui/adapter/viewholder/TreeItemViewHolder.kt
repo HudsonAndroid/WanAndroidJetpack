@@ -1,7 +1,7 @@
 package com.hudson.wanandroid.ui.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
-import com.hudson.wanandroid.data.entity.TreeItem
+import com.hudson.wanandroid.data.entity.Subject
 import com.hudson.wanandroid.databinding.ItemTreeItemBinding
 import com.hudson.wanandroid.viewmodel.bindingadapter.TreeClickListener
 
@@ -12,7 +12,7 @@ class TreeItemViewHolder(private val binding: ItemTreeItemBinding,
         private val clickListener: TreeClickListener?):
         RecyclerView.ViewHolder(binding.root){
 
-    fun bindTree(tree: TreeItem){
+    fun bindTree(tree: Subject){
         binding.tree = tree
         binding.clickListener = clickListener
     }

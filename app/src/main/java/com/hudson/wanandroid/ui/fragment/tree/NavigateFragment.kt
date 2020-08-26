@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.hudson.wanandroid.R
 import com.hudson.wanandroid.data.entity.wrapper.Status
-import com.hudson.wanandroid.databinding.FragmentNavigationBinding
 import com.hudson.wanandroid.databinding.FragmentTreeNavigationBinding
 import com.hudson.wanandroid.di.Injectable
 import com.hudson.wanandroid.ui.adapter.NavigationListAdapter

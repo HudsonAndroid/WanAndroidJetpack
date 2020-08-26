@@ -7,9 +7,9 @@
         android:title="@string/fragment_home"/>
 
     <item
-        android:id="@+id/navigationFragment"
-        android:icon="@drawable/main_ic_navigation"
-        android:title="@string/fragment_nav"/>
+        android:id="@+id/wechatFragment"
+        android:icon="@drawable/main_ic_wechat"
+        android:title="@string/fragment_wechat"/>
 
     <item
         android:id="@+id/projectsFragment"

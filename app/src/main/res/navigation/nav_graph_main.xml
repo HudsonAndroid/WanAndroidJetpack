@@ -14,7 +14,7 @@
             app:destination="@id/treeFragment" />
         <action
             android:id="@+id/action_homeFragment_to_navigationFragment"
-            app:destination="@id/navigationFragment" />
+            app:destination="@id/wechatFragment" />
         <action
             android:id="@+id/action_homeFragment_to_projectsFragment"
             app:destination="@id/projectsFragment" />
@@ -25,10 +25,10 @@
         android:label="fragment_tree"
         tools:layout="@layout/fragment_tree" />
     <wanFragment
-        android:id="@+id/navigationFragment"
-        android:name="com.hudson.wanandroid.ui.fragment.main.NavigationFragment"
+        android:id="@+id/wechatFragment"
+        android:name="com.hudson.wanandroid.ui.fragment.main.WechatFragment"
         android:label="fragment_navigation"
-        tools:layout="@layout/fragment_navigation" />
+        tools:layout="@layout/fragment_wechat" />
     <wanFragment
         android:id="@+id/projectsFragment"
         android:name="com.hudson.wanandroid.ui.fragment.main.ProjectsFragment"
