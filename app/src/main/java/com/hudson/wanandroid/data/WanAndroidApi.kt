@@ -53,7 +53,7 @@ interface WanAndroidApi {
     fun projectsCategory(): Call<Projects>
 
     @GET("tree/json")
-    fun treeCategory(): Call<TreeWrapper>
+    fun treeCategory(): Call<SubjectWrapper>
 
     @GET("navi/json")
     fun navigation(): Call<NavigationWrapper>
