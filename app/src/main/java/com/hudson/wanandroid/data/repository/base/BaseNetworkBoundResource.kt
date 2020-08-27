@@ -57,7 +57,7 @@ abstract class BaseNetworkBoundResource<ResultType, RequestType>(
             //数据库访问，异步处理
             val clazz = getRequestClass()
             val wrapper =
-                loadDataWrapper(clazz, dataWrapperDao)
+                loadDataWrapper(clazz, dataWrapperDao, identityInfo())
             checkDataExpire(wrapper)
             val source = wrapper?.content?.run {
                 val jsonEntity = Gson().fromJson(this, clazz)
@@ -95,7 +95,7 @@ fun isDataWrapperExpire(dataWrapper: DataWrapper?): Boolean{
 }
 
 fun loadDataWrapper(clazz: Class<*>,dataWrapperDao: DataWrapperDao,
-                        identityInfo: String = ""): DataWrapper? {
+                    identityInfo: String): DataWrapper? {
     return dataWrapperDao.queryExactly(clazz.name, identityInfo)
 }
 
@@ -108,8 +108,8 @@ fun <T> wrapperCall(call: retrofit2.Call<T>): Call<T> {
 }
 
 fun <T> saveDataWrapper(clazz: Class<*>, content: T,
-                    dataWrapperDao: DataWrapperDao,
-                    identityInfo: String = ""){
+                        dataWrapperDao: DataWrapperDao,
+                        identityInfo: String){
     val dataWrapper =
         DataWrapper(clazz)
     dataWrapper.customInfo = identityInfo
