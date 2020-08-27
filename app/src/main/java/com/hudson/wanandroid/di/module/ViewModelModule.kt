@@ -55,6 +55,16 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(WechatModel::class)
+    abstract fun bindWechatModel(wechatModel: WechatModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(WechatItemModel::class)
+    abstract fun bindWechatItemModel(wechatItemModel: WechatItemModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(NavigationModel::class)
     abstract fun bindNavigationModel(navigationModel: NavigationModel): ViewModel
 

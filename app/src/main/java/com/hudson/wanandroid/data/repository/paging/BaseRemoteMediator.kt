@@ -55,7 +55,7 @@ abstract class BaseRemoteMediator<T: Any> (
                     cacheKey.nextKey
                 }
             }
-            nextPageKey = nextPageKey ?: 0
+            nextPageKey = nextPageKey ?: getDefaultStartPageKey()
             // 3.使用拿到的nextPageKey获取该页数据
             val networkData = fetchNetworkData(nextPageKey)
 
@@ -85,6 +85,8 @@ abstract class BaseRemoteMediator<T: Any> (
             return MediatorResult.Error(e)
         }
     }
+
+    open fun getDefaultStartPageKey() = 0
 
     abstract suspend fun fetchNetworkData(nextPageKey: Int?): List<T>
     abstract fun getNextKey(nextPageKey: Int?): Int?

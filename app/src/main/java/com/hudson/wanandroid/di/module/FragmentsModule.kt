@@ -7,6 +7,7 @@ import com.hudson.wanandroid.ui.fragment.main.TreeFragment
 import com.hudson.wanandroid.ui.fragment.projects.ProjectItemFragment
 import com.hudson.wanandroid.ui.fragment.tree.DefaultTreeFragment
 import com.hudson.wanandroid.ui.fragment.tree.NavigateFragment
+import com.hudson.wanandroid.ui.fragment.wechat.WechatItemFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -22,7 +23,10 @@ abstract class FragmentsModule {
     abstract fun homeFragmentInjector(): HomeFragment
 
     @ContributesAndroidInjector
-    abstract fun navigationFragmentInjector(): WechatFragment
+    abstract fun wechatFragmentInjector(): WechatFragment
+
+    @ContributesAndroidInjector
+    abstract fun wechatItemFragmentInjector(): WechatItemFragment
 
     @ContributesAndroidInjector
     abstract fun projectFragmentInjector(): ProjectsFragment

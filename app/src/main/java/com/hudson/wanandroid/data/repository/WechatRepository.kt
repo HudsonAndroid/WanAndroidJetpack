@@ -12,36 +12,35 @@ import com.hudson.wanandroid.data.entity.SubjectWrapper
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.base.BaseNetworkBoundResource
 import com.hudson.wanandroid.data.repository.base.NetworkBoundResource
-import com.hudson.wanandroid.data.repository.paging.TreeItemRemoteMediator
+import com.hudson.wanandroid.data.repository.paging.WechatRemoteMediator
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Created by Hudson on 2020/8/24.
+ * Created by Hudson on 2020/8/26.
  */
 @Singleton
-class TreeRepository @Inject constructor(
+class WechatRepository @Inject constructor(
     private val appExecutor: AppExecutor,
     private val wanAndroidApi: WanAndroidApi,
-    private val db:WanAndroidDb
+    private val db: WanAndroidDb
 ){
+    companion object{
+        private const val NETWORK_PAGE_SIZE = 20
+    }
     private var resource: NetworkBoundResource<List<Subject>, SubjectWrapper>? = null
 
-    fun loadTree(): LiveData<Resource<List<Subject>>>{
-        resource = object :
-            BaseNetworkBoundResource<List<Subject>, SubjectWrapper>(db.dataWrapperDao(), appExecutor) {
+    fun loadWechatCategory(): LiveData<Resource<List<Subject>>>{
+        resource = object : BaseNetworkBoundResource<List<Subject>, SubjectWrapper>(db.dataWrapperDao(), appExecutor){
             override fun shouldFetch(data: List<Subject>?): Boolean {
                 return super.shouldFetch(data) || data == null || data.isEmpty()
             }
 
-            override fun transform(requestType: SubjectWrapper): List<Subject>? {
-                return requestType.data
-            }
+            override fun transform(requestType: SubjectWrapper) = requestType.data
 
-            override fun createCall() = RetrofitCall(wanAndroidApi.treeCategory())
+            override fun createCall() = RetrofitCall(wanAndroidApi.wechatCategory())
 
-            // 有公众号数据实体与当前数据实体一致，因此需要区分
-            override fun identityInfo() = "home_tab_tree"
+            override fun identityInfo() = "home_tab_wechat"
         }
         return resource!!.asLiveData()
     }
@@ -50,13 +49,9 @@ class TreeRepository @Inject constructor(
         resource?.retry()
     }
 
-    fun loadTreeItemArticles(treeId: Int, superId: Int)
-            = Pager(config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
-        remoteMediator = TreeItemRemoteMediator(wanAndroidApi, db, treeId, superId)){
-        db.articleDao().getSubjectPagingSource(treeId, superId)
+    fun loadWechatItemArticles(wechatId: Int, superId: Int)
+        = Pager(config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
+            remoteMediator = WechatRemoteMediator(wanAndroidApi,db, wechatId, superId)){
+        db.articleDao().getSubjectPagingSource(wechatId, superId)
     }.flow
-
-    companion object{
-        private const val NETWORK_PAGE_SIZE = 20
-    }
 }

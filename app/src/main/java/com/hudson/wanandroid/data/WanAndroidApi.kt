@@ -55,6 +55,15 @@ interface WanAndroidApi {
     @GET("tree/json")
     fun treeCategory(): Call<SubjectWrapper>
 
+    @GET("wxarticle/chapters/json")
+    fun wechatCategory(): Call<SubjectWrapper>
+
+    // 注意记得添加suspend标志符，否则会报错：java.lang.IllegalArgumentException: Unable to create call adapter for class
+    // 这个错误表面上是CallAdapter不对应，实际是没有添加suspend处理导致
+    @GET("wxarticle/list/{wechatId}/{pageNo}/json")
+    suspend fun wechatItemList(@Path("wechatId")wechatId: Int,
+        @Path("pageNo")pageNo: Int): ArticleResultWrapper
+
     @GET("navi/json")
     fun navigation(): Call<NavigationWrapper>
 

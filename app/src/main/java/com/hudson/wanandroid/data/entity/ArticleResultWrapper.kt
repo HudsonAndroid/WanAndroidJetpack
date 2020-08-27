@@ -9,7 +9,7 @@ data class ArticleResultWrapper(
     val data: ArticleWrapper
 ): BaseResult(){
     override fun toString(): String {
-        return "HomeArticle(data=$data)"
+        return "ArticleResult(data=$data)"
     }
 }
 
@@ -23,6 +23,6 @@ data class ArticleWrapper(
     val datas: List<Article>
 ){
     override fun toString(): String {
-        return "HomeArticleWrapper(curPage=$curPage, offset=$offset, over=$over, pageCount=$pageCount, size=$size, total=$total, datas=$datas)"
+        return "ArticleWrapper(curPage=$curPage, offset=$offset, over=$over, pageCount=$pageCount, size=$size, total=$total, datas=$datas)"
     }
 }
