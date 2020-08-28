@@ -140,4 +140,8 @@ dependencies {
 
     // Timber log util
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    // sqlcipher 数据库加密工具
+    implementation "net.zetetic:android-database-sqlcipher:4.4.0"
+    implementation "androidx.sqlite:sqlite:2.1.0"
 }
