@@ -6,12 +6,14 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.databinding.ItemPagingArticleBinding
-import com.hudson.wanandroid.ui.adapter.viewholder.HomeArticleViewHolder
+import com.hudson.wanandroid.ui.adapter.viewholder.ArticleStarClickListener
+import com.hudson.wanandroid.ui.adapter.viewholder.ArticleViewHolder
 
 /**
  * Created by Hudson on 2020/7/30.
  */
-class ArticleAdapter : PagingDataAdapter<Article, HomeArticleViewHolder>(DiffCallback){
+class ArticleAdapter(private val starClickListener: ArticleStarClickListener? = null)
+    : PagingDataAdapter<Article, ArticleViewHolder>(DiffCallback){
 
     companion object{
         val DiffCallback = object: DiffUtil.ItemCallback<Article>(){
@@ -24,16 +26,16 @@ class ArticleAdapter : PagingDataAdapter<Article, HomeArticleViewHolder>(DiffCal
         }
     }
 
-    override fun onBindViewHolder(holder: HomeArticleViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val item = getItem(position)
         item?.let {
             holder.bindArticle(item)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeArticleViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         val binding =
             ItemPagingArticleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return HomeArticleViewHolder(binding)
+        return ArticleViewHolder(binding, starClickListener)
     }
 }

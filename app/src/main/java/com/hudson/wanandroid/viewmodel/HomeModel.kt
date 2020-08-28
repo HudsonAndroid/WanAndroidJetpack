@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.PagingRetryLoad
 import com.hudson.wanandroid.data.repository.HomeRepository
 import javax.inject.Inject
@@ -31,6 +32,8 @@ class HomeModel @Inject constructor(private val repository: HomeRepository): Vie
     fun retry(){
         repository.retry()
     }
+
+    suspend fun starArticle(article: Article) = repository.starArticle(article)
 
     //data load in, invoke
     fun update(){

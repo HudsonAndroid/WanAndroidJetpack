@@ -80,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_top"
             app:layout_constraintBottom_toTopOf="@+id/tv_desc"
             app:layout_constraintLeft_toRightOf="@id/iv_img"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/iv_star"
             android:textColor="@color/colorText"
             android:layout_marginLeft="@dimen/spaceNormal"
             android:layout_marginStart="@dimen/spaceNormal"
@@ -109,6 +109,14 @@
             android:layout_marginTop="@dimen/spaceSmall"
             android:text='@{article.superChapterName + "/" + article.chapterName }'
             style="@style/gray_small_text"/>
+
+        <ImageView
+            android:id="@+id/iv_star"
+            app:layout_constraintRight_toRightOf="@id/tv_date"
+            app:layout_constraintBottom_toBottomOf="@id/tv_category"
+            android:src="@{article.collect ? @drawable/icon_love_selected : @drawable/icon_love}"
+            android:layout_width="@dimen/spaceLarge"
+            android:layout_height="@dimen/spaceLarge"/>
 
         <View
             showOrHide="@{TextUtils.isEmpty(article.envelopePic)}"

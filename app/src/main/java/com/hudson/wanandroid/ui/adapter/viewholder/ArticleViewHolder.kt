@@ -7,10 +7,18 @@ import com.hudson.wanandroid.databinding.ItemPagingArticleBinding
 /**
  * Created by Hudson on 2020/7/30.
  */
-class HomeArticleViewHolder(private val binding: ItemPagingArticleBinding):
+class ArticleViewHolder(private val binding: ItemPagingArticleBinding,
+    private val starClickListener: ArticleStarClickListener? = null):
     RecyclerView.ViewHolder(binding.root){
 
     fun bindArticle(article: Article){
         binding.article = article
+        binding.ivStar.setOnClickListener {
+            starClickListener?.onStarClick(article)
+        }
     }
+}
+
+interface ArticleStarClickListener{
+    fun onStarClick(article: Article)
 }

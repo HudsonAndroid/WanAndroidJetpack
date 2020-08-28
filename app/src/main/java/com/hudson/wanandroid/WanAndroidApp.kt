@@ -2,6 +2,7 @@ package com.hudson.wanandroid
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import com.hudson.wanandroid.di.AppInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -23,8 +24,12 @@ class WanAndroidApp : Application(), HasActivityInjector{
         if(BuildConfig.DEBUG){
             Timber.plant(Timber.DebugTree())
         }
+        GLOBAL_CONTEXT = this
     }
 
     override fun activityInjector() = dispatchingAndroidInjector
 
+    companion object{
+        var GLOBAL_CONTEXT: Context? = null
+    }
 }

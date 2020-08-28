@@ -1,6 +1,8 @@
 package com.hudson.wanandroid.data
 
 import com.hudson.wanandroid.data.entity.*
+import com.hudson.wanandroid.data.entity.wrapper.BaseResult
+import com.hudson.wanandroid.data.network.WanAndroidCookieJar
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -17,6 +19,7 @@ interface WanAndroidApi {
 
         val okHttpClient: OkHttpClient = OkHttpClient.Builder()
             .addInterceptor(logger)
+            .cookieJar(WanAndroidCookieJar())
             .build()
 
         val singleTon: WanAndroidApi = Retrofit.Builder()
@@ -28,6 +31,7 @@ interface WanAndroidApi {
 
     companion object{
         private const val BASE_URL = "https://www.wanandroid.com"
+        const val LOGIN_PATH = "/user/login"
 
         fun api():WanAndroidApi{
             return Inner.singleTon
@@ -81,4 +85,15 @@ interface WanAndroidApi {
     @FormUrlEncoded
     suspend fun searchHotResult(@Path("pageNo") pageNo: Int,
                                 @Field("k") searchWord: String): ArticleResultWrapper
+
+    @POST(LOGIN_PATH)
+    @FormUrlEncoded
+    suspend fun login(@Field("username") userName: String,
+                @Field("password") password: String): LoginResult
+
+    @POST("lg/collect/{starId}/json")
+    suspend fun starArticle(@Path("starId")starId: Int): BaseResult
+
+    @GET("lg/collect/list/{pageNo}/json")
+    suspend fun starArticles(@Path("pageNo")pageNo: Int): ArticleResultWrapper
 }

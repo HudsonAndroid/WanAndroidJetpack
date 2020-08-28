@@ -7,6 +7,7 @@ import com.hudson.wanandroid.data.WanAndroidApi
 import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.common.mergecall.RetrofitCall
 import com.hudson.wanandroid.data.db.WanAndroidDb
+import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.Banner
 import com.hudson.wanandroid.data.entity.BannerItem
 import com.hudson.wanandroid.data.entity.wrapper.Resource
@@ -53,6 +54,10 @@ class HomeRepository @Inject constructor(
         remoteMediator = ArticleRemoteMediator(wanAndroidApi, db)){
         db.articleDao().getArticlePagingSource()
     }.flow
+
+    suspend fun starArticle(article: Article){
+        wanAndroidApi.starArticle(article.id)
+    }
     
     companion object{
         private const val NETWORK_PAGE_SIZE = 20

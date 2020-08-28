@@ -9,14 +9,17 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.hudson.wanandroid.R
+import com.hudson.wanandroid.data.account.WanAndroidAccount
 import com.hudson.wanandroid.ui.fix.WanAndroidNavigator
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -84,6 +87,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
+        if(id == R.id.nav_score){
+            lifecycleScope.launch {
+                WanAndroidAccount.getInstance().login("HudsonS", "hudson666")
+            }
+        }
 //
 //        if (id == R.id.nav_camera) {
 //            // Handle the camera action

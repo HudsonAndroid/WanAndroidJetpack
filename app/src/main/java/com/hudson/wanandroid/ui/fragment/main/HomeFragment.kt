@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.BannerItem
 import com.hudson.wanandroid.data.entity.PagingRetryLoad
 import com.hudson.wanandroid.data.entity.wrapper.Resource
@@ -18,6 +19,7 @@ import com.hudson.wanandroid.di.Injectable
 import com.hudson.wanandroid.ui.adapter.ArticleAdapter
 import com.hudson.wanandroid.ui.adapter.BannerAdapter
 import com.hudson.wanandroid.ui.adapter.PagingLoadStateAdapter
+import com.hudson.wanandroid.ui.adapter.viewholder.ArticleStarClickListener
 import com.hudson.wanandroid.ui.common.RetryCallback
 import com.hudson.wanandroid.ui.util.autoCleared
 import com.hudson.wanandroid.ui.view.indicatorviewpager.listener.SimplePageChangeListener
@@ -68,8 +70,16 @@ class HomeFragment: Fragment() , Injectable{
         viewModelFactory
     }
 
+    private val starClickListener = object: ArticleStarClickListener{
+        override fun onStarClick(article: Article) {
+            lifecycleScope.launch {
+                homeModel.starArticle(article)
+            }
+        }
+    }
+
     private val articleAdapter: ArticleAdapter by lazy {
-        ArticleAdapter()
+        ArticleAdapter(starClickListener)
     }
 
     override fun onCreateView(
