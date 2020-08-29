@@ -14,4 +14,6 @@ class ProjectsModel @Inject constructor(private val repository: ProjectsReposito
     fun retry(){
         repository.retry()
     }
+
+    fun refresh() = repository.refresh()
 }

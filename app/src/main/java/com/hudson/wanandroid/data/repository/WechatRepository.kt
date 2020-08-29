@@ -49,6 +49,10 @@ class WechatRepository @Inject constructor(
         resource?.retry()
     }
 
+    fun refresh(){
+        resource?.refresh()
+    }
+
     fun loadWechatItemArticles(wechatId: Int, superId: Int)
         = Pager(config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
             remoteMediator = WechatRemoteMediator(wanAndroidApi,db, wechatId, superId)){

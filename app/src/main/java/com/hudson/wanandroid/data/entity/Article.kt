@@ -1,7 +1,6 @@
 package com.hudson.wanandroid.data.entity
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
 // TODO: 2020/8/20 0020 maybe should keep a tag for entity
 /**
@@ -17,7 +16,7 @@ data class Article(
     val canEdit: Boolean,
     val chapterId: Int,
     val chapterName: String,
-    val collect: Boolean,
+    var collect: Boolean,
     val courseId: Int,
     val desc: String,
     val descMd: String,

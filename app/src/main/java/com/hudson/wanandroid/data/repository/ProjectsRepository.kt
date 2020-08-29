@@ -51,6 +51,10 @@ class ProjectsRepository @Inject constructor(
         resource?.retry()
     }
 
+    fun refresh(){
+        resource?.refresh()
+    }
+
     fun loadProjectItemArticles(projectId: Int) = Pager(config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
         remoteMediator = ProjectItemRemoteMediator(wanAndroidApi, db, projectId)){
         db.articleDao().getProjectPagingSource(projectId)

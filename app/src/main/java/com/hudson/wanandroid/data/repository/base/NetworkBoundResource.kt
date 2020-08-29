@@ -163,4 +163,6 @@ abstract class NetworkBoundResource<ResultType, RequestType>
             load()
         }
     }
+
+    fun refresh() = load()
 }

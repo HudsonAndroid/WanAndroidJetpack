@@ -56,7 +56,12 @@ class HomeRepository @Inject constructor(
     }.flow
 
     suspend fun starArticle(article: Article){
-        wanAndroidApi.starArticle(article.id)
+        val result = wanAndroidApi.starArticle(article.id)
+        if(result.isSuccess()){
+            article.collect = true
+            // we should update local star database
+            db.articleDao().insertArticle(article)
+        }
     }
     
     companion object{

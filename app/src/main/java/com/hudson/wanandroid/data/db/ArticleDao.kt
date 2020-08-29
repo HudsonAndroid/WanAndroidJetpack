@@ -16,6 +16,9 @@ interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertArticles(articles: List<Article>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertArticle(article: Article)
+
     //返回值PagingSource类型要求room版本2.3.0-alpha01
     @Query("SELECT * FROM article")
     fun getArticlePagingSource(): PagingSource<Int, Article>

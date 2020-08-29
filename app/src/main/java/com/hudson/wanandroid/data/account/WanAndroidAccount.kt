@@ -1,5 +1,6 @@
 package com.hudson.wanandroid.data.account
 
+import androidx.lifecycle.MutableLiveData
 import com.hudson.wanandroid.WanAndroidApp
 import com.hudson.wanandroid.data.WanAndroidApi
 import com.hudson.wanandroid.data.common.AppExecutor
@@ -7,7 +8,6 @@ import com.hudson.wanandroid.data.db.WanAndroidDb
 import com.hudson.wanandroid.data.entity.LoginInfo
 import com.hudson.wanandroid.data.entity.LoginUser
 import okhttp3.Cookie
-import timber.log.Timber
 
 /**
  * 账号模块
@@ -18,17 +18,15 @@ class WanAndroidAccount private constructor(
     private val api: WanAndroidApi,
     private val db: WanAndroidDb){
 
-    var currentLogin: LoginInfo? = null
-    var cookies = mutableListOf<Cookie>()
-    private var loginUser: LoginUser? = null
+    val currentUser = MutableLiveData<LoginUser>()
 
     init {
         AppExecutor.getInstance().ioExecutor.execute {
             val user = db.loginUserDao().getCurrentUser()
-            if(user != null) {
-                Timber.e("当前账号是$user")
-                currentLogin = user.loginInfo
-                cookies = user.cookies.toMutableList()
+            user?.initialState = true
+            currentUser.postValue(user)
+            if(user != null){
+                cookieCache = user.cookies.toMutableList()
             }
         }
     }
@@ -36,26 +34,32 @@ class WanAndroidAccount private constructor(
     suspend fun login(userName: String, password:String) {
         val login = api.login(userName, password)
         if (login.isSuccess()) {
-            currentLogin = login.data
-            Timber.e("登录完成")
-            if(isMatch(currentLogin!!, cookies)){
+            val currentLogin = login.data
+            if(isMatch(currentLogin, cookieCache)){
                 val loginUserDao = db.loginUserDao()
-                if(loginUser != null){
-                    loginUser?.current = false
+                if(currentUser.value != null){
+                    currentUser.value?.current = false
                     // clean old user flag
-                    loginUserDao.insertUser(loginUser!!)
+                    loginUserDao.insertUser(currentUser.value!!)
                 }
                 // save account info into Room
-                loginUserDao.insertUser(LoginUser(currentLogin!!.id, currentLogin!!, cookies, true))
+                val user = LoginUser(currentLogin.id, currentLogin, cookieCache!!, true)
+                currentUser.value = user
+                loginUserDao.insertUser(user)
+            }else{
+                // clean
+                cookieCache = mutableListOf()
             }
         }
     }
 
     // 检查当前的登录账号和获取到的cookie是否对应
-    private fun isMatch(loginInfo: LoginInfo, cookies: MutableList<Cookie>): Boolean{
-        for (cookie in cookies) {
-            if(cookie.value() == loginInfo.username){
-                return true
+    private fun isMatch(loginInfo: LoginInfo, cookies: MutableList<Cookie>?): Boolean{
+        if(cookies != null){
+            for (cookie in cookies) {
+                if(cookie.value() == loginInfo.username){
+                    return true
+                }
             }
         }
         return false
@@ -65,14 +69,18 @@ class WanAndroidAccount private constructor(
 
     suspend fun switchAccount(accountId: Int){
         // change current account
-        val user = db.loginUserDao().getUser(accountId)
-        currentLogin = user.loginInfo
-        cookies = user.cookies.toMutableList()
+        val loginUserDao = db.loginUserDao()
+        val user = loginUserDao.getUser(accountId)
+        user.current = true
+        loginUserDao.insertUser(user)
+        currentUser.value = user
+        cookieCache = user.cookies.toMutableList()
     }
 
     companion object{
         @Volatile
         private var instance: WanAndroidAccount? = null
+        var cookieCache: MutableList<Cookie>? = null
 
         fun getInstance(): WanAndroidAccount {
             return instance?: synchronized(this){

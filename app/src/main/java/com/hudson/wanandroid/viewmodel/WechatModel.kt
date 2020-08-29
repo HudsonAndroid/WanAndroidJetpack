@@ -11,7 +11,7 @@ class WechatModel @Inject constructor(private val repository: WechatRepository):
 
     val wechatCategory = repository.loadWechatCategory()
 
-    fun retry(){
-        repository.retry()
-    }
+    fun retry() = repository.retry()
+
+    fun refresh() = repository.refresh()
 }

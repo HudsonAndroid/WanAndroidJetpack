@@ -14,12 +14,12 @@ class WanAndroidCookieJar : CookieJar{
 
     override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {
         if(url.toString().endsWith(WanAndroidApi.LOGIN_PATH)){
-            WanAndroidAccount.getInstance().cookies = cookies
+            WanAndroidAccount.cookieCache = cookies
         }
     }
 
     override fun loadForRequest(url: HttpUrl): MutableList<Cookie> {
-        return WanAndroidAccount.getInstance().cookies
+        return WanAndroidAccount.cookieCache ?: mutableListOf()
     }
 
 }

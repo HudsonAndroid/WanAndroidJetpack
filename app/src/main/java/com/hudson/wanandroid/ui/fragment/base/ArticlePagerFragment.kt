@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import com.hudson.wanandroid.data.entity.Article
+import com.hudson.wanandroid.data.entity.LoginUser
 import com.hudson.wanandroid.data.entity.PagingRetryLoad
 import com.hudson.wanandroid.databinding.FragmentBaseArticleBinding
 import com.hudson.wanandroid.ui.adapter.ArticleAdapter
@@ -24,7 +25,7 @@ import timber.log.Timber
 /**
  * Created by Hudson on 2020/8/26.
  */
-abstract class ArticlePagerFragment: Fragment(){
+abstract class ArticlePagerFragment: AccountRelativeFragment(){
     private var binding by autoCleared<FragmentBaseArticleBinding>()
 
     private val adapter: ArticleAdapter by lazy {
@@ -65,11 +66,18 @@ abstract class ArticlePagerFragment: Fragment(){
             retryLoad.hasShowData = !it
             notifyLoadStateChange(retryLoad)
         }
+    }
+
+    final override fun onAccountInitialed(user: LoginUser) {
         lifecycleScope.launch {
             loadData().collectLatest {
                 adapter.submitData(it)
             }
         }
+    }
+
+    final override fun onAccountChanged(user: LoginUser) {
+        adapter.refresh()
     }
 
     abstract fun getPagingLoadState(): LiveData<PagingRetryLoad>?

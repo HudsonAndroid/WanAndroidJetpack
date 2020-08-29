@@ -10,8 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.hudson.wanandroid.data.account.WanAndroidAccount
 import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.BannerItem
+import com.hudson.wanandroid.data.entity.LoginUser
 import com.hudson.wanandroid.data.entity.PagingRetryLoad
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.databinding.FragmentHomeBinding
@@ -21,12 +23,14 @@ import com.hudson.wanandroid.ui.adapter.BannerAdapter
 import com.hudson.wanandroid.ui.adapter.PagingLoadStateAdapter
 import com.hudson.wanandroid.ui.adapter.viewholder.ArticleStarClickListener
 import com.hudson.wanandroid.ui.common.RetryCallback
+import com.hudson.wanandroid.ui.fragment.base.AccountRelativeFragment
 import com.hudson.wanandroid.ui.util.autoCleared
 import com.hudson.wanandroid.ui.view.indicatorviewpager.listener.SimplePageChangeListener
 import com.hudson.wanandroid.viewmodel.HomeModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -52,7 +56,7 @@ import javax.inject.Inject
  * 和onViewCreated
  * Created by Hudson on 2020/7/12.
  */
-class HomeFragment: Fragment() , Injectable{
+class HomeFragment: AccountRelativeFragment() , Injectable{
     private var homeBinding by autoCleared<FragmentHomeBinding>()
 
     @Inject
@@ -121,15 +125,22 @@ class HomeFragment: Fragment() , Injectable{
         homeBinding.pagingRetry = homeModel.articleLoadState
         homeBinding.lifecycleOwner = this //自动为LiveData设置数据观察绑定，相当于liveData.observe自动完成
 
-        homeModel.bannersLiveData.observe(this,
+        homeModel.bannersLiveData.observe(viewLifecycleOwner,
             Observer<Resource<List<BannerItem>>> {
                 homeBinding.adapter!!.refresh(homeBinding.vpBanner,it.data)
                 homeModel.update()
                 homeBinding.vpBanner.startAutoSwitch()
-                Log.d(javaClass.simpleName,"${it.status}, ${it.data}, ${it.msg}")
+                Timber.d("${it.status}, ${it.data}, ${it.msg}")
             })
+    }
 
+    override fun onAccountInitialed(user: LoginUser) {
         attachArticles()
+    }
+
+    override fun onAccountChanged(user: LoginUser) {
+        // 重新加载
+        articleAdapter.refresh()
     }
 
     private fun attachArticles(){
@@ -140,10 +151,11 @@ class HomeFragment: Fragment() , Injectable{
             homeModel.articleLoadState.value = retryLoad
         }
         homeBinding.rvList.adapter = articleAdapter.withLoadStateFooter(PagingLoadStateAdapter(articleAdapter))
+
         lifecycleScope.launch {
             @OptIn(ExperimentalCoroutinesApi::class)
             homeModel.articles.collectLatest { // collectLatest主要是为了背压处理
-                    articleAdapter.submitData(it)
+                articleAdapter.submitData(it)
             }
         }
     }

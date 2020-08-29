@@ -13,17 +13,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import com.hudson.wanandroid.R
+import com.hudson.wanandroid.data.account.AccountRelative
+import com.hudson.wanandroid.data.entity.LoginUser
 import com.hudson.wanandroid.data.entity.wrapper.Status
 import com.hudson.wanandroid.databinding.FragmentHomeBinding
 import com.hudson.wanandroid.databinding.FragmentProjectsBinding
 import com.hudson.wanandroid.di.Injectable
 import com.hudson.wanandroid.ui.adapter.ProjectsPagerAdapter
 import com.hudson.wanandroid.ui.common.RetryCallback
+import com.hudson.wanandroid.ui.fragment.base.AccountRelativeFragment
 import com.hudson.wanandroid.ui.util.autoCleared
 import com.hudson.wanandroid.viewmodel.ProjectsModel
 import javax.inject.Inject
 
-class ProjectsFragment : Fragment(), Injectable {
+class ProjectsFragment : AccountRelativeFragment(), Injectable {
     companion object{
         const val CACHE_FRAGMENT_SIZE = 6
     }
@@ -43,6 +46,11 @@ class ProjectsFragment : Fragment(), Injectable {
         projectsBinding = FragmentProjectsBinding.inflate(inflater, container, false)
 
         return projectsBinding.root
+    }
+
+    override fun onAccountChanged(user: LoginUser) {
+        // 账号变动了，重新加载
+        projectsModel.refresh()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
