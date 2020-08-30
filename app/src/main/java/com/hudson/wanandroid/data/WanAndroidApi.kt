@@ -104,5 +104,5 @@ interface WanAndroidApi {
     suspend fun starArticle(@Path("starId")starId: Int): BaseResult
 
     @GET("lg/collect/list/{pageNo}/json")
-    suspend fun starArticles(@Path("pageNo")pageNo: Int): ArticleResultWrapper
+    suspend fun starArticlesResult(@Path("pageNo")pageNo: Int): ArticleResultWrapper
 }
