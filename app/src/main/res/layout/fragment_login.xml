@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="accountModel"
+            type="com.hudson.wanandroid.viewmodel.AccountModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.login.LoginFragment">
+
+        <TextView
+            android:id="@+id/tv_logo"
+            android:textSize="@dimen/textSizeMax"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/spaceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/fragment_login" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            app:layout_constraintTop_toBottomOf="@id/tv_logo"
+            android:layout_marginTop="@dimen/heightLittle"
+            android:layout_marginLeft="@dimen/spaceLarge"
+            android:layout_marginRight="@dimen/spaceLarge"
+            android:id="@+id/container_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_account"
+                android:hint="@string/hint_account_name"
+                android:text="@={accountModel.name}"
+                inputWatcher="@{accountModel.nameWatcher}"
+                android:background="@color/transparent"
+                android:imeOptions="actionNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/container_password"
+            android:layout_marginTop="@dimen/heightSmall"
+            app:layout_constraintTop_toBottomOf="@id/container_account"
+            android:layout_marginLeft="@dimen/spaceLarge"
+            android:layout_marginRight="@dimen/spaceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                android:background="@color/transparent"
+                android:text="@={accountModel.password}"
+                inputWatcher="@{accountModel.passwordWatcher}"
+                android:imeOptions="actionNext"
+                android:hint="@string/hint_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_login"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/heightNormal"
+            android:enabled="@{accountModel.loginEnable}"
+            android:text="@string/action_login"
+            android:layout_marginLeft="@dimen/heightNormal"
+            android:layout_marginRight="@dimen/heightNormal"
+            app:layout_constraintTop_toBottomOf="@id/container_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="@string/tips_no_account"
+            app:layout_constraintTop_toBottomOf="@id/btn_login"
+            android:layout_marginTop="@dimen/spaceLarge"
+            app:layout_constraintLeft_toLeftOf="@id/btn_login"
+            app:layout_constraintRight_toRightOf="@id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

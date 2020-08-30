@@ -91,6 +91,15 @@ interface WanAndroidApi {
     suspend fun login(@Field("username") userName: String,
                 @Field("password") password: String): LoginResult
 
+    @POST("user/register")
+    @FormUrlEncoded
+    suspend fun register(@Field("username") userName: String,
+                         @Field("password") password: String,
+                         @Field("repassword") repassword: String): BaseResult
+
+    @GET("user/logout/json")
+    suspend fun logout(): BaseResult
+
     @POST("lg/collect/{starId}/json")
     suspend fun starArticle(@Path("starId")starId: Int): BaseResult
 

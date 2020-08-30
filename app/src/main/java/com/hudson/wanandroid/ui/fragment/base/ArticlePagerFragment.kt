@@ -68,7 +68,7 @@ abstract class ArticlePagerFragment: AccountRelativeFragment(){
         }
     }
 
-    final override fun onAccountInitialed(user: LoginUser) {
+    final override fun onAccountInitialed(user: LoginUser?) {
         lifecycleScope.launch {
             loadData().collectLatest {
                 adapter.submitData(it)

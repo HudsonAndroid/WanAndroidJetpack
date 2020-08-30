@@ -1,7 +1,6 @@
 package com.hudson.wanandroid.works
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.work.Worker
 import androidx.work.WorkerParameters
@@ -9,6 +8,7 @@ import com.hudson.wanandroid.BuildConfig
 import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.db.WanAndroidDb
 import com.hudson.wanandroid.viewmodel.bindingadapter.MAX_SHOW_WORD_COUNT
+import timber.log.Timber
 
 /**
  * Created by Hudson on 2020/8/12.
@@ -30,7 +30,7 @@ class SearchHistoryCleanWork(val context: Context, workerParams: WorkerParameter
 
         if(value.size > MAX_SHOW_WORD_COUNT * 2){
             debugCleanTips()
-            Log.d("SearchCleanWorker", "need cleaning search history data, current size ${value.size}")
+            Timber.d("need cleaning search history data, current size ${value.size}")
             db.runInTransaction {
                 // 清理部分多余数据
                 // 1.先清空

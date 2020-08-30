@@ -134,7 +134,7 @@ class HomeFragment: AccountRelativeFragment() , Injectable{
             })
     }
 
-    override fun onAccountInitialed(user: LoginUser) {
+    override fun onAccountInitialed(user: LoginUser?) {
         attachArticles()
     }
 

@@ -4,6 +4,7 @@
     <dimen name="textSizeNormal">14sp</dimen>
     <dimen name="textSizeSmall">12sp</dimen>
     <dimen name="textSizeLittle">9sp</dimen>
+    <dimen name="textSizeMax">25sp</dimen>
     <dimen name="spaceNormal">10dp</dimen>
     <dimen name="spaceBig">15dp</dimen>
     <dimen name="spaceLarge">20dp</dimen>

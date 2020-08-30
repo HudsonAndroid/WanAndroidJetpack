@@ -6,6 +6,7 @@ import com.hudson.wanandroid.data.WanAndroidApi
 import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.db.WanAndroidDb
 import com.hudson.wanandroid.data.entity.LoginInfo
+import com.hudson.wanandroid.data.entity.LoginResult
 import com.hudson.wanandroid.data.entity.LoginUser
 import okhttp3.Cookie
 
@@ -31,7 +32,7 @@ class WanAndroidAccount private constructor(
         }
     }
 
-    suspend fun login(userName: String, password:String) {
+    suspend fun login(userName: String, password:String): LoginResult {
         val login = api.login(userName, password)
         if (login.isSuccess()) {
             val currentLogin = login.data
@@ -51,6 +52,7 @@ class WanAndroidAccount private constructor(
                 cookieCache = mutableListOf()
             }
         }
+        return login
     }
 
     // 检查当前的登录账号和获取到的cookie是否对应

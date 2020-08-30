@@ -9,7 +9,7 @@ interface AccountRelative {
     /**
      * 账号首次初始化时触发，包括未登录情况下
      */
-    fun onAccountInitialed(user: LoginUser)
+    fun onAccountInitialed(user: LoginUser?)
 
     /**
      * 当当前账号变动时触发

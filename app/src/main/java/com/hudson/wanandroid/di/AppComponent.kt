@@ -2,10 +2,7 @@ package com.hudson.wanandroid.di
 
 import android.app.Application
 import com.hudson.wanandroid.WanAndroidApp
-import com.hudson.wanandroid.di.module.AppModule
-import com.hudson.wanandroid.di.module.MainActivityModule
-import com.hudson.wanandroid.di.module.SearchActivityModule
-import com.hudson.wanandroid.di.module.TreeListActivityModule
+import com.hudson.wanandroid.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -20,7 +17,8 @@ import javax.inject.Singleton
     AppModule::class, //应用层级的
     MainActivityModule::class, //activity注入
     SearchActivityModule::class,
-    TreeListActivityModule::class
+    TreeListActivityModule::class,
+    LoginActivityModule::class
 ])
 interface AppComponent {
 

@@ -68,6 +68,12 @@ abstract class ViewModelModule {
     @ViewModelKey(NavigationModel::class)
     abstract fun bindNavigationModel(navigationModel: NavigationModel): ViewModel
 
+    // 登录相关
+    @Binds
+    @IntoMap
+    @ViewModelKey(AccountModel::class)
+    abstract fun bindAccountModel(accountModel: AccountModel): ViewModel
+
     @Binds
     abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
 }

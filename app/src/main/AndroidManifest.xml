@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <!--部分图片地址还是http的，需要允许明文请求-->
     <application
         android:name=".WanAndroidApp"
         android:allowBackup="true"
@@ -16,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.TreeListActivity"/>
+        <activity android:name=".ui.activity.LoginActivity"></activity>
+        <activity android:name=".ui.activity.TreeListActivity" />
         <activity android:name=".ui.activity.SearchActivity" />
         <activity android:name=".ui.activity.WebDetailActivity" />
         <activity android:name=".ui.activity.MainActivity">

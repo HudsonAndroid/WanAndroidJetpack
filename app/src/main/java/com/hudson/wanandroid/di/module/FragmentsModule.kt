@@ -1,9 +1,11 @@
 package com.hudson.wanandroid.di.module
 
+import com.hudson.wanandroid.ui.fragment.login.LoginFragment
+import com.hudson.wanandroid.ui.fragment.login.RegisterFragment
 import com.hudson.wanandroid.ui.fragment.main.HomeFragment
-import com.hudson.wanandroid.ui.fragment.main.WechatFragment
 import com.hudson.wanandroid.ui.fragment.main.ProjectsFragment
 import com.hudson.wanandroid.ui.fragment.main.TreeFragment
+import com.hudson.wanandroid.ui.fragment.main.WechatFragment
 import com.hudson.wanandroid.ui.fragment.projects.ProjectItemFragment
 import com.hudson.wanandroid.ui.fragment.tree.DefaultTreeFragment
 import com.hudson.wanandroid.ui.fragment.tree.NavigateFragment
@@ -42,4 +44,11 @@ abstract class FragmentsModule {
 
     @ContributesAndroidInjector
     abstract fun defaultTreeFragmentInjector(): DefaultTreeFragment
+
+    // 登录相关
+    @ContributesAndroidInjector
+    abstract fun loginFragmentInjector(): LoginFragment
+
+    @ContributesAndroidInjector
+    abstract fun registerFragmentInjector(): RegisterFragment
 }

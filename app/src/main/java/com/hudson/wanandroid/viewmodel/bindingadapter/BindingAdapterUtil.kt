@@ -6,7 +6,9 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
+import com.google.android.material.textfield.TextInputEditText
 import com.hudson.wanandroid.R
+import com.hudson.wanandroid.ui.util.SimpleEditWatcher
 import com.hudson.wanandroid.ui.view.indicatorviewpager.indicator.CirclePointIndicator
 import com.hudson.wanandroid.ui.view.indicatorviewpager.indicator.IPagerIndicator
 import com.hudson.wanandroid.ui.view.indicatorviewpager.listener.SimplePageChangeListener
@@ -65,4 +67,11 @@ fun indicator(autoSwitchViewPager: AutoSwitchViewPager, indicator: IPagerIndicat
 @BindingAdapter(value = ["showOrHide"])
 fun showOrHide(view: View, show: Boolean){
     view.visibility =  if(show) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter(value = ["inputWatcher"])
+fun editInputWatcher(input: TextInputEditText, watcher: SimpleEditWatcher?){
+    if(watcher != null){
+        input.addTextChangedListener(watcher)
+    }
 }

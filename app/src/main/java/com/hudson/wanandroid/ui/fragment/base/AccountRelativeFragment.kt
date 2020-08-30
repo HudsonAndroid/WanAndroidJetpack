@@ -17,7 +17,7 @@ abstract class AccountRelativeFragment : Fragment(), AccountRelative{
         super.onViewCreated(view, savedInstanceState)
         // 监听账号变动
         WanAndroidAccount.getInstance().currentUser.observe(viewLifecycleOwner, Observer {
-            if(it.initialState){
+            if(it == null || it.initialState){
                 onAccountInitialed(it)
             }else{
                 onAccountChanged(it)
@@ -25,5 +25,5 @@ abstract class AccountRelativeFragment : Fragment(), AccountRelative{
         })
     }
 
-    override fun onAccountInitialed(user: LoginUser) {}
+    override fun onAccountInitialed(user: LoginUser?) {}
 }
