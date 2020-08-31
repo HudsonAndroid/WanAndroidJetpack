@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 class ProjectsFragment : AccountRelativeFragment(), Injectable {
     companion object{
-        const val CACHE_FRAGMENT_SIZE = 6
+        const val CACHE_FRAGMENT_SIZE = 3
     }
     private var projectsBinding by autoCleared<FragmentProjectsBinding>()
 

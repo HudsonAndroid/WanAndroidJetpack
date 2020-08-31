@@ -25,7 +25,7 @@ import javax.inject.Inject
  */
 class WechatFragment : Fragment(), Injectable {
     companion object{
-        const val CACHE_FRAGMENT_SIZE = 6
+        const val CACHE_FRAGMENT_SIZE = 3
     }
     private var wechatBinding by autoCleared<FragmentWechatBinding>()
 
