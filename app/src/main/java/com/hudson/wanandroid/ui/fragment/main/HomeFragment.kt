@@ -134,7 +134,7 @@ class HomeFragment: AccountRelativeFragment() , Injectable{
             })
     }
 
-    override fun onAccountChanged(user: LoginUser) {
+    override fun onAccountChanged(user: LoginUser?) {
         if(homeBinding.rvList.adapter == null){
             attachArticles()
         }else{

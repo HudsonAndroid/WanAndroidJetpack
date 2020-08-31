@@ -1,7 +1,6 @@
 package com.hudson.wanandroid.data.entity
 
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import okhttp3.Cookie
 
@@ -16,8 +15,4 @@ data class LoginUser(
     val loginInfo: LoginInfo,
     val cookies: List<Cookie>,
     var current: Boolean = false
-){
-    // just a flag for data initial load
-    @Ignore
-    var initialState: Boolean = false
-}
+)

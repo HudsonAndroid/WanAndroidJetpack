@@ -24,7 +24,6 @@ class WanAndroidAccount private constructor(
     init {
         AppExecutor.getInstance().ioExecutor.execute {
             val user = db.loginUserDao().getCurrentUser()
-            user?.initialState = true
             currentUser.postValue(user)
             if(user != null){
                 cookieCache = user.cookies.toMutableList()
@@ -37,6 +36,7 @@ class WanAndroidAccount private constructor(
         if (login.isSuccess()) {
             val currentLogin = login.data
             if(isMatch(currentLogin, cookieCache)){
+                // todo 可以考虑是否要判断账号是否还是旧账号
                 val loginUserDao = db.loginUserDao()
                 if(currentUser.value != null){
                     currentUser.value?.current = false

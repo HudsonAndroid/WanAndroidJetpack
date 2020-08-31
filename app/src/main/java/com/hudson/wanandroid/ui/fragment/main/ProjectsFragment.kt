@@ -48,7 +48,7 @@ class ProjectsFragment : AccountRelativeFragment(), Injectable {
         return projectsBinding.root
     }
 
-    override fun onAccountChanged(user: LoginUser) {
+    override fun onAccountChanged(user: LoginUser?) {
         // 账号变动了，重新加载
         projectsModel.refresh()
     }

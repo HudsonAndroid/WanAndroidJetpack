@@ -50,7 +50,7 @@ abstract class ArticlePagerFragment: AccountRelativeFragment(){
         }
         binding.pagingRetry = getPagingLoadState()
         binding.lifecycleOwner = this
-        binding.rvList.adapter = adapter.withLoadStateFooter(PagingLoadStateAdapter(adapter))
+
         val retryLoad = PagingRetryLoad()
         adapter.addLoadStateListener { loadState ->
             if(adapter.itemCount > 0){
@@ -68,16 +68,19 @@ abstract class ArticlePagerFragment: AccountRelativeFragment(){
         }
     }
 
-    final override fun onAccountInitialed(user: LoginUser?) {
-        lifecycleScope.launch {
-            loadData().collectLatest {
-                adapter.submitData(it)
+    final override fun onAccountChanged(user: LoginUser?) {
+        if(binding.rvList.adapter == null){
+            // not attach, so attach adapter
+            binding.rvList.adapter = adapter.withLoadStateFooter(PagingLoadStateAdapter(adapter))
+            lifecycleScope.launch {
+                loadData().collectLatest {
+                    adapter.submitData(it)
+                }
             }
+        }else{
+            // already attached, reload from network
+            adapter.refresh()
         }
-    }
-
-    final override fun onAccountChanged(user: LoginUser) {
-        adapter.refresh()
     }
 
     abstract fun getPagingLoadState(): LiveData<PagingRetryLoad>?
