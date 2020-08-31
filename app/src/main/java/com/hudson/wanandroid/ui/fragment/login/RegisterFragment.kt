@@ -10,9 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
+import com.hudson.wanandroid.R
 import com.hudson.wanandroid.databinding.FragmentRegisterBinding
 import com.hudson.wanandroid.di.Injectable
 import com.hudson.wanandroid.ui.util.autoCleared
+import com.hudson.wanandroid.ui.util.showToast
 import com.hudson.wanandroid.viewmodel.AccountModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -44,9 +46,11 @@ class RegisterFragment : Fragment(), Injectable {
             lifecycleScope.launch {
                 val registerResult = accountModel.register()
                 if(registerResult.isSuccess()){
-                    Toast.makeText(context, "register success", Toast.LENGTH_LONG).show()
+                    showToast(R.string.tips_register_success)
+                    // back to login page
+                    Navigation.findNavController(binding.root).navigateUp()
                 }else{
-                    Toast.makeText(context, registerResult.errorMsg, Toast.LENGTH_LONG).show()
+                    showToast(if(registerResult.errorMsg.isEmpty()) getString(R.string.tips_register_failed) else registerResult.errorMsg)
                 }
             }
         }

@@ -48,7 +48,7 @@ class LoginFragment : Fragment(), Injectable {
                     requireActivity().finish()
                     showToast(R.string.tips_login_success)
                 }else{
-                    showToast(if(login.errorMsg.isNullOrEmpty()) getString(R.string.tips_login_failed) else login.errorMsg)
+                    showToast(if(login.errorMsg.isEmpty()) getString(R.string.tips_login_failed) else login.errorMsg)
                 }
             }
         }
