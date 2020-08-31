@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.hudson.wanandroid.R
+import com.hudson.wanandroid.data.entity.wrapper.BaseResult
 import com.hudson.wanandroid.databinding.FragmentRegisterBinding
 import com.hudson.wanandroid.di.Injectable
 import com.hudson.wanandroid.ui.util.autoCleared
@@ -44,13 +44,14 @@ class RegisterFragment : Fragment(), Injectable {
         binding.lifecycleOwner = this
         binding.btnRegister.setOnClickListener{
             lifecycleScope.launch {
-                val registerResult = accountModel.register()
-                if(registerResult.isSuccess()){
+                val registerResult: BaseResult? = accountModel.register()
+                if(registerResult?.isSuccess() == true){
                     showToast(R.string.tips_register_success)
                     // back to login page
                     Navigation.findNavController(binding.root).navigateUp()
                 }else{
-                    showToast(if(registerResult.errorMsg.isEmpty()) getString(R.string.tips_register_failed) else registerResult.errorMsg)
+                    val errorMsg = registerResult?.errorMsg
+                    showToast(if(errorMsg == null || errorMsg.isEmpty()) getString(R.string.tips_register_failed) else errorMsg)
                 }
             }
         }

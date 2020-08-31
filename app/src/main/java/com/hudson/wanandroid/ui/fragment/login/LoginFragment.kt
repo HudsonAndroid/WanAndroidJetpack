@@ -44,11 +44,12 @@ class LoginFragment : Fragment(), Injectable {
         binding.btnLogin.setOnClickListener{
             lifecycleScope.launch {
                 val login = accountModel.login()
-                if(login.isSuccess()){
+                if(login?.isSuccess() == true){
                     requireActivity().finish()
                     showToast(R.string.tips_login_success)
                 }else{
-                    showToast(if(login.errorMsg.isEmpty()) getString(R.string.tips_login_failed) else login.errorMsg)
+                    val errorMsg = login?.errorMsg
+                    showToast(if(errorMsg == null || errorMsg.isEmpty()) getString(R.string.tips_login_failed) else errorMsg)
                 }
             }
         }

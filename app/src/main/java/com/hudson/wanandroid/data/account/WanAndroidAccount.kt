@@ -9,6 +9,7 @@ import com.hudson.wanandroid.data.entity.LoginInfo
 import com.hudson.wanandroid.data.entity.LoginResult
 import com.hudson.wanandroid.data.entity.LoginUser
 import okhttp3.Cookie
+import kotlin.Exception
 
 /**
  * 账号模块
@@ -31,9 +32,14 @@ class WanAndroidAccount private constructor(
         }
     }
 
-    suspend fun login(userName: String, password:String): LoginResult {
-        val login = api.login(userName, password)
-        if (login.isSuccess()) {
+    suspend fun login(userName: String, password:String): LoginResult? {
+        val login = try{
+            api.login(userName, password)
+        }catch (e: Exception){
+            e.printStackTrace()
+            null
+        }
+        if (login?.isSuccess() == true) {
             val currentLogin = login.data
             if(isMatch(currentLogin, cookieCache)){
                 // todo 可以考虑是否要判断账号是否还是旧账号

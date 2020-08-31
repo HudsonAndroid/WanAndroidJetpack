@@ -21,7 +21,7 @@ class AccountModel @Inject constructor(private val api: WanAndroidApi): ViewMode
     val loginEnable = MutableLiveData<Boolean>()
     val registerEnable = MutableLiveData<Boolean>()
 
-    suspend fun login(): LoginResult{
+    suspend fun login(): LoginResult?{
         loadState.value = true
         loginEnable.value = false
         val login = WanAndroidAccount.getInstance().login(name.value!!, password.value!!)
@@ -30,10 +30,15 @@ class AccountModel @Inject constructor(private val api: WanAndroidApi): ViewMode
         return login
     }
 
-    suspend fun register(): BaseResult{
+    suspend fun register(): BaseResult?{
         loadState.value = true
         registerEnable.value = false
-        val register = api.register(name.value!!, password.value!!, confirm.value!!)
+        val register = try {
+            api.register(name.value!!, password.value!!, confirm.value!!)
+        }catch (e: Exception){
+            e.printStackTrace()
+            null
+        }
         loadState.value = false
         registerEnable.value = true
         return register

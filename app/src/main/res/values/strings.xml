@@ -18,6 +18,7 @@
     <string name="action_login_running">登录中..</string>
     <string name="action_register">注册</string>
     <string name="action_register_running">注册中..</string>
+    <string name="action_clean_record">清空记录</string>
 
     <string name="tips_unknown_error">未知错误</string>
     <string name="tips_empty_data">没有任何数据</string>
@@ -27,7 +28,8 @@
     <string name="tips_login_failed">登录失败</string>
     <string name="tips_register_success">注册成功</string>
     <string name="tips_register_failed">注册失败</string>
-    <string name="action_clean_record">清空记录</string>
+    <string name="tips_operate_failed">操作失败</string>
+
 
     <string name="article_type_top">置顶</string>
     <string name="article_type_new">新</string>
