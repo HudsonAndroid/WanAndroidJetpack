@@ -1,5 +1,6 @@
 package com.hudson.wanandroid.data.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -14,6 +15,7 @@ import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.base.BaseNetworkBoundResource
 import com.hudson.wanandroid.data.repository.base.NetworkBoundResource
 import com.hudson.wanandroid.data.repository.paging.ArticleRemoteMediator
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -55,12 +57,14 @@ class HomeRepository @Inject constructor(
         db.articleDao().getArticlePagingSource()
     }.flow
 
-    suspend fun starArticle(article: Article){
+    suspend fun starArticle(context: Context, article: Article){
         val result = wanAndroidApi.starArticle(article.id)
         if(result.isSuccess()){
             article.collect = true
             // we should update local star database
             db.articleDao().insertArticle(article)
+        }else{
+            result.tryHandleError(context)
         }
     }
     

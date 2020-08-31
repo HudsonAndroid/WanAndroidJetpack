@@ -1,5 +1,6 @@
 package com.hudson.wanandroid.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,7 +34,7 @@ class HomeModel @Inject constructor(private val repository: HomeRepository): Vie
         repository.retry()
     }
 
-    suspend fun starArticle(article: Article) = repository.starArticle(article)
+    suspend fun starArticle(context: Context, article: Article) = repository.starArticle(context, article)
 
     //data load in, invoke
     fun update(){

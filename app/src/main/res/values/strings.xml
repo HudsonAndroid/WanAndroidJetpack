@@ -15,7 +15,9 @@
     <string name="action_search">搜索</string>
     <string name="action_back">返回</string>
     <string name="action_login">登录</string>
+    <string name="action_login_running">登录中..</string>
     <string name="action_register">注册</string>
+    <string name="action_register_running">注册中..</string>
 
     <string name="tips_unknown_error">未知错误</string>
     <string name="tips_empty_data">没有任何数据</string>

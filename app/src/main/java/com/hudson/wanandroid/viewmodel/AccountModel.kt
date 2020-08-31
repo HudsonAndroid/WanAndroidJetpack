@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hudson.wanandroid.data.WanAndroidApi
 import com.hudson.wanandroid.data.account.WanAndroidAccount
+import com.hudson.wanandroid.data.entity.LoginResult
+import com.hudson.wanandroid.data.entity.wrapper.BaseResult
 import com.hudson.wanandroid.ui.util.SimpleEditWatcher
 import javax.inject.Inject
 
@@ -15,14 +17,27 @@ class AccountModel @Inject constructor(private val api: WanAndroidApi): ViewMode
     val name = MutableLiveData<String>()
     val password = MutableLiveData<String>()
     val confirm = MutableLiveData<String>()
+    val loadState = MutableLiveData<Boolean>()
     val loginEnable = MutableLiveData<Boolean>()
     val registerEnable = MutableLiveData<Boolean>()
 
-    suspend fun login()
-        = WanAndroidAccount.getInstance().login(name.value!!, password.value!!)
+    suspend fun login(): LoginResult{
+        loadState.value = true
+        loginEnable.value = false
+        val login = WanAndroidAccount.getInstance().login(name.value!!, password.value!!)
+        loadState.value = false
+        loginEnable.value = true
+        return login
+    }
 
-    suspend fun register()
-        = api.register(name.value!!, password.value!!, confirm.value!!)
+    suspend fun register(): BaseResult{
+        loadState.value = true
+        registerEnable.value = false
+        val register = api.register(name.value!!, password.value!!, confirm.value!!)
+        loadState.value = false
+        registerEnable.value = true
+        return register
+    }
 
     val nameWatcher = object: SimpleEditWatcher(){
         override fun afterTextChanged(s: Editable?) {

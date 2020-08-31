@@ -74,11 +74,13 @@
 
         <Button
             android:id="@+id/btn_login"
+            bindLoadState="@{accountModel.loadState}"
+            loadingStr="@{@string/action_login_running}"
+            normalStr="@{@string/action_login}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="@dimen/heightNormal"
             android:enabled="@{accountModel.loginEnable}"
-            android:text="@string/action_login"
             android:layout_marginLeft="@dimen/heightNormal"
             android:layout_marginRight="@dimen/heightNormal"
             app:layout_constraintTop_toBottomOf="@id/container_password"

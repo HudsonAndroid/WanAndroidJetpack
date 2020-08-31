@@ -77,7 +77,7 @@ class HomeFragment: AccountRelativeFragment() , Injectable{
     private val starClickListener = object: ArticleStarClickListener{
         override fun onStarClick(article: Article) {
             lifecycleScope.launch {
-                homeModel.starArticle(article)
+                homeModel.starArticle(requireActivity(),article)
             }
         }
     }
@@ -134,13 +134,13 @@ class HomeFragment: AccountRelativeFragment() , Injectable{
             })
     }
 
-    override fun onAccountInitialed(user: LoginUser?) {
-        attachArticles()
-    }
-
     override fun onAccountChanged(user: LoginUser) {
-        // 重新加载
-        articleAdapter.refresh()
+        if(homeBinding.rvList.adapter == null){
+            attachArticles()
+        }else{
+            // 重新加载
+            articleAdapter.refresh()
+        }
     }
 
     private fun attachArticles(){
