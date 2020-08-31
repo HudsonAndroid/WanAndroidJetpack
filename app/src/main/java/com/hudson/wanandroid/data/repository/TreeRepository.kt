@@ -22,9 +22,9 @@ import javax.inject.Singleton
 @Singleton
 class TreeRepository @Inject constructor(
     private val appExecutor: AppExecutor,
-    private val wanAndroidApi: WanAndroidApi,
-    private val db:WanAndroidDb
-){
+    wanAndroidApi: WanAndroidApi,
+    db:WanAndroidDb
+): ArticleRepository(wanAndroidApi, db){
     private var resource: NetworkBoundResource<List<Subject>, SubjectWrapper>? = null
 
     fun loadTree(): LiveData<Resource<List<Subject>>>{

@@ -1,10 +1,7 @@
 package com.hudson.wanandroid.data.db
 
 import androidx.paging.PagingSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.hudson.wanandroid.data.entity.Article
 
 /**
@@ -18,6 +15,10 @@ interface ArticleDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertArticle(article: Article)
+
+    // 注意，update和OnConflictStrategy.REPLACE不一样，前者会出现数据重新掉到PagingSource一页数据的最后
+    @Update
+    suspend fun updateArticle(article: Article)
 
     //返回值PagingSource类型要求room版本2.3.0-alpha01
     @Query("SELECT * FROM article")

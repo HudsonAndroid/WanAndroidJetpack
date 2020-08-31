@@ -15,6 +15,7 @@ import com.hudson.wanandroid.data.entity.PagingRetryLoad
 import com.hudson.wanandroid.databinding.FragmentBaseArticleBinding
 import com.hudson.wanandroid.ui.adapter.ArticleAdapter
 import com.hudson.wanandroid.ui.adapter.PagingLoadStateAdapter
+import com.hudson.wanandroid.ui.adapter.viewholder.ArticleStarClickListener
 import com.hudson.wanandroid.ui.common.RetryCallback
 import com.hudson.wanandroid.ui.util.autoCleared
 import kotlinx.coroutines.flow.Flow
@@ -28,8 +29,21 @@ import timber.log.Timber
 abstract class ArticlePagerFragment: AccountRelativeFragment(){
     private var binding by autoCleared<FragmentBaseArticleBinding>()
 
+    private val starClickListener = object: ArticleStarClickListener {
+        override fun onStarClick(article: Article, position: Int) {
+            lifecycleScope.launch {
+                starOrReverseArticle(article)
+                // 如果是收藏，出现问题是偶发性不会刷新收藏状态，因此手动通知刷新
+                // 关联问题见：
+                // https://stackoverflow.com/questions/51889154/recycler-view-not-scrolling-to-the-top-after-adding-new-item-at-the-top-as-chan
+                // https://stackoverflow.com/questions/31367599/how-to-update-recyclerview-adapter-data
+                adapter.notifyItemChanged(position)
+            }
+        }
+    }
+
     private val adapter: ArticleAdapter by lazy {
-        ArticleAdapter()
+        ArticleAdapter(starClickListener)
     }
 
     override fun onCreateView(
@@ -71,6 +85,7 @@ abstract class ArticlePagerFragment: AccountRelativeFragment(){
     final override fun onAccountChanged(user: LoginUser?) {
         if(binding.rvList.adapter == null){
             // not attach, so attach adapter
+            binding.rvList.itemAnimator = null
             binding.rvList.adapter = adapter.withLoadStateFooter(PagingLoadStateAdapter(adapter))
             lifecycleScope.launch {
                 loadData().collectLatest {
@@ -82,6 +97,8 @@ abstract class ArticlePagerFragment: AccountRelativeFragment(){
             adapter.refresh()
         }
     }
+
+    abstract suspend fun starOrReverseArticle(article: Article)
 
     abstract fun getPagingLoadState(): LiveData<PagingRetryLoad>?
 

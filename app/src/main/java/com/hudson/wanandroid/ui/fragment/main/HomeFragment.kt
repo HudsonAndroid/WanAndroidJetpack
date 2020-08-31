@@ -1,16 +1,13 @@
 package com.hudson.wanandroid.ui.fragment.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.hudson.wanandroid.data.account.WanAndroidAccount
 import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.BannerItem
 import com.hudson.wanandroid.data.entity.LoginUser
@@ -75,9 +72,14 @@ class HomeFragment: AccountRelativeFragment() , Injectable{
     }
 
     private val starClickListener = object: ArticleStarClickListener{
-        override fun onStarClick(article: Article) {
+        override fun onStarClick(article: Article, position: Int) {
             lifecycleScope.launch {
-                homeModel.starArticle(requireActivity(),article)
+                homeModel.starOrReverseArticle(requireActivity(),article)
+                // 如果是收藏，出现问题是偶发性不会刷新收藏状态，因此手动通知刷新
+                // 关联问题见：
+                // https://stackoverflow.com/questions/51889154/recycler-view-not-scrolling-to-the-top-after-adding-new-item-at-the-top-as-chan
+                // https://stackoverflow.com/questions/31367599/how-to-update-recyclerview-adapter-data
+                articleAdapter.notifyItemChanged(position)
             }
         }
     }
@@ -150,6 +152,7 @@ class HomeFragment: AccountRelativeFragment() , Injectable{
             retryLoad.hasShowData = articleAdapter.itemCount != 0
             homeModel.articleLoadState.value = retryLoad
         }
+        homeBinding.rvList.itemAnimator = null
         homeBinding.rvList.adapter = articleAdapter.withLoadStateFooter(PagingLoadStateAdapter(articleAdapter))
 
         lifecycleScope.launch {

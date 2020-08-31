@@ -14,11 +14,11 @@ class ArticleViewHolder(private val binding: ItemPagingArticleBinding,
     fun bindArticle(article: Article){
         binding.article = article
         binding.ivStar.setOnClickListener {
-            starClickListener?.onStarClick(article)
+            starClickListener?.onStarClick(article, layoutPosition)
         }
     }
 }
 
 interface ArticleStarClickListener{
-    fun onStarClick(article: Article)
+    fun onStarClick(article: Article, position: Int)
 }

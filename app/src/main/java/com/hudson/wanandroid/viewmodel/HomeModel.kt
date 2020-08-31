@@ -34,7 +34,9 @@ class HomeModel @Inject constructor(private val repository: HomeRepository): Vie
         repository.retry()
     }
 
-    suspend fun starArticle(context: Context, article: Article) = repository.starArticle(context, article)
+    suspend fun starOrReverseArticle(context: Context, article: Article) {
+        repository.starOrReverseArticle(context, article)
+    }
 
     //data load in, invoke
     fun update(){

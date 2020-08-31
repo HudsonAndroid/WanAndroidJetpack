@@ -100,8 +100,11 @@ interface WanAndroidApi {
     @GET("user/logout/json")
     suspend fun logout(): BaseResult
 
-    @POST("lg/collect/{starId}/json")
-    suspend fun starArticle(@Path("starId")starId: Int): BaseResult
+    @POST("lg/collect/{id}/json")
+    suspend fun starArticle(@Path("id")id: Int): BaseResult
+
+    @POST("lg/uncollect_originId/{id}/json")
+    suspend fun unStarArticle(@Path("id")starId: Int): BaseResult
 
     @GET("lg/collect/list/{pageNo}/json")
     suspend fun starArticlesResult(@Path("pageNo")pageNo: Int): ArticleResultWrapper

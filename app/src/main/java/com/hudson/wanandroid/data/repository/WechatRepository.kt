@@ -22,9 +22,9 @@ import javax.inject.Singleton
 @Singleton
 class WechatRepository @Inject constructor(
     private val appExecutor: AppExecutor,
-    private val wanAndroidApi: WanAndroidApi,
-    private val db: WanAndroidDb
-){
+    wanAndroidApi: WanAndroidApi,
+    db: WanAndroidDb
+): ArticleRepository(wanAndroidApi, db){
     companion object{
         private const val NETWORK_PAGE_SIZE = 20
     }

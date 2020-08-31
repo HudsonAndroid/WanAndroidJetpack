@@ -11,6 +11,7 @@ import com.hudson.wanandroid.data.db.WanAndroidDb
 import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.Banner
 import com.hudson.wanandroid.data.entity.BannerItem
+import com.hudson.wanandroid.data.entity.wrapper.BaseResult
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.base.BaseNetworkBoundResource
 import com.hudson.wanandroid.data.repository.base.NetworkBoundResource
@@ -26,9 +27,9 @@ import javax.inject.Singleton
 @Singleton
 class HomeRepository @Inject constructor(
     private val appExecutor: AppExecutor,
-    private val wanAndroidApi: WanAndroidApi,
-    private val db: WanAndroidDb
-) {
+    wanAndroidApi: WanAndroidApi,
+    db: WanAndroidDb
+): ArticleRepository(wanAndroidApi, db) {
     private var resource: NetworkBoundResource<List<BannerItem>, Banner>? = null
 
     fun loadBanners(): LiveData<Resource<List<BannerItem>>>{
@@ -57,17 +58,6 @@ class HomeRepository @Inject constructor(
         db.articleDao().getArticlePagingSource()
     }.flow
 
-    suspend fun starArticle(context: Context, article: Article){
-        val result = wanAndroidApi.starArticle(article.id)
-        if(result.isSuccess()){
-            article.collect = true
-            // we should update local star database
-            db.articleDao().insertArticle(article)
-        }else{
-            result.tryHandleError(context)
-        }
-    }
-    
     companion object{
         private const val NETWORK_PAGE_SIZE = 20
     }

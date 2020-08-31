@@ -2,6 +2,7 @@ package com.hudson.wanandroid.ui.fragment.projects
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.PagingRetryLoad
 import com.hudson.wanandroid.data.entity.ProjectInfo
 import com.hudson.wanandroid.di.Injectable
@@ -22,6 +23,9 @@ class ProjectItemFragment(private val projectInfo: ProjectInfo) : ArticlePagerFr
     private val projectItemModel: ProjectItemModel by viewModels {
         viewModelFactory
     }
+
+    override suspend fun starOrReverseArticle(article: Article)
+            = projectItemModel.starOrReverseArticle(requireActivity(), article)
 
     override fun getPagingLoadState() = projectItemModel.loadState
 

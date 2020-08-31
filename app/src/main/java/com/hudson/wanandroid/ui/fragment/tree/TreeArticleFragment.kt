@@ -2,6 +2,7 @@ package com.hudson.wanandroid.ui.fragment.tree
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.PagingRetryLoad
 import com.hudson.wanandroid.data.entity.Subject
 import com.hudson.wanandroid.di.Injectable
@@ -20,6 +21,9 @@ class TreeArticleFragment(private val subject: Subject) : ArticlePagerFragment()
     private val treeItemModel: TreeItemModel by viewModels {
         viewModelFactory
     }
+
+    override suspend fun starOrReverseArticle(article: Article)
+            = treeItemModel.starOrReverseArticle(requireActivity(), article)
 
     override fun getPagingLoadState() = treeItemModel.loadState
 

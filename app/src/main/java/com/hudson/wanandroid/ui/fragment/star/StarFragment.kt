@@ -24,15 +24,20 @@ class StarFragment : ArticlePagerFragment(), Injectable {
         return inflater.inflate(R.layout.fragment_star, container, false)
     }
 
-    override fun getPagingLoadState(): LiveData<PagingRetryLoad>? {
+    override suspend fun starOrReverseArticle(article: Article) {
+        TODO("Not yet implemented")
+    }
 
+    override fun getPagingLoadState(): LiveData<PagingRetryLoad>? {
+        TODO("Not yet implemented")
     }
 
     override fun notifyLoadStateChange(retryLoad: PagingRetryLoad) {
-
+        TODO("Not yet implemented")
     }
 
     override fun loadData(): Flow<PagingData<Article>> {
-
+        TODO("Not yet implemented")
     }
+
 }

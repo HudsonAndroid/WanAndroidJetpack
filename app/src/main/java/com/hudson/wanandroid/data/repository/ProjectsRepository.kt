@@ -22,9 +22,9 @@ import javax.inject.Singleton
 @Singleton
 class ProjectsRepository @Inject constructor(
     private val appExecutor: AppExecutor,
-    private val wanAndroidApi: WanAndroidApi,
-    private val db: WanAndroidDb
-){
+    wanAndroidApi: WanAndroidApi,
+    db: WanAndroidDb
+): ArticleRepository(wanAndroidApi, db){
     private var resource: NetworkBoundResource<List<ProjectInfo>, Projects>? = null
 
     fun loadProjectsCategory(): LiveData<Resource<List<ProjectInfo>>>{

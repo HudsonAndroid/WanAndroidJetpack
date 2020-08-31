@@ -112,6 +112,7 @@
 
         <ImageView
             android:id="@+id/iv_star"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             app:layout_constraintRight_toRightOf="@id/tv_date"
             app:layout_constraintBottom_toBottomOf="@id/tv_category"
             android:src="@{article.collect ? @drawable/icon_love_selected : @drawable/icon_love}"

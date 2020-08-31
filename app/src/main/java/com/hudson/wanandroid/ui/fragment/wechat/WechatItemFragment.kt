@@ -2,6 +2,7 @@ package com.hudson.wanandroid.ui.fragment.wechat
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.PagingRetryLoad
 import com.hudson.wanandroid.data.entity.Subject
 import com.hudson.wanandroid.di.Injectable
@@ -20,6 +21,9 @@ class WechatItemFragment(private val subject: Subject): ArticlePagerFragment(), 
     private val wechatItemModel: WechatItemModel by viewModels {
         viewModelFactory
     }
+
+    override suspend fun starOrReverseArticle(article: Article)
+            = wechatItemModel.starOrReverseArticle(requireActivity(), article)
 
     override fun getPagingLoadState() = wechatItemModel.loadState
 
