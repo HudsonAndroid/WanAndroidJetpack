@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
+import com.hudson.wanandroid.data.account.AccountRelative
 import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.LoginUser
 import com.hudson.wanandroid.data.entity.PagingRetryLoad
@@ -26,7 +27,7 @@ import timber.log.Timber
 /**
  * Created by Hudson on 2020/8/26.
  */
-abstract class ArticlePagerFragment: AccountRelativeFragment(){
+abstract class ArticlePagerFragment: Fragment(), AccountRelative{
     private var binding by autoCleared<FragmentBaseArticleBinding>()
 
     private val starClickListener = object: ArticleStarClickListener {
@@ -83,6 +84,7 @@ abstract class ArticlePagerFragment: AccountRelativeFragment(){
     }
 
     final override fun onAccountChanged(user: LoginUser?) {
+        Timber.e("文章页面，账号变动了${user}")
         if(binding.rvList.adapter == null){
             // not attach, so attach adapter
             binding.rvList.itemAnimator = null

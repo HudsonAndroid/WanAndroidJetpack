@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.hudson.wanandroid.data.account.AccountRelative
 import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.BannerItem
 import com.hudson.wanandroid.data.entity.LoginUser
@@ -20,7 +22,6 @@ import com.hudson.wanandroid.ui.adapter.BannerAdapter
 import com.hudson.wanandroid.ui.adapter.PagingLoadStateAdapter
 import com.hudson.wanandroid.ui.adapter.viewholder.ArticleStarClickListener
 import com.hudson.wanandroid.ui.common.RetryCallback
-import com.hudson.wanandroid.ui.fragment.base.AccountRelativeFragment
 import com.hudson.wanandroid.ui.util.autoCleared
 import com.hudson.wanandroid.ui.view.indicatorviewpager.listener.SimplePageChangeListener
 import com.hudson.wanandroid.viewmodel.HomeModel
@@ -53,7 +54,7 @@ import javax.inject.Inject
  * 和onViewCreated
  * Created by Hudson on 2020/7/12.
  */
-class HomeFragment: AccountRelativeFragment() , Injectable{
+class HomeFragment: Fragment(), Injectable, AccountRelative{
     private var homeBinding by autoCleared<FragmentHomeBinding>()
 
     @Inject

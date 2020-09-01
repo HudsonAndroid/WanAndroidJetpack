@@ -9,13 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
-import com.hudson.wanandroid.data.entity.LoginUser
 import com.hudson.wanandroid.data.entity.wrapper.Status
 import com.hudson.wanandroid.databinding.FragmentWechatBinding
 import com.hudson.wanandroid.di.Injectable
 import com.hudson.wanandroid.ui.adapter.WechatPagerAdapter
 import com.hudson.wanandroid.ui.common.RetryCallback
-import com.hudson.wanandroid.ui.fragment.base.AccountRelativeFragment
 import com.hudson.wanandroid.ui.util.autoCleared
 import com.hudson.wanandroid.viewmodel.WechatModel
 import javax.inject.Inject

@@ -19,12 +19,12 @@ class WanAndroidApp : Application(), HasActivityInjector{
 
     override fun onCreate() {
         super.onCreate()
-        AppInjector.init(this)
         // config timber
         if(BuildConfig.DEBUG){
             Timber.plant(Timber.DebugTree())
         }
         GLOBAL_CONTEXT = this
+        AppInjector.init(this)
     }
 
     override fun activityInjector() = dispatchingAndroidInjector
