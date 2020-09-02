@@ -68,7 +68,7 @@ object AppInjector {
 
 
     private fun injectActivity(activity: Activity){
-        if(activity is HasSupportFragmentInjector){
+        if(activity is HasSupportFragmentInjector || activity is Injectable){
             AndroidInjection.inject(activity)
         }
         if(activity is FragmentActivity){

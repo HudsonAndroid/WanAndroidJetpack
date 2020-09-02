@@ -13,4 +13,6 @@
     <color name="transparent">#0000</color>
     <color name="colorPink">#FFB4AE</color>
     <color name="colorRed">#CD4846</color>
+
+    <color name="colorUserLevel">#5529B629</color>
 </resources>

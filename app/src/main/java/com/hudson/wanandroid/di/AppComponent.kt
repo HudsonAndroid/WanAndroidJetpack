@@ -18,7 +18,8 @@ import javax.inject.Singleton
     MainActivityModule::class, //activity注入
     SearchActivityModule::class,
     TreeListActivityModule::class,
-    LoginActivityModule::class
+    LoginActivityModule::class,
+    AccountManageActivityModule::class
 ])
 interface AppComponent {
 

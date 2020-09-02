@@ -84,7 +84,6 @@ abstract class ArticlePagerFragment: Fragment(), AccountRelative{
     }
 
     final override fun onAccountChanged(user: LoginUser?) {
-        Timber.e("文章页面，账号变动了${user}")
         if(binding.rvList.adapter == null){
             // not attach, so attach adapter
             binding.rvList.itemAnimator = null

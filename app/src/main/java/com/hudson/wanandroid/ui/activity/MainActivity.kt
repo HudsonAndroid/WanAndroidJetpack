@@ -3,18 +3,26 @@ package com.hudson.wanandroid.ui.activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.hudson.wanandroid.R
+import com.hudson.wanandroid.data.account.AccountRelative
+import com.hudson.wanandroid.data.entity.LoginUser
+import com.hudson.wanandroid.data.entity.wrapper.Status
+import com.hudson.wanandroid.databinding.NavHeaderSideBinding
 import com.hudson.wanandroid.ui.fix.WanAndroidNavigator
+import com.hudson.wanandroid.viewmodel.UserScoreModel
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
@@ -25,10 +33,19 @@ import javax.inject.Inject
  * 在Fragment注入时会自动找到Activity，并利用下面的dispatchingAndroidInjector来完成注入
  */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
-    NavigationView.OnNavigationItemSelectedListener {
+    NavigationView.OnNavigationItemSelectedListener, AccountRelative {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    lateinit var viewModelFactory : ViewModelProvider.Factory
+
+    private val userScoreModel: UserScoreModel by viewModels {
+        viewModelFactory
+    }
+
+    lateinit var headerSideBinding: NavHeaderSideBinding
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
@@ -67,6 +84,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
         toggle.syncState()
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
+
+        headerSideBinding = NavHeaderSideBinding.inflate(layoutInflater, navigationView, false)
+        navigationView.addHeaderView(headerSideBinding.root)
         navigationView.setNavigationItemSelectedListener(this)
     }
 
@@ -109,6 +129,18 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
             drawer.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+        }
+    }
+
+    override fun onAccountChanged(user: LoginUser?) {
+        headerSideBinding.currentUser = user
+        user?.id?.run {
+            userScoreModel.loadCurrentUserScore(this).observe(this@MainActivity, Observer {
+                // we only care successful result
+                if(it.status == Status.SUCCESS){
+                    headerSideBinding.userScore = it.data
+                }
+            })
         }
     }
 }

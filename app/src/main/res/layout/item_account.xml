@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="account"
+            type="com.hudson.wanandroid.data.entity.LoginUser" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cl_root"
+        android:layout_marginTop="@dimen/spaceSmall"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_marginLeft="@dimen/spaceNormal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/icon_default_user"
+            android:layout_width="@dimen/heightNormal"
+            android:layout_height="@dimen/heightNormal"/>
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:text="@{account.loginInfo.nickname}"
+            app:layout_constraintLeft_toRightOf="@id/iv_avatar"
+            android:layout_marginLeft="@dimen/spaceNormal"
+            app:layout_constraintTop_toTopOf="@id/iv_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/iv_check_state"
+            showOrHide="@{account.current}"
+            app:layout_constraintTop_toTopOf="@id/iv_avatar"
+            app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="@dimen/spaceNormal"
+            android:src="@drawable/icon_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <View
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_avatar"
+            android:layout_marginTop="@dimen/spaceSmall"
+            android:layout_marginLeft="@dimen/spaceNormal"
+            android:layout_marginRight="@dimen/spaceNormal"
+            android:background="@color/colorLightGray"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/widthLine"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

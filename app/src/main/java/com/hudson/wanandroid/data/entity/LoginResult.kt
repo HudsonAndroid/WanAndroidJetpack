@@ -17,7 +17,7 @@ data class LoginInfo(
     val collectIds: List<Int>,
     val email: String,
     val icon: String,
-    val id: Int,
+    val id: Long,
     val nickname: String,
     val password: String,
     val publicName: String,

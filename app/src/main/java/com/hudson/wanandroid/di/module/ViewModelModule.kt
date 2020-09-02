@@ -75,5 +75,10 @@ abstract class ViewModelModule {
     abstract fun bindAccountModel(accountModel: AccountModel): ViewModel
 
     @Binds
+    @IntoMap
+    @ViewModelKey(UserScoreModel::class)
+    abstract fun bindUserScoreModel(userScoreModel: UserScoreModel): ViewModel
+
+    @Binds
     abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
 }

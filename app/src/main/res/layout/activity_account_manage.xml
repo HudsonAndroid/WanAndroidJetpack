@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="com.hudson.wanandroid.viewmodel.global.GlobalJumpHandler"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.AccountManageActivity">
+
+        <LinearLayout
+            android:id="@+id/ll_header"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/colorPrimary"
+            android:paddingLeft="@dimen/spaceNormal"
+            android:paddingRight="@dimen/spaceNormal"
+            android:paddingTop="@dimen/spaceSmall"
+            android:paddingBottom="@dimen/spaceNormal"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:padding="@dimen/spaceLittle"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/icon_back"
+                android:onClick="@{(view)->GlobalJumpHandler.backPage(view)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:text="@string/activity_account_manage"
+                android:textSize="@dimen/textSizeTitle"
+                android:textColor="@color/white"
+                android:layout_marginStart="@dimen/spaceBig"
+                android:layout_marginLeft="@dimen/spaceBig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_account"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/ll_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_add"
+            android:paddingLeft="@dimen/spaceBig"
+            android:paddingBottom="@dimen/spaceSmall"
+            android:paddingTop="@dimen/spaceSmall"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/spaceNormal"
+            android:layout_marginRight="@dimen/spaceNormal"
+            android:drawablePadding="@dimen/spaceBig"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawableLeft="@drawable/icon_add"
+            app:layout_constraintTop_toBottomOf="@id/rv_account"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="@string/action_login_or_register"
+            android:textSize="@dimen/textSizeTitle"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/heightLarge"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

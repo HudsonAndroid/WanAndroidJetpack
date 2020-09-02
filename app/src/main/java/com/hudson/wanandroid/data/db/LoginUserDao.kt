@@ -1,5 +1,6 @@
 package com.hudson.wanandroid.data.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -15,11 +16,15 @@ interface LoginUserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(loginUser: LoginUser)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUsers(loginUsers: List<LoginUser>)
+
+    // LiveData返回类型不能与suspend共用
     @Query("SELECT * FROM loginuser")
-    suspend fun allUsers(): List<LoginUser>
+    fun allUsers(): LiveData<List<LoginUser>>
 
     @Query("SELECT * FROM loginuser WHERE id = :id")
-    suspend fun getUser(id: Int): LoginUser
+    suspend fun getUser(id: Long): LoginUser
 
     @Query("SELECT * FROM loginuser WHERE current = :flag")
     fun getCurrentUser(flag: Boolean = true): LoginUser?

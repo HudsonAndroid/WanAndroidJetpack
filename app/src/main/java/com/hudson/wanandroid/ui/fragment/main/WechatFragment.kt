@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
+import com.hudson.wanandroid.data.account.AccountRelative
+import com.hudson.wanandroid.data.entity.LoginUser
 import com.hudson.wanandroid.data.entity.wrapper.Status
 import com.hudson.wanandroid.databinding.FragmentWechatBinding
 import com.hudson.wanandroid.di.Injectable
@@ -21,9 +23,9 @@ import javax.inject.Inject
 /**
  * 公众号
  */
-class WechatFragment : Fragment(), Injectable {
+class WechatFragment : Fragment(), Injectable, AccountRelative {
     companion object{
-        const val CACHE_FRAGMENT_SIZE = 3
+        const val CACHE_FRAGMENT_SIZE = 2
     }
     private var wechatBinding by autoCleared<FragmentWechatBinding>()
 
@@ -63,5 +65,9 @@ class WechatFragment : Fragment(), Injectable {
                 }.attach()
             }
         })
+    }
+
+    override fun onAccountChanged(user: LoginUser?) {
+        wechatModel.refresh()
     }
 }

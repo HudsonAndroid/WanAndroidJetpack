@@ -42,17 +42,7 @@ class WanAndroidAccount private constructor(
         if (login?.isSuccess() == true) {
             val currentLogin = login.data
             if(isMatch(currentLogin, cookieCache)){
-                // todo 可以考虑是否要判断账号是否还是旧账号
-                val loginUserDao = db.loginUserDao()
-                if(currentUser.value != null){
-                    currentUser.value?.current = false
-                    // clean old user flag
-                    loginUserDao.insertUser(currentUser.value!!)
-                }
-                // save account info into Room
-                val user = LoginUser(currentLogin.id, currentLogin, cookieCache!!, true)
-                currentUser.value = user
-                loginUserDao.insertUser(user)
+                switchAccount(LoginUser(currentLogin.id, currentLogin, cookieCache!!))
             }else{
                 // clean
                 cookieCache = mutableListOf()
@@ -73,16 +63,28 @@ class WanAndroidAccount private constructor(
         return false
     }
 
-    suspend fun accountList() = db.loginUserDao().allUsers()
+    fun accountList() = db.loginUserDao().allUsers()
 
-    suspend fun switchAccount(accountId: Int){
-        // change current account
-        val loginUserDao = db.loginUserDao()
-        val user = loginUserDao.getUser(accountId)
-        user.current = true
-        loginUserDao.insertUser(user)
-        currentUser.value = user
-        cookieCache = user.cookies.toMutableList()
+    suspend fun switchAccount(accountId: Long){
+        switchAccount(db.loginUserDao().getUser(accountId))
+    }
+
+    private suspend fun switchAccount(targetUser: LoginUser){
+        // todo 可以考虑是否要判断账号是否还是旧账号
+        val modifiedUsers = mutableListOf<LoginUser>()
+        if(currentUser.value != null){
+            // clean old user flag
+            currentUser.value?.current = false
+            modifiedUsers.add(currentUser.value!!)
+        }
+        // change current user flag
+        targetUser.current = true
+        modifiedUsers.add(targetUser)
+        // update change into Room
+        db.loginUserDao().insertUsers(modifiedUsers)
+        // switch now
+        cookieCache = targetUser.cookies.toMutableList()
+        currentUser.value = targetUser
     }
 
     companion object{

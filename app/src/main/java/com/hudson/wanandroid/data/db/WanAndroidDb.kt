@@ -6,10 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.hudson.wanandroid.BuildConfig
-import com.hudson.wanandroid.data.entity.Article
-import com.hudson.wanandroid.data.entity.HotWord
-import com.hudson.wanandroid.data.entity.LoginUser
-import com.hudson.wanandroid.data.entity.PagingNextKey
+import com.hudson.wanandroid.data.entity.*
 import com.hudson.wanandroid.data.entity.wrapper.DataWrapper
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
@@ -23,9 +20,10 @@ import net.sqlcipher.database.SupportFactory
         PagingNextKey::class,
         Article::class,
         HotWord::class,
-        LoginUser::class
+        LoginUser::class,
+        UserScore::class
     ],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 // DbMemberConverters被PagingNextKey使用
@@ -36,6 +34,7 @@ abstract class WanAndroidDb: RoomDatabase(){
     abstract fun articleDao(): ArticleDao
     abstract fun hotWordDao(): HotWordDao
     abstract fun loginUserDao(): LoginUserDao
+    abstract fun userScoreDao(): UserScoreDao
 
     companion object{
         @Volatile

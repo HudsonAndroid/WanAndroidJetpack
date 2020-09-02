@@ -108,4 +108,8 @@ interface WanAndroidApi {
 
     @GET("lg/collect/list/{pageNo}/json")
     suspend fun starArticlesResult(@Path("pageNo")pageNo: Int): ArticleResultWrapper
+
+    // 账号积分
+    @GET("lg/coin/userinfo/json")
+    fun fetchCurrentUserScore(): Call<CurrentUserScore>
 }

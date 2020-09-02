@@ -11,7 +11,7 @@ import okhttp3.Cookie
 @Entity
 data class LoginUser(
     @PrimaryKey
-    val id: Int,
+    val id: Long,
     val loginInfo: LoginInfo,
     val cookies: List<Cookie>,
     var current: Boolean = false
