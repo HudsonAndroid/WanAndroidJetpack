@@ -29,7 +29,7 @@ class ProjectsPagerAdapter(fragment: Fragment,
     override fun getItemCount() = projects.size
 
     override fun createFragment(position: Int): ProjectItemFragment {
-        return ProjectItemFragment(projects[position])
+        return ProjectItemFragment.newInstance(projects[position])
     }
 
 }

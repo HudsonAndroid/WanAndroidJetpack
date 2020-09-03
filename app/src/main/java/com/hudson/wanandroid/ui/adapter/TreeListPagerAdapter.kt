@@ -13,5 +13,5 @@ class TreeListPagerAdapter(activity: FragmentActivity,
 
     override fun getItemCount() = treeList.size
 
-    override fun createFragment(position: Int) = TreeArticleFragment(treeList[position])
+    override fun createFragment(position: Int) = TreeArticleFragment.newInstance(treeList[position])
 }

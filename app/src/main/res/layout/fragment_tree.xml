@@ -19,6 +19,8 @@
             app:tabMaxWidth="0dp"
             app:tabGravity="fill"
             app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabIndicatorColor="@color/colorAccent"
             app:tabTextAppearance="@style/TabTextAppearance"
             android:layout_height="?attr/actionBarSize" />
 

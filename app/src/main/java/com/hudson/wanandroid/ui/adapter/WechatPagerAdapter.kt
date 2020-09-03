@@ -13,6 +13,6 @@ class WechatPagerAdapter(fragment: Fragment,
     : FragmentStateAdapter(fragment){
     override fun getItemCount() = categories.size
 
-    override fun createFragment(position: Int) = WechatItemFragment(categories[position])
+    override fun createFragment(position: Int) = WechatItemFragment.newInstance(categories[position])
 
 }

@@ -31,6 +31,8 @@
             android:id="@+id/tabs"
             android:layout_width="0dp"
             app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabIndicatorColor="@color/colorAccent"
             app:tabTextAppearance="@style/TabTextAppearance"
             android:layout_height="?attr/actionBarSize" />
 

@@ -1,5 +1,7 @@
 package com.hudson.wanandroid.data.entity
 
+import java.io.Serializable
+
 /**
  * Created by Hudson on 2020/8/26.
  */
@@ -12,4 +14,4 @@ data class Subject(
     val parentChapterId: Int,
     val userControlSetTop: Boolean,
     val visible: Int
-)
+): Serializable

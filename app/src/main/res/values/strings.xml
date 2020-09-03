@@ -47,6 +47,7 @@
     <string name="menu_star">我的收藏</string>
     <string name="menu_share">我的分享</string>
     <string name="menu_todo">TODO</string>
+    <string name="menu_night">夜间模式</string>
     <string name="search_hot">热门搜索</string>
     <string name="search_history">历史搜索</string>
     <string name="search_input_hint">输入关键字，多个关键字空格隔开</string>

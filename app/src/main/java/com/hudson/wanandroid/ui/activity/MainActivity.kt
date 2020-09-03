@@ -1,11 +1,13 @@
 package com.hudson.wanandroid.ui.activity
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -69,6 +71,17 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
         findViewById<BottomNavigationView>(R.id.bnv_navigation).setupWithNavController(navController)
 
         configDrawer()
+
+        initTheme()
+    }
+
+    private fun initTheme(){
+        val configuration = getSharedPreferences(CONFIG_NAME, Context.MODE_PRIVATE)
+        val isCustomNightMode = configuration.getBoolean(CUSTOM_NIGHT_FLAG, false)
+        if(isCustomNightMode){
+            // 使用自定义的夜间模式
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
     }
 
     private fun configDrawer(){
@@ -107,16 +120,19 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
         if(id == R.id.nav_score){
             LoginActivity.start(this)
 //            SearchActivity.start(this)
+        }else if(id == R.id.nav_night){
+            val configuration = getSharedPreferences(CONFIG_NAME, Context.MODE_PRIVATE)
+            val edit = configuration.edit()
+            val isCustomNightMode = configuration.getBoolean(CUSTOM_NIGHT_FLAG, false)
+            if(isCustomNightMode){
+                // 跟随系统
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }else{
+                // 使用自定义的夜间模式
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            edit.putBoolean(CUSTOM_NIGHT_FLAG, !isCustomNightMode).apply()
         }
-//
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//        } else if (id == R.id.nav_slideshow) {
-//        } else if (id == R.id.nav_manage) {
-//        } else if (id == R.id.nav_share) {
-//        } else if (id == R.id.nav_send) {
-//        }
 
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         drawer.closeDrawer(GravityCompat.START)
@@ -142,5 +158,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
                 }
             })
         }
+    }
+
+    companion object{
+        const val CONFIG_NAME = "wanandroidConfigs"
+        const val CUSTOM_NIGHT_FLAG = "customNightFlag"
     }
 }

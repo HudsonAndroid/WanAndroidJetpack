@@ -45,7 +45,7 @@
                 android:id="@+id/tv_title"
                 android:text="@string/activity_account_manage"
                 android:textSize="@dimen/textSizeTitle"
-                android:textColor="@color/white"
+                android:textColor="@color/white_no_theme"
                 android:layout_marginStart="@dimen/spaceBig"
                 android:layout_marginLeft="@dimen/spaceBig"
                 android:layout_width="wrap_content"
@@ -75,7 +75,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:text="@string/action_login_or_register"
             android:textSize="@dimen/textSizeTitle"
-            android:textColor="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="@dimen/heightLarge"/>
 
