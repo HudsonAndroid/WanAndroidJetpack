@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import com.hudson.wanandroid.R
 import com.hudson.wanandroid.databinding.FragmentLoginBinding
 import com.hudson.wanandroid.di.Injectable
+import com.hudson.wanandroid.ui.activity.AccountManageActivity
 import com.hudson.wanandroid.ui.util.autoCleared
 import com.hudson.wanandroid.ui.util.showToast
 import com.hudson.wanandroid.viewmodel.AccountModel
@@ -55,6 +56,11 @@ class LoginFragment : Fragment(), Injectable {
         }
         binding.tvRegister.setOnClickListener{
             Navigation.findNavController(binding.root).navigate(R.id.registerFragment)
+        }
+        binding.tvExist.setOnClickListener {
+            val activity = requireActivity()
+            activity.finish()
+            AccountManageActivity.start(activity)
         }
     }
 

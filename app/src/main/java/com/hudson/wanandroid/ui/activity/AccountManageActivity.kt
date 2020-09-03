@@ -29,6 +29,7 @@ class AccountManageActivity : AppCompatActivity() {
                 if(!loginUser.current){
                     lifecycleScope.launch {
                         wanAndroidAccount.switchAccount(loginUser.id)
+                        finish()
                     }
                 }
             }
@@ -40,7 +41,19 @@ class AccountManageActivity : AppCompatActivity() {
             accountListAdapter.load(it)
         })
         binding.tvAdd.setOnClickListener {
+            finish()
             LoginActivity.start(this)
+        }
+        binding.currentUser = wanAndroidAccount.currentUser
+        binding.lifecycleOwner = this
+        binding.btnLogout.setOnClickListener {
+            lifecycleScope.launch {
+                val logout = wanAndroidAccount.logout()
+                if (logout?.isSuccess() == true) {
+                    this@AccountManageActivity.finish()
+                    LoginActivity.start(this@AccountManageActivity)
+                }
+            }
         }
     }
 

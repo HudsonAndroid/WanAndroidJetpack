@@ -20,6 +20,7 @@ class AccountModel @Inject constructor(private val api: WanAndroidApi): ViewMode
     val loadState = MutableLiveData<Boolean>()
     val loginEnable = MutableLiveData<Boolean>()
     val registerEnable = MutableLiveData<Boolean>()
+    val existAccounts = WanAndroidAccount.getInstance().accountList()
 
     suspend fun login(): LoginResult?{
         loadState.value = true

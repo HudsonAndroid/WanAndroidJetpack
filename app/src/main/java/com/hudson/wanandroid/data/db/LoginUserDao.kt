@@ -28,4 +28,7 @@ interface LoginUserDao {
 
     @Query("SELECT * FROM loginuser WHERE current = :flag")
     fun getCurrentUser(flag: Boolean = true): LoginUser?
+
+    @Query("DELETE FROM loginuser WHERE current = :flag")
+    suspend fun removeCurrentUser(flag: Boolean = true)
 }

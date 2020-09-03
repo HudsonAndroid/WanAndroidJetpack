@@ -8,6 +8,7 @@ import com.hudson.wanandroid.data.db.WanAndroidDb
 import com.hudson.wanandroid.data.entity.LoginInfo
 import com.hudson.wanandroid.data.entity.LoginResult
 import com.hudson.wanandroid.data.entity.LoginUser
+import com.hudson.wanandroid.data.entity.wrapper.BaseResult
 import okhttp3.Cookie
 import kotlin.Exception
 
@@ -49,6 +50,21 @@ class WanAndroidAccount private constructor(
             }
         }
         return login
+    }
+
+    suspend fun logout(): BaseResult? {
+        val result = try{
+            api.logout()
+        }catch (e: Exception){
+            e.printStackTrace()
+            null
+        }
+        if(result?.isSuccess() == true){
+            db.loginUserDao().removeCurrentUser()
+            cookieCache = mutableListOf()
+            currentUser.value = null
+        }
+        return result
     }
 
     // 检查当前的登录账号和获取到的cookie是否对应

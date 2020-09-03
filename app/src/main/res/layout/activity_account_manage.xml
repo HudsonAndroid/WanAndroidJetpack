@@ -3,6 +3,12 @@
 
     <data>
         <import type="com.hudson.wanandroid.viewmodel.global.GlobalJumpHandler"/>
+        <import type="com.hudson.wanandroid.data.entity.LoginUser"/>
+        <import type="androidx.lifecycle.LiveData"/>
+
+        <variable
+            name="currentUser"
+            type="LiveData&lt;LoginUser>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,6 +78,19 @@
             android:textColor="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="@dimen/heightLarge"/>
+
+        <Button
+            android:id="@+id/btn_logout"
+            showOrHide="@{currentUser != null}"
+            android:text="@string/action_logout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/heightNormal"
+            android:layout_marginLeft="@dimen/heightNormal"
+            android:layout_marginRight="@dimen/heightNormal"
+            app:layout_constraintTop_toBottomOf="@id/tv_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

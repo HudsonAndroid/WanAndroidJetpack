@@ -52,6 +52,7 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_user"
             android:layout_marginBottom="@dimen/spaceLittle"
             android:textStyle="italic|bold"
+            showOrHide="@{currentUser != null}"
             android:background="@drawable/bg_user_level"
             android:text="@{@string/title_level + userScore.level}"
             android:paddingLeft="@dimen/spaceSmall"
@@ -63,6 +64,7 @@
 
         <TextView
             android:id="@+id/tv_sort"
+            showOrHide="@{currentUser != null}"
             app:layout_constraintLeft_toLeftOf="@id/tv_user"
             app:layout_constraintTop_toBottomOf="@id/tv_user"
             app:layout_constraintBottom_toBottomOf="@id/iv_icon"
@@ -76,6 +78,7 @@
         <TextView
             android:id="@+id/tv_score"
             android:layout_marginLeft="@dimen/spaceNormal"
+            showOrHide="@{currentUser != null}"
             android:drawablePadding="@dimen/spaceLittle"
             android:drawableLeft="@drawable/icon_coin"
             app:layout_constraintTop_toTopOf="@id/tv_sort"
