@@ -121,11 +121,15 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
             LoginActivity.start(this)
 //            SearchActivity.start(this)
         }else if(id == R.id.nav_night){
+            // Day-Night theme switch see
+            // https://medium.com/androiddevelopers/appcompat-v23-2-daynight-d10f90c83e94
             val configuration = getSharedPreferences(CONFIG_NAME, Context.MODE_PRIVATE)
             val edit = configuration.edit()
             val isCustomNightMode = configuration.getBoolean(CUSTOM_NIGHT_FLAG, false)
             if(isCustomNightMode){
                 // 跟随系统
+                // 注意：下面方法对AppCompatActivity生效，其他类型的Activity无法生效
+                // 另外可以通过setLocalNightMode单独对某个Activity应用
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }else{
                 // 使用自定义的夜间模式

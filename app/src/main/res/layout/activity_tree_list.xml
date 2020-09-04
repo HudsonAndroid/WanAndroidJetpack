@@ -37,7 +37,7 @@
                 android:id="@+id/tv_title"
                 android:text="@string/fragment_tree"
                 android:textSize="@dimen/textSizeTitle"
-                android:textColor="@color/white"
+                android:textColor="@color/white_no_theme"
                 android:layout_marginStart="@dimen/spaceBig"
                 android:layout_marginLeft="@dimen/spaceBig"
                 android:layout_width="wrap_content"
