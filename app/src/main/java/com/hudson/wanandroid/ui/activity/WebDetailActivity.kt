@@ -3,6 +3,7 @@ package com.hudson.wanandroid.ui.activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.ViewGroup
@@ -21,8 +22,6 @@ class WebDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_web_detail)
         val container = findViewById<ConstraintLayout>(R.id.cl_container)
         val context = this
-        // TODO: 2020/9/4 问题： 暗色模式下首次打开会白屏，原因是webView的构建过程中会把它附加到ViewGroup上
-        // 由于内部逻辑被AgentWeb固定，无法先修改webView的theme再附加到ViewGroup上
         intent?.getStringExtra(KEY_URL)?.apply {
             agentWeb = AgentWeb.with(context)
                 .setAgentWebParent(
@@ -46,6 +45,8 @@ class WebDetailActivity : AppCompatActivity() {
                 Configuration.UI_MODE_NIGHT_YES
 //        val isSupportDark = WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)
         if(isDarkTheme && WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)){
+            // fix first open show blank page bug
+            agentWeb.webCreator.webView.setBackgroundColor(Color.BLACK)
             val settings = agentWeb.webCreator.webView.settings
             WebSettingsCompat.setForceDark(settings, WebSettingsCompat.FORCE_DARK_ON)
         }
