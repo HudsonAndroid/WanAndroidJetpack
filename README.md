@@ -1,8 +1,8 @@
 # WanAndroidJetpack
 ## UI展示
-![网页夜间模式](displayImages/webpage.jpg) ![白天模式-体系](displayImages/dayMode.jpg)
-![文章列表Paging3](displayImages/pagingArticles.jpg) ![搜索页面ShareModel共享型ViewModel](displayImages/searchPage.jpg)
-![首页-Banner是java代码，之前有实现过复用了](displayImages/homePage.jpg)
+<img src="displayImages/webpage.jpg" width="320" alt="网页夜间模式"/>  <img src="displayImages/dayMode.jpg" width="320" alt="白天模式-体系"/>
+<img src="displayImages/pagingArticles.jpg" width="320" alt="文章列表Paging3"/>  <img src="displayImages/searchPage.jpg" width="320" alt="搜索页面ShareModel共享型ViewModel"/>
+<img src="displayImages/homePage.jpg" width="320" alt="首页-Banner是java代码，之前有实现过复用了"/>
 ## 单元测试
 ### MergeCall及网络请求单元测试
 在test文件夹下的[network包](/app/src/test/java/com/hudson/wanandroid/network)内。单元测试模拟数据存放在resources目录下，同时通过往OkHttp中添加interceptor，并设置
