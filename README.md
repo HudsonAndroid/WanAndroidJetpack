@@ -15,7 +15,7 @@
 从resources目录下读取的json数据作为返回值。测试时需要注意确保AppExecutor是外界设置，同时针对RetrofitCall类型的需要修改Retrofit的callback回调线程调度器，具体见代码。
 
 ## 使用到的jetpack内容
-### ViewModelyuan
+### ViewModel
 ViewModel配合Repository的使用
 ViewModel共享数据实践(Fragment与Activity共享同一个ViewModel，见[Fragment](/app/src/main/java/com/hudson/wanandroid/ui/fragment/search))、[Activity](/app/src/main/java/com/hudson/wanandroid/ui/activity/SearchActivity.kt)及[共享ViewModel](/app/src/main/java/com/hudson/wanandroid/viewmodel/SearchModel.kt)
 ### WorkManager定期任务
