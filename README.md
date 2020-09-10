@@ -1,4 +1,10 @@
 # WanAndroidJetpack
+## 介绍
+本项目全部使用jetpack相关技术方案实现，充分借鉴单一可信数据源设计方案(如下图所示)，摒弃EventBus处处监听处处触发的数据源不确定性问题，并借助依赖注入进一步降低代码之间的耦合。
+数据请求方面运用ROOM作为数据缓存方案，错误发生时统一重试及结合Paging3的重试刷新特性构建重试方案，以及失败重新启用ROOM本地数据。
+账号模块充分利用ROOM支持LiveData特性，使得数据驱动视图，充分替代RxJava。
+![方案](https://developer.android.google.cn/topic/libraries/architecture/images/final-architecture.png)
+目前存在的可能优化部分是：数据源Repository仍然使用的是线程池操作异步逻辑，可以考虑使用LifecycleScope或ViewModelScope代替（目前代码中涉及列表的Paging3都是通过这种方式实现），以及依赖注入可以考虑使用更容易上手的Hilt
 ## UI展示
 <img src="displayImages/webpage.jpg" width="320" alt="网页夜间模式"/>  <img src="displayImages/dayMode.jpg" width="320" alt="白天模式-体系"/>
 <img src="displayImages/pagingArticles.jpg" width="320" alt="文章列表Paging3"/>  <img src="displayImages/searchPage.jpg" width="320" alt="搜索页面ShareModel共享型ViewModel"/>
@@ -9,7 +15,7 @@
 从resources目录下读取的json数据作为返回值。测试时需要注意确保AppExecutor是外界设置，同时针对RetrofitCall类型的需要修改Retrofit的callback回调线程调度器，具体见代码。
 
 ## 使用到的jetpack内容
-### ViewModel
+### ViewModelyuan
 ViewModel配合Repository的使用
 ViewModel共享数据实践(Fragment与Activity共享同一个ViewModel，见[Fragment](/app/src/main/java/com/hudson/wanandroid/ui/fragment/search))、[Activity](/app/src/main/java/com/hudson/wanandroid/ui/activity/SearchActivity.kt)及[共享ViewModel](/app/src/main/java/com/hudson/wanandroid/viewmodel/SearchModel.kt)
 ### WorkManager定期任务
