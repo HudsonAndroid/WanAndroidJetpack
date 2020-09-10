@@ -21,6 +21,7 @@
         android:onClick="@{clickListener}"
         android:text="@{word}"
         android:textSize="@dimen/textSizeNormal"
+        android:textColor="@color/colorText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </layout>
