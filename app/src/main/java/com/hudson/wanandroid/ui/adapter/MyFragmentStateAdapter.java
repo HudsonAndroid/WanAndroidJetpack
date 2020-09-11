@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -237,7 +236,6 @@ public abstract class MyFragmentStateAdapter extends
     private void ensureFragment(int position) {
         long itemId = getItemId(position);
         if (!mFragments.containsKey(itemId)) {
-            // TODO(133419201): check if a Fragment provided here is a new Fragment
             Fragment newFragment = createFragment(position);
             Fragment.SavedState state = mSavedStates.get(itemId);
             newFragment.setInitialSavedState(state);
@@ -341,7 +339,6 @@ public abstract class MyFragmentStateAdapter extends
         // all Fragment views.
         mFragmentManager.registerFragmentLifecycleCallbacks(
                 new FragmentManager.FragmentLifecycleCallbacks() {
-                    // TODO(b/141956012): Suppressed during upgrade to AGP 3.6.
                     @SuppressWarnings("ReferenceEquality")
                     @Override
                     public void onFragmentViewCreated(@NonNull FragmentManager fm,
@@ -447,7 +444,6 @@ public abstract class MyFragmentStateAdapter extends
     /**
      * Default implementation works for collections that don't add, move, remove items.
      * <p>
-     * TODO(b/122670460): add lint rule
      * When overriding, also override {@link #containsItem(long)}.
      * <p>
      * If the item is not a part of the collection, return {@link RecyclerView#NO_ID}.
@@ -463,7 +459,6 @@ public abstract class MyFragmentStateAdapter extends
     /**
      * Default implementation works for collections that don't add, move, remove items.
      * <p>
-     * TODO(b/122670460): add lint rule
      * When overriding, also override {@link #getItemId(int)}
      */
     public boolean containsItem(long itemId) {
@@ -479,7 +474,6 @@ public abstract class MyFragmentStateAdapter extends
 
     @Override
     public final @NonNull Parcelable saveState() {
-        /** TODO(b/122670461): use custom {@link Parcelable} instead of Bundle to save space */
         Bundle savedState = new Bundle(mFragments.size() + mSavedStates.size());
 
         /** save references to active fragments */
@@ -513,7 +507,6 @@ public abstract class MyFragmentStateAdapter extends
 
         Bundle bundle = (Bundle) savedState;
         if (bundle.getClassLoader() == null) {
-            /** TODO(b/133752041): pass the class loader from {@link ViewPager2.SavedState } */
             bundle.setClassLoader(getClass().getClassLoader());
         }
 
