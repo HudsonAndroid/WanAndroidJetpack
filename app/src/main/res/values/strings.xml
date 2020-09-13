@@ -38,6 +38,7 @@
     <string name="title_level">Lv.</string>
     <string name="title_score">积分：</string>
     <string name="title_sort">排行：</string>
+    <string name="title_score_board">积分榜</string>
 
     <string name="article_type_top">置顶</string>
     <string name="article_type_new">新</string>

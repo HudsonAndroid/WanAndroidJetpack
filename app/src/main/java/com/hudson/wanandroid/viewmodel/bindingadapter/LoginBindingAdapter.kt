@@ -2,13 +2,13 @@ package com.hudson.wanandroid.viewmodel.bindingadapter
 
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.hudson.wanandroid.R
 import com.hudson.wanandroid.data.entity.LoginUser
 import com.hudson.wanandroid.ui.activity.AccountManageActivity
 import com.hudson.wanandroid.ui.activity.LoginActivity
+import com.hudson.wanandroid.ui.activity.UserInfoActivity
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 
 /**
@@ -32,7 +32,9 @@ fun bindNickName(textView: TextView, nickName: String?, count: Int?){
         }
     }else{
         textView.text = nickName
-        textView.setOnClickListener(null)
+        textView.setOnClickListener{
+            UserInfoActivity.start(textView.context)
+        }
     }
 
     // 由于系统针对maxLength的省略号不生效，因此手动处理

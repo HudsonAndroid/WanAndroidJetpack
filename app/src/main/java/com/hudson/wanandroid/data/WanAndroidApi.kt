@@ -112,4 +112,7 @@ interface WanAndroidApi {
     // 账号积分
     @GET("lg/coin/userinfo/json")
     fun fetchCurrentUserScore(): Call<CurrentUserScore>
+
+    @GET("coin/rank/{pageNo}/json")
+    suspend fun userScoreBoard(@Path("pageNo")pageNo: Int): UserScoreRankWrapper
 }

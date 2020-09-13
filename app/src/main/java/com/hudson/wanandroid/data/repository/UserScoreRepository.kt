@@ -1,6 +1,8 @@
 package com.hudson.wanandroid.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.hudson.wanandroid.data.WanAndroidApi
 import com.hudson.wanandroid.data.common.AppExecutor
 import com.hudson.wanandroid.data.common.mergecall.RetrofitCall
@@ -9,6 +11,7 @@ import com.hudson.wanandroid.data.entity.CurrentUserScore
 import com.hudson.wanandroid.data.entity.UserScore
 import com.hudson.wanandroid.data.entity.wrapper.Resource
 import com.hudson.wanandroid.data.repository.base.NetworkBoundResource
+import com.hudson.wanandroid.data.repository.paging.ScoreRankRemoteMediator
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -37,5 +40,15 @@ class UserScoreRepository @Inject constructor(
             override fun createCall() = RetrofitCall(wanAndroidApi.fetchCurrentUserScore())
 
         }.asLiveData()
+    }
+
+    fun loadUserScoreRank() = Pager(config = PagingConfig(pageSize = LOAD_PAGE_SIZE),
+        remoteMediator = ScoreRankRemoteMediator(wanAndroidApi, db)
+    ){
+        db.userScoreDao().getUserScoreRank()
+    }.flow
+
+    companion object{
+        const val LOAD_PAGE_SIZE = 20
     }
 }

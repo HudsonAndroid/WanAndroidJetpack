@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="com.hudson.wanandroid.data.entity.LoginUser"/>
+        <import type="com.hudson.wanandroid.data.entity.UserScore"/>
+        <variable
+            name="currentUser"
+            type="LoginUser" />
+
+        <variable
+            name="userScore"
+            type="UserScore" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.UserInfoActivity">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_marginTop="@dimen/heightLittle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="@dimen/spaceBig"
+            avatar="@{currentUser.loginInfo.icon}"
+            loginUser="@{currentUser}"
+            android:layout_width="@dimen/heightAvatar"
+            android:layout_height="@dimen/heightAvatar"/>
+
+        <TextView
+            android:id="@+id/tv_user"
+            maxWords="@{9}"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/textSizeTitle"
+            android:textStyle="bold"
+            nickName="@{currentUser.loginInfo.nickname}"
+            android:layout_marginTop="@dimen/spaceLittle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_level"
+            app:layout_constraintTop_toTopOf="@+id/tv_sort"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_sort"
+            app:layout_constraintLeft_toLeftOf="@id/tv_user"
+            app:layout_constraintRight_toLeftOf="@id/tv_sort"
+            android:textStyle="italic|bold"
+            showOrHide="@{currentUser != null}"
+            android:background="@drawable/bg_user_level"
+            android:text="@{@string/title_level + userScore.level}"
+            android:paddingLeft="@dimen/spaceSmall"
+            android:paddingRight="@dimen/spaceSmall"
+            android:textSize="@dimen/textSizeSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_sort"
+            showOrHide="@{currentUser != null}"
+            android:layout_marginLeft="@dimen/spaceNormal"
+            app:layout_constraintLeft_toRightOf="@id/tv_level"
+            app:layout_constraintTop_toBottomOf="@id/tv_user"
+            app:layout_constraintRight_toLeftOf="@+id/tv_score"
+            android:drawablePadding="@dimen/spaceLittle"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/icon_rank"
+            android:text='@{userScore.rank + ""}'
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_score"
+            android:layout_marginLeft="@dimen/spaceNormal"
+            showOrHide="@{currentUser != null}"
+            android:drawablePadding="@dimen/spaceLittle"
+            android:drawableLeft="@drawable/icon_coin"
+            app:layout_constraintTop_toTopOf="@+id/tv_sort"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_sort"
+            android:gravity="center_vertical"
+            app:layout_constraintLeft_toRightOf="@id/tv_sort"
+            app:layout_constraintRight_toRightOf="@id/tv_user"
+            android:text='@{userScore.coinCount + ""}'
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <!--tab布局-->
+
+        <com.google.android.material.tabs.TabLayout
+            app:layout_constraintTop_toBottomOf="@id/tv_sort"
+            android:layout_marginTop="@dimen/spaceNormal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/view_pager"
+            android:id="@+id/tabs"
+            android:layout_width="0dp"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabTextAppearance="@style/TabTextAppearance"
+            android:layout_height="?attr/actionBarSize" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            app:layout_constraintTop_toBottomOf="@id/tabs"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
