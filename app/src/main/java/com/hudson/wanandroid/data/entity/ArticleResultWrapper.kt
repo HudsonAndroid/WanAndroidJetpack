@@ -13,6 +13,20 @@ data class ArticleResultWrapper(
     }
 }
 
+data class StarArticleResultWrapper(
+    val data: StarArticleWrapper
+)
+
+data class StarArticleWrapper(
+    val curPage: Int,
+    val offset: Int,
+    val over: Boolean,
+    val pageCount: Int,
+    val size: Int,
+    val total: Int,
+    val datas: List<StarArticle>
+)
+
 data class ArticleWrapper(
     val curPage: Int,
     val offset: Int,

@@ -2,7 +2,7 @@ package com.hudson.wanandroid.data.repository.paging
 
 import com.hudson.wanandroid.data.WanAndroidApi
 import com.hudson.wanandroid.data.db.WanAndroidDb
-import com.hudson.wanandroid.data.entity.Article
+import com.hudson.wanandroid.data.entity.StarArticle
 
 /**
  * Created by Hudson on 2020/8/30.
@@ -10,10 +10,10 @@ import com.hudson.wanandroid.data.entity.Article
 class StarRemoteMediator(
     api: WanAndroidApi,
     db: WanAndroidDb
-    ): BaseRemoteMediator<Article>(api, db){
+    ): BaseRemoteMediator<StarArticle>(api, db){
     private var nextKey: Int? = null
 
-    override suspend fun fetchNetworkData(nextPageKey: Int?): List<Article> {
+    override suspend fun fetchNetworkData(nextPageKey: Int?): List<StarArticle> {
         return nextPageKey?.run {
             val result = api.starArticlesResult(nextPageKey)
             nextKey = result.data.curPage + 1
@@ -23,11 +23,9 @@ class StarRemoteMediator(
 
     override fun getNextKey(nextPageKey: Int?) = nextKey
 
-    override suspend fun updateNetworkData(db: WanAndroidDb, data: List<Article>)
-        = db.articleDao().insertArticles(data)
+    override suspend fun updateNetworkData(db: WanAndroidDb, data: List<StarArticle>)
+        = db.starArticleDao().insertStarArticles(data)
 
-    override suspend fun cleanLocalData(db: WanAndroidDb) {
-        //todo 如果清理，会影响其他页面
-    }
-
+    override suspend fun cleanLocalData(db: WanAndroidDb)
+        = db.starArticleDao().cleanArticles()
 }

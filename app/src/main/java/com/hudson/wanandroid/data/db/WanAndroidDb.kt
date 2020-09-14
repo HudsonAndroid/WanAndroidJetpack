@@ -21,7 +21,8 @@ import net.sqlcipher.database.SupportFactory
         Article::class,
         HotWord::class,
         LoginUser::class,
-        UserScore::class
+        UserScore::class,
+        StarArticle::class
     ],
     version = 5,
     exportSchema = false
@@ -35,6 +36,7 @@ abstract class WanAndroidDb: RoomDatabase(){
     abstract fun hotWordDao(): HotWordDao
     abstract fun loginUserDao(): LoginUserDao
     abstract fun userScoreDao(): UserScoreDao
+    abstract fun starArticleDao(): StarArticleDao
 
     companion object{
         @Volatile

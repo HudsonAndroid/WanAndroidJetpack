@@ -106,8 +106,15 @@ interface WanAndroidApi {
     @POST("lg/uncollect_originId/{id}/json")
     suspend fun unStarArticle(@Path("id")starId: Int): BaseResult
 
+    // 取消收藏，需要使用收藏接口获取的StarArticle的数据来操作
+    // 其中StarArticle的originId对应了普通文章的id，但可能会为空
+    @POST("lg/uncollect/{id}/json")
+    @FormUrlEncoded
+    suspend fun unStarArticleUseStarId(@Path("id")starId: Int,
+                                        @Field("originId")originId: Int): BaseResult
+
     @GET("lg/collect/list/{pageNo}/json")
-    suspend fun starArticlesResult(@Path("pageNo")pageNo: Int): ArticleResultWrapper
+    suspend fun starArticlesResult(@Path("pageNo")pageNo: Int): StarArticleResultWrapper
 
     // 账号积分
     @GET("lg/coin/userinfo/json")

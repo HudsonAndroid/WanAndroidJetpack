@@ -20,9 +20,15 @@ interface ArticleDao {
     @Update
     suspend fun updateArticle(article: Article)
 
+    @Query("SELECT * FROM article WHERE id = :id")
+    suspend fun getTargetArticle(id: Int): Article?
+
     //返回值PagingSource类型要求room版本2.3.0-alpha01
     @Query("SELECT * FROM article")
     fun getArticlePagingSource(): PagingSource<Int, Article>
+
+    @Query("SELECT * FROM article WHERE collect = :star")
+    fun getStarArticlePagingSource(star: Boolean = true): PagingSource<Int, Article>
 
     @Query("SELECT * FROM article WHERE chapterId = :projectId")
     fun getProjectPagingSource(projectId: Int): PagingSource<Int, Article>
