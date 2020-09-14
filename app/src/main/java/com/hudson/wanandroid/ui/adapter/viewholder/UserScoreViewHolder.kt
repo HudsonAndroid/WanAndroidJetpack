@@ -12,5 +12,6 @@ class UserScoreViewHolder(private val binding: ItemUserScoreBinding)
 
     fun bindUserScore(userScore: UserScore){
         binding.userScore = userScore
+        binding.rankNo = layoutPosition + 1
     }
 }

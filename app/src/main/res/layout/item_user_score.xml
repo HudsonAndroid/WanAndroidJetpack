@@ -5,27 +5,46 @@
         <variable
             name="userScore"
             type="com.hudson.wanandroid.data.entity.UserScore" />
+        <variable
+            name="rankNo"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/heightNormal">
+
+        <TextView
+            android:id="@+id/tv_no"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="@dimen/spaceNormal"
+            rankNo="@{rankNo}"
+            android:textSize="@dimen/textSizeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/tv_user"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="@dimen/spaceLarge"
+            app:layout_constraintLeft_toRightOf="@id/tv_no"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/textSizeTitle"
             android:text="@{userScore.username}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
-            app:layout_constraintLeft_toRightOf="@id/tv_user"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="@dimen/spaceNormal"
             app:layout_constraintTop_toTopOf="@id/tv_user"
-            android:layout_marginLeft="@dimen/spaceNormal"
-            android:text='@{":" + userScore.coinCount}'
+            android:textSize="@dimen/textSizeTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text='@{"" + userScore.coinCount}'
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

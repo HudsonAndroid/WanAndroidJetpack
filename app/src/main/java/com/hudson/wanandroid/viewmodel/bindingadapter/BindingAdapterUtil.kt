@@ -3,6 +3,7 @@ package com.hudson.wanandroid.viewmodel.bindingadapter
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
@@ -73,5 +74,30 @@ fun showOrHide(view: View, show: Boolean){
 fun editInputWatcher(input: TextInputEditText, watcher: SimpleEditWatcher?){
     if(watcher != null){
         input.addTextChangedListener(watcher)
+    }
+}
+
+@BindingAdapter(value = ["rankNo"])
+fun rankNo(textView: TextView, no: Int?){
+    no?.run {
+        val resources = textView.resources
+        textView.text = "$no"
+        when(this){
+            1 -> {
+                textView.paint.isFakeBoldText = true
+                textView.setTextColor(resources.getColor(R.color.colorGolden))
+            }
+            2 -> {
+                textView.paint.isFakeBoldText = true
+                textView.setTextColor(resources.getColor(R.color.colorSilver))
+            }
+            3 -> {
+                textView.paint.isFakeBoldText = true
+                textView.setTextColor(resources.getColor(R.color.colorCopper))
+            }
+            else -> {
+                textView.setTextColor(resources.getColor(R.color.colorGray))
+            }
+        }
     }
 }
