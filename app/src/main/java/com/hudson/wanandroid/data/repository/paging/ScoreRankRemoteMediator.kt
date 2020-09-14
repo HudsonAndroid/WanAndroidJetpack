@@ -16,6 +16,7 @@ class ScoreRankRemoteMediator(
     override suspend fun fetchNetworkData(nextPageKey: Int?): List<UserScore> {
         return nextPageKey?.run {
             val userScoreBoard = api.userScoreBoard(nextPageKey)
+            nextKey = userScoreBoard.data.curPage + 1
             return userScoreBoard.data.datas
         } ?: mutableListOf()
     }
@@ -23,11 +24,19 @@ class ScoreRankRemoteMediator(
     override fun getNextKey(nextPageKey: Int?) = nextKey
 
     override suspend fun updateNetworkData(db: WanAndroidDb, data: List<UserScore>) {
+        for (datum in data) {
+            datum.pagingTag = getPagingTag()
+        }
         db.userScoreDao().insertUserScoreList(data)
     }
 
     override suspend fun cleanLocalData(db: WanAndroidDb) {
-        db.userScoreDao().cleanUserScoreRank()
+        db.userScoreDao().cleanUserScoreRank(getPagingTag())
     }
 
+    fun getPagingTag() = PAGING_TAG
+
+    companion object{
+        const val PAGING_TAG = "ScoreRank"
+    }
 }

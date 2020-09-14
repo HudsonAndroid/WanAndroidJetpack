@@ -20,12 +20,12 @@ interface UserScoreDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUserScoreList(userScoreList: List<UserScore>)
 
-    @Query("SELECT * FROM userscore")
-    fun getUserScoreRank(): PagingSource<Int, UserScore>
+    @Query("SELECT * FROM userscore WHERE pagingTag = :pagingTag ORDER BY coinCount DESC")
+    fun getUserScoreRank(pagingTag: String): PagingSource<Int, UserScore>
 
     @Query("SELECT * FROM UserScore WHERE userId = :userId")
     fun getCurrentUserScore(userId: Long): LiveData<UserScore>
 
-    @Query("DELETE FROM userscore")
-    fun cleanUserScoreRank()
+    @Query("DELETE FROM userscore WHERE pagingTag = :pagingTag")
+    fun cleanUserScoreRank(pagingTag: String)
 }

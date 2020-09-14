@@ -45,7 +45,7 @@ class UserScoreRepository @Inject constructor(
     fun loadUserScoreRank() = Pager(config = PagingConfig(pageSize = LOAD_PAGE_SIZE),
         remoteMediator = ScoreRankRemoteMediator(wanAndroidApi, db)
     ){
-        db.userScoreDao().getUserScoreRank()
+        db.userScoreDao().getUserScoreRank(ScoreRankRemoteMediator.PAGING_TAG)
     }.flow
 
     companion object{
