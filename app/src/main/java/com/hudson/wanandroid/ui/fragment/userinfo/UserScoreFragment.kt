@@ -12,7 +12,7 @@ import androidx.paging.ExperimentalPagingApi
 import com.hudson.wanandroid.data.account.AccountRelative
 import com.hudson.wanandroid.data.entity.LoginUser
 import com.hudson.wanandroid.data.entity.PagingRetryLoad
-import com.hudson.wanandroid.databinding.FragmentUserScoreBinding
+import com.hudson.wanandroid.databinding.FragmentCommonPagingBinding
 import com.hudson.wanandroid.di.Injectable
 import com.hudson.wanandroid.ui.adapter.PagingLoadStateAdapter
 import com.hudson.wanandroid.ui.adapter.UserScoreAdapter
@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UserScoreFragment : Fragment(), Injectable, AccountRelative {
-    private var binding by autoCleared<FragmentUserScoreBinding>()
+    private var binding by autoCleared<FragmentCommonPagingBinding>()
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -41,7 +41,7 @@ class UserScoreFragment : Fragment(), Injectable, AccountRelative {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentUserScoreBinding.inflate(inflater, container, false)
+        binding = FragmentCommonPagingBinding.inflate(inflater, container, false)
         return binding.root
     }
 

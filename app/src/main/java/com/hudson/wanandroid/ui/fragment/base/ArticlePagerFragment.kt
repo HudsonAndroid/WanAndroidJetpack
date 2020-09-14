@@ -13,7 +13,7 @@ import com.hudson.wanandroid.data.account.AccountRelative
 import com.hudson.wanandroid.data.entity.Article
 import com.hudson.wanandroid.data.entity.LoginUser
 import com.hudson.wanandroid.data.entity.PagingRetryLoad
-import com.hudson.wanandroid.databinding.FragmentBaseArticleBinding
+import com.hudson.wanandroid.databinding.FragmentCommonPagingBinding
 import com.hudson.wanandroid.ui.adapter.ArticleAdapter
 import com.hudson.wanandroid.ui.adapter.PagingLoadStateAdapter
 import com.hudson.wanandroid.ui.adapter.viewholder.ArticleStarClickListener
@@ -22,13 +22,12 @@ import com.hudson.wanandroid.ui.util.autoCleared
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 /**
  * Created by Hudson on 2020/8/26.
  */
 abstract class ArticlePagerFragment: Fragment(), AccountRelative{
-    private var binding by autoCleared<FragmentBaseArticleBinding>()
+    private var binding by autoCleared<FragmentCommonPagingBinding>()
 
     private val starClickListener = object: ArticleStarClickListener {
         override fun onStarClick(article: Article, position: Int) {
@@ -52,7 +51,7 @@ abstract class ArticlePagerFragment: Fragment(), AccountRelative{
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBaseArticleBinding.inflate(inflater, container, false)
+        binding = FragmentCommonPagingBinding.inflate(inflater, container, false)
         return binding.root
     }
 
