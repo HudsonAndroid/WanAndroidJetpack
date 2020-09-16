@@ -57,7 +57,7 @@
                         app:layout_constraintTop_toBottomOf="@id/iv_icon"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        android:textColor="@color/colorText"
+                        android:textColor="@color/gray_no_theme"
                         android:textSize="@dimen/textSizeTitle"
                         android:textStyle="bold"
                         nickName="@{currentUser.loginInfo.nickname}"

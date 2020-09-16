@@ -102,6 +102,7 @@
             android:layout_marginTop="@dimen/heightNormal"
             android:enabled="@{accountModel.registerEnable}"
             android:text="@string/action_register"
+            android:textColor="@color/gray_no_theme"
             android:layout_marginLeft="@dimen/heightNormal"
             android:layout_marginRight="@dimen/heightNormal"
             app:layout_constraintTop_toBottomOf="@id/container_confirm"

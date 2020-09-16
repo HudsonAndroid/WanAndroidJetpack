@@ -29,10 +29,12 @@
 
         <TextView
             android:id="@+id/tv_user_name"
+            android:textColor="@color/colorText"
             android:text="@{account.loginInfo.nickname}"
             app:layout_constraintLeft_toRightOf="@id/iv_avatar"
             android:layout_marginLeft="@dimen/spaceNormal"
             app:layout_constraintTop_toTopOf="@id/iv_avatar"
+            app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

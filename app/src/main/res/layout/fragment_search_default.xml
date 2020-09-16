@@ -75,6 +75,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_history_title"
             app:layout_constraintBottom_toBottomOf="@id/tv_history_title"
             android:text="@string/action_clean_record"
+            android:textColor="@color/colorTextGray"
             android:layout_marginRight="@dimen/spaceBig"
             android:layout_marginEnd="@dimen/spaceBig"
             android:onClick="@{cleanListener}"

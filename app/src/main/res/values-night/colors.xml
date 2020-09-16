@@ -8,6 +8,7 @@
     <color name="colorGray">#aaa</color>
     <color name="colorLightGray">#d8d8d8</color>
     <color name="colorText">#ccc</color>
+    <color name="colorTextGray">#888</color>
     <color name="colorHalfBlack">#7fff</color>
     <color name="white">#2C2C2C</color>
     <color name="transparent">#0000</color>

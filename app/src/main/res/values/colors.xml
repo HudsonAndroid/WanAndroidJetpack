@@ -8,10 +8,10 @@
     <color name="colorGray">#aaa</color>
     <color name="colorLightGray">#d8d8d8</color>
     <color name="colorText">#333</color>
+    <color name="colorTextGray">#777</color>
     <color name="colorHalfBlack">#5000</color>
     <color name="colorImageDark">#4000</color>
     <color name="white">#fff</color>
-    <color name="white_no_theme">#FFF</color>
     <color name="transparent">#0000</color>
     <color name="colorPink">#FFB4AE</color>
     <color name="colorRed">#CD4846</color>
@@ -20,4 +20,7 @@
     <color name="colorCopper">#CA9956</color>
 
     <color name="colorUserLevel">#5529B629</color>
+
+    <color name="white_no_theme">#FFF</color>
+    <color name="gray_no_theme">#ccc</color>
 </resources>

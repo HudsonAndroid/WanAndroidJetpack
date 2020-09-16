@@ -57,18 +57,20 @@
             android:id="@+id/rv_account"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/ll_header"
+            android:maxHeight="600dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/tv_add"
-            android:paddingLeft="@dimen/spaceBig"
+            android:paddingLeft="@dimen/spaceSmall"
             android:paddingBottom="@dimen/spaceSmall"
             android:paddingTop="@dimen/spaceSmall"
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/spaceNormal"
             android:layout_marginRight="@dimen/spaceNormal"
             android:drawablePadding="@dimen/spaceBig"
+            android:textColor="@color/colorText"
             android:background="?android:attr/selectableItemBackground"
             android:drawableLeft="@drawable/icon_add"
             app:layout_constraintTop_toBottomOf="@id/rv_account"
@@ -87,6 +89,7 @@
             android:layout_marginTop="@dimen/heightNormal"
             android:layout_marginLeft="@dimen/heightNormal"
             android:layout_marginRight="@dimen/heightNormal"
+            android:textColor="@color/gray_no_theme"
             app:layout_constraintTop_toBottomOf="@id/tv_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
