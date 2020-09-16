@@ -16,7 +16,7 @@ data class LoginInfo(
 //    val chapterTops: List<?>,
     val collectIds: List<Int>,
     val email: String,
-    val icon: String,
+    var icon: String,
     val id: Long,
     val nickname: String,
     val password: String,

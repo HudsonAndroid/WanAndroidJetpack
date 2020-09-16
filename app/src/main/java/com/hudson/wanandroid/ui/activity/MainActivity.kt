@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
     @Inject
     lateinit var viewModelFactory : ViewModelProvider.Factory
 
+    lateinit var navigationView: NavigationView
+
     private val userScoreModel: UserScoreModel by viewModels {
         viewModelFactory
     }
@@ -78,9 +80,12 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
     private fun initTheme(){
         val configuration = getSharedPreferences(CONFIG_NAME, Context.MODE_PRIVATE)
         val isCustomNightMode = configuration.getBoolean(CUSTOM_NIGHT_FLAG, false)
+        val menuItem = navigationView.menu.findItem(R.id.nav_night)
         if(isCustomNightMode){
             // 使用自定义的夜间模式
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }else{
+            menuItem.setTitle(R.string.menu_night_system)
         }
     }
 
@@ -96,7 +101,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
         drawer.addDrawerListener(toggle)
         toggle.syncState()
 
-        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        navigationView = findViewById<NavigationView>(R.id.nav_view)
 
         headerSideBinding = NavHeaderSideBinding.inflate(layoutInflater, navigationView, false)
         navigationView.addHeaderView(headerSideBinding.root)
@@ -126,14 +131,17 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
             val configuration = getSharedPreferences(CONFIG_NAME, Context.MODE_PRIVATE)
             val edit = configuration.edit()
             val isCustomNightMode = configuration.getBoolean(CUSTOM_NIGHT_FLAG, false)
+            val menuItem = navigationView.menu.findItem(R.id.nav_night)
             if(isCustomNightMode){
                 // 跟随系统
                 // 注意：下面方法对AppCompatActivity生效，其他类型的Activity无法生效
                 // 另外可以通过setLocalNightMode单独对某个Activity应用
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                menuItem.setTitle(R.string.menu_night_system)
             }else{
                 // 使用自定义的夜间模式
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                menuItem.setTitle(R.string.menu_night)
             }
             edit.putBoolean(CUSTOM_NIGHT_FLAG, !isCustomNightMode).apply()
         }

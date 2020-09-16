@@ -33,7 +33,8 @@
                 android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_marginBottom="@dimen/spaceNormal"
+                    android:paddingBottom="@dimen/spaceNormal"
+                    avatarBlur="@{currentUser.loginInfo.icon}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -44,6 +45,7 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         android:layout_marginLeft="@dimen/spaceBig"
+                        autoClick="@{false}"
                         avatar="@{currentUser.loginInfo.icon}"
                         loginUser="@{currentUser}"
                         android:layout_width="@dimen/heightAvatar"

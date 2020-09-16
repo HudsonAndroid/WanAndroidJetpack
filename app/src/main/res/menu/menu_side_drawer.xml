@@ -14,7 +14,7 @@
         android:title="@string/menu_share"/>
 
     <item android:id="@+id/nav_night"
-        android:icon="@drawable/icon_star"
+        android:icon="@drawable/icon_night"
         android:title="@string/menu_night"/>
 
     <item android:id="@+id/nav_todo"
