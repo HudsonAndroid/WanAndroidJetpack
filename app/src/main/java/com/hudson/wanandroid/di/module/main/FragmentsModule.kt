@@ -1,4 +1,4 @@
-package com.hudson.wanandroid.di.module
+package com.hudson.wanandroid.di.module.main
 
 import com.hudson.wanandroid.ui.fragment.login.LoginFragment
 import com.hudson.wanandroid.ui.fragment.login.RegisterFragment
@@ -45,10 +45,4 @@ abstract class FragmentsModule {
     @ContributesAndroidInjector
     abstract fun defaultTreeFragmentInjector(): DefaultTreeFragment
 
-    // 登录相关
-    @ContributesAndroidInjector
-    abstract fun loginFragmentInjector(): LoginFragment
-
-    @ContributesAndroidInjector
-    abstract fun registerFragmentInjector(): RegisterFragment
 }

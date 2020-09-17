@@ -1,4 +1,4 @@
-package com.hudson.wanandroid.di.module
+package com.hudson.wanandroid.di.module.search
 
 import com.hudson.wanandroid.ui.fragment.search.SearchDefaultFragment
 import com.hudson.wanandroid.ui.fragment.search.SearchResultFragment

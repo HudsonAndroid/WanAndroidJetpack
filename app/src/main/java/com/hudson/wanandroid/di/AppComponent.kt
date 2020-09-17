@@ -3,6 +3,12 @@ package com.hudson.wanandroid.di
 import android.app.Application
 import com.hudson.wanandroid.WanAndroidApp
 import com.hudson.wanandroid.di.module.*
+import com.hudson.wanandroid.di.module.article.ArticleActivityModule
+import com.hudson.wanandroid.di.module.login.LoginActivityModule
+import com.hudson.wanandroid.di.module.main.MainActivityModule
+import com.hudson.wanandroid.di.module.search.SearchActivityModule
+import com.hudson.wanandroid.di.module.treelist.TreeListActivityModule
+import com.hudson.wanandroid.di.module.userinfo.UserInfoActivityModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

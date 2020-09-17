@@ -1,4 +1,4 @@
-package com.hudson.wanandroid.di.module
+package com.hudson.wanandroid.di.module.login
 
 import com.hudson.wanandroid.ui.activity.LoginActivity
 import dagger.Module
@@ -11,6 +11,6 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class LoginActivityModule {
 
-    @ContributesAndroidInjector(modules = [FragmentsModule::class])
+    @ContributesAndroidInjector(modules = [LoginFragmentsModule::class])
     abstract fun loginActivityInjector() : LoginActivity
 }

@@ -1,4 +1,4 @@
-package com.hudson.wanandroid.di.module
+package com.hudson.wanandroid.di.module.userinfo
 
 import com.hudson.wanandroid.ui.activity.UserInfoActivity
 import dagger.Module

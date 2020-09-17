@@ -1,4 +1,4 @@
-package com.hudson.wanandroid.di.module
+package com.hudson.wanandroid.di.module.search
 
 import com.hudson.wanandroid.ui.activity.SearchActivity
 import dagger.Module

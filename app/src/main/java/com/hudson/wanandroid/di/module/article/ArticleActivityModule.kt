@@ -1,4 +1,4 @@
-package com.hudson.wanandroid.di.module
+package com.hudson.wanandroid.di.module.article
 
 import com.hudson.wanandroid.ui.activity.ArticleActivity
 import dagger.Module

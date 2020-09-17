@@ -1,4 +1,4 @@
-package com.hudson.wanandroid.di.module
+package com.hudson.wanandroid.di.module.treelist
 
 import com.hudson.wanandroid.ui.fragment.tree.TreeArticleFragment
 import dagger.Module

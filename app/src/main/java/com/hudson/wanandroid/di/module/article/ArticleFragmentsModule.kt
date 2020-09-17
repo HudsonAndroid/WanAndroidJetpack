@@ -1,4 +1,4 @@
-package com.hudson.wanandroid.di.module
+package com.hudson.wanandroid.di.module.article
 
 import com.hudson.wanandroid.ui.fragment.other.AskArticleFragment
 import com.hudson.wanandroid.ui.fragment.other.SquareArticleFragment
