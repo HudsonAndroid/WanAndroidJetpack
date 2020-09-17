@@ -10,15 +10,11 @@
         android:title="@string/menu_square"/>
 
     <item android:id="@+id/nav_share"
-        android:icon="@drawable/icon_share"
-        android:title="@string/menu_share"/>
+        android:icon="@drawable/icon_browser"
+        android:title="@string/menu_browser"/>
 
     <item android:id="@+id/nav_night"
         android:icon="@drawable/icon_night"
         android:title="@string/menu_night"/>
-
-    <item android:id="@+id/nav_todo"
-        android:icon="@drawable/icon_todo"
-        android:title="@string/menu_todo"/>
 
 </menu>

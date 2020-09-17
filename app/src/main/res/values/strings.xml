@@ -47,8 +47,7 @@
     <string name="menu_close">关闭菜单</string>
     <string name="menu_ask">问答</string>
     <string name="menu_square">广场</string>
-    <string name="menu_share">我的分享</string>
-    <string name="menu_todo">TODO</string>
+    <string name="menu_browser">我的浏览器</string>
     <string name="menu_night">夜间模式</string>
     <string name="menu_night_system">跟随系统</string>
     <string name="search_hot">热门搜索</string>
