@@ -85,5 +85,15 @@ abstract class ViewModelModule {
     abstract fun bindStarModel(starModel: StarModel): ViewModel
 
     @Binds
+    @IntoMap
+    @ViewModelKey(AskArticleModel::class)
+    abstract fun bindAskArticleModel(askArticleModel: AskArticleModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SquareArticleModel::class)
+    abstract fun bindSquareArticleModel(squareArticleModel: SquareArticleModel): ViewModel
+
+    @Binds
     abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
 }

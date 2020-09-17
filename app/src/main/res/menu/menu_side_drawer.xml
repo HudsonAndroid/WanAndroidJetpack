@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/nav_score"
+    <item android:id="@+id/nav_ask"
         android:icon="@drawable/icon_score"
-        android:title="@string/menu_score"/>
+        android:title="@string/menu_ask"/>
 
-    <item android:id="@+id/nav_star"
+    <item android:id="@+id/nav_square"
         android:icon="@drawable/icon_star"
-        android:title="@string/menu_star"/>
+        android:title="@string/menu_square"/>
 
     <item android:id="@+id/nav_share"
         android:icon="@drawable/icon_share"

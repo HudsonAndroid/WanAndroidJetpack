@@ -19,7 +19,8 @@ import javax.inject.Singleton
     SearchActivityModule::class,
     TreeListActivityModule::class,
     LoginActivityModule::class,
-    UserInfoActivityModule::class
+    UserInfoActivityModule::class,
+    ArticleActivityModule::class
 ])
 interface AppComponent {
 

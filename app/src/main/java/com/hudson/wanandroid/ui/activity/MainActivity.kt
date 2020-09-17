@@ -23,6 +23,8 @@ import com.hudson.wanandroid.data.account.AccountRelative
 import com.hudson.wanandroid.data.entity.LoginUser
 import com.hudson.wanandroid.data.entity.wrapper.Status
 import com.hudson.wanandroid.databinding.NavHeaderSideBinding
+import com.hudson.wanandroid.ui.activity.ArticleActivity.Companion.TYPE_ASK
+import com.hudson.wanandroid.ui.activity.ArticleActivity.Companion.TYPE_SQUARE
 import com.hudson.wanandroid.ui.fix.WanAndroidNavigator
 import com.hudson.wanandroid.viewmodel.UserScoreModel
 import dagger.android.DispatchingAndroidInjector
@@ -122,9 +124,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-        if(id == R.id.nav_score){
-            LoginActivity.start(this)
-//            SearchActivity.start(this)
+        if(id == R.id.nav_ask){
+            ArticleActivity.start(this, TYPE_ASK)
         }else if(id == R.id.nav_night){
             // Day-Night theme switch see
             // https://medium.com/androiddevelopers/appcompat-v23-2-daynight-d10f90c83e94
@@ -144,6 +145,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
                 menuItem.setTitle(R.string.menu_night)
             }
             edit.putBoolean(CUSTOM_NIGHT_FLAG, !isCustomNightMode).apply()
+        }else if(id == R.id.nav_square){
+            ArticleActivity.start(this, TYPE_SQUARE)
         }
 
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)

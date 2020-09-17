@@ -33,7 +33,7 @@ class UserInfoPagerAdapter(activity: FragmentActivity)
                 R.string.title_score_board
             }
             USER_STAR -> {
-                R.string.menu_star
+                R.string.title_my_star
             }
             else -> {
                 throw java.lang.IndexOutOfBoundsException()

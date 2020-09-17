@@ -122,4 +122,11 @@ interface WanAndroidApi {
 
     @GET("coin/rank/{pageNo}/json")
     suspend fun userScoreBoard(@Path("pageNo")pageNo: Int): UserScoreRankWrapper
+
+    // 广场
+    @GET("user_article/list/{pageNo}/json")
+    suspend fun squareArticles(@Path("pageNo")pageNo: Int): ArticleResultWrapper
+
+    @GET("wenda/list/{pageNo}/json")
+    suspend fun askArticles(@Path("pageNo")pageNo: Int): ArticleResultWrapper
 }
