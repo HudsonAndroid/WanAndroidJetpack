@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/nav_ask"
-        android:icon="@drawable/icon_score"
+        android:icon="@drawable/icon_ask"
         android:title="@string/menu_ask"/>
 
     <item android:id="@+id/nav_square"
-        android:icon="@drawable/icon_star"
+        android:icon="@drawable/icon_square"
         android:title="@string/menu_square"/>
 
     <item android:id="@+id/nav_share"
