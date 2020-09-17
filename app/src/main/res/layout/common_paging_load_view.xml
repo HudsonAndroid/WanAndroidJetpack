@@ -35,6 +35,7 @@
             android:padding="@dimen/spaceNormal"
             android:layout_marginTop="@dimen/spaceNormal"
             android:text="@string/action_retry"
+            android:textColor="@color/colorTextGray"
             android:id="@+id/retry"
             android:onClick="@{() -> retry.retry()}"
             app:showOrHide="@{pagingRetry.status == Status.ERROR}" />
@@ -42,6 +43,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorTextGray"
             android:id="@+id/error_msg"
             android:text="@{pagingRetry.msg.toString() ?? @string/tips_unknown_error}"
             app:showOrHide="@{pagingRetry.status == Status.ERROR}" />
