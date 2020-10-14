@@ -95,5 +95,15 @@ abstract class ViewModelModule {
     abstract fun bindSquareArticleModel(squareArticleModel: SquareArticleModel): ViewModel
 
     @Binds
+    @IntoMap
+    @ViewModelKey(WebsiteModel::class)
+    abstract fun bindWebsiteModel(websiteModel: WebsiteModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingModel::class)
+    abstract fun bindSettingModel(settingModel: SettingModel): ViewModel
+
+    @Binds
     abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
 }

@@ -39,6 +39,7 @@ class SearchActivity : AppCompatActivity(), HasSupportFragmentInjector {
             handleBackInvoke()
         }
         binding.ivSearch.setOnClickListener{
+            hideSoftInput()
             startSearch(binding)
         }
         binding.etInput.setOnEditorActionListener { view, actionId, event ->

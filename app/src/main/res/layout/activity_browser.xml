@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <import type="androidx.lifecycle.LiveData"/>
+        <variable
+            name="searchUrl"
+            type="LiveData&lt;String>" />
+        <variable
+            name="stared"
+            type="LiveData&lt;Boolean>" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.BrowserActivity">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/spaceBig"
+            android:layout_marginLeft="@dimen/spaceSmall"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/icon_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.hudson.wanandroid.ui.view.BackPressInterceptEditText
+            android:id="@+id/et_input"
+            android:textSize="@dimen/textSizeNormal"
+            android:maxLines="1"
+            android:text="@{searchUrl}"
+            android:layout_marginLeft="@dimen/spaceNormal"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:textColorHint="@color/colorGray"
+            android:textColor="@color/colorLightGray"
+            android:hint="@string/browser_search_hint"
+            app:layout_constraintVertical_bias="0.333"
+            app:layout_constraintLeft_toRightOf="@id/iv_back"
+            app:layout_constraintRight_toLeftOf="@+id/iv_star"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/spaceNormal"
+            android:background="@drawable/edit_text_bg"
+            app:layout_constraintWidth_percent="0.65"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightSmall"/>
+
+        <ImageView
+            android:id="@+id/iv_star"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:layout_constraintLeft_toRightOf="@id/et_input"
+            app:layout_constraintRight_toLeftOf="@+id/iv_search"
+            app:layout_constraintTop_toTopOf="@id/et_input"
+            app:layout_constraintBottom_toBottomOf="@id/et_input"
+            android:src="@{stared ? @drawable/icon_love_selected : @drawable/icon_love}"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/spaceLittle"
+            android:padding="@dimen/spaceNormal"
+            android:layout_width="@dimen/heightMiddle"
+            android:layout_height="@dimen/heightMiddle"/>
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:padding="@dimen/spaceSmall"
+            app:layout_constraintLeft_toRightOf="@id/iv_star"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/et_input"
+            app:layout_constraintBottom_toBottomOf="@id/et_input"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/icon_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <fragment
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/heightLarge"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:navGraph="@navigation/nav_browser"
+            app:defaultNavHost="true" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

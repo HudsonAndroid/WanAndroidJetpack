@@ -1,6 +1,5 @@
 package com.hudson.wanandroid.ui.activity
 
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -20,6 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.hudson.wanandroid.R
 import com.hudson.wanandroid.data.account.AccountRelative
+import com.hudson.wanandroid.data.common.WanAndroidConfig
 import com.hudson.wanandroid.data.entity.LoginUser
 import com.hudson.wanandroid.data.entity.wrapper.Status
 import com.hudson.wanandroid.databinding.NavHeaderSideBinding
@@ -80,8 +80,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
     }
 
     private fun initTheme(){
-        val configuration = getSharedPreferences(CONFIG_NAME, Context.MODE_PRIVATE)
-        val isCustomNightMode = configuration.getBoolean(CUSTOM_NIGHT_FLAG, false)
+        val isCustomNightMode = WanAndroidConfig(this).getFlag(CUSTOM_NIGHT_FLAG)
+
         val menuItem = navigationView.menu.findItem(R.id.nav_night)
         if(isCustomNightMode){
             // 使用自定义的夜间模式
@@ -129,9 +129,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
         }else if(id == R.id.nav_night){
             // Day-Night theme switch see
             // https://medium.com/androiddevelopers/appcompat-v23-2-daynight-d10f90c83e94
-            val configuration = getSharedPreferences(CONFIG_NAME, Context.MODE_PRIVATE)
-            val edit = configuration.edit()
-            val isCustomNightMode = configuration.getBoolean(CUSTOM_NIGHT_FLAG, false)
+            val wanAndroidConfig = WanAndroidConfig(this)
+            val isCustomNightMode = wanAndroidConfig.getFlag(CUSTOM_NIGHT_FLAG)
             val menuItem = navigationView.menu.findItem(R.id.nav_night)
             if(isCustomNightMode){
                 // 跟随系统
@@ -144,9 +143,14 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 menuItem.setTitle(R.string.menu_night)
             }
-            edit.putBoolean(CUSTOM_NIGHT_FLAG, !isCustomNightMode).apply()
+            wanAndroidConfig.configFlag(CUSTOM_NIGHT_FLAG, !isCustomNightMode)
         }else if(id == R.id.nav_square){
             ArticleActivity.start(this, TYPE_SQUARE)
+        }else if(id == R.id.nav_browser){
+            BrowserActivity.start(this)
+        }else if(id == R.id.nav_setting){
+            // 设置
+            SettingActivity.start(this)
         }
 
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
@@ -176,7 +180,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector,
     }
 
     companion object{
-        const val CONFIG_NAME = "wanandroidConfigs"
         const val CUSTOM_NIGHT_FLAG = "customNightFlag"
     }
 }

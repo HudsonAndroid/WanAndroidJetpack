@@ -9,12 +9,16 @@
         android:icon="@drawable/icon_square"
         android:title="@string/menu_square"/>
 
-    <item android:id="@+id/nav_share"
+    <item android:id="@+id/nav_browser"
         android:icon="@drawable/icon_browser"
         android:title="@string/menu_browser"/>
 
     <item android:id="@+id/nav_night"
         android:icon="@drawable/icon_night"
         android:title="@string/menu_night"/>
+
+    <item android:id="@+id/nav_setting"
+        android:icon="@drawable/icon_setting"
+        android:title="@string/menu_setting"/>
 
 </menu>

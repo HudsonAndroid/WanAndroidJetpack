@@ -22,9 +22,10 @@ import net.sqlcipher.database.SupportFactory
         HotWord::class,
         LoginUser::class,
         UserScore::class,
-        StarArticle::class
+        StarArticle::class,
+        UserWebsiteItem::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 // DbMemberConverters被PagingNextKey使用
@@ -37,6 +38,7 @@ abstract class WanAndroidDb: RoomDatabase(){
     abstract fun loginUserDao(): LoginUserDao
     abstract fun userScoreDao(): UserScoreDao
     abstract fun starArticleDao(): StarArticleDao
+    abstract fun userWebsiteDao(): UserWebsiteDao
 
     companion object{
         @Volatile

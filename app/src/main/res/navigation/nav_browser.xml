@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_browser"
+    app:startDestination="@id/browserDefaultFragment">
+
+    <fragment
+        android:id="@+id/browserDefaultFragment"
+        android:name="com.hudson.wanandroid.ui.fragment.browser.BrowserDefaultFragment"
+        android:label="BrowserDefaultFragment" >
+        <action
+            android:id="@+id/action_browserDefaultFragment_to_browserMainFragment"
+            app:destination="@id/browserMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/browserMainFragment"
+        android:name="com.hudson.wanandroid.ui.fragment.browser.BrowserMainFragment"
+        android:label="BrowserMainFragment" />
+</navigation>

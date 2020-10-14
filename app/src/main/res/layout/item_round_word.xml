@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
+        <import type="android.text.Html"/>
         <variable
             name="word"
             type="String" />
@@ -19,7 +20,7 @@
         android:layout_marginLeft="@dimen/spaceNormal"
         android:layout_marginRight="@dimen/spaceNormal"
         android:onClick="@{clickListener}"
-        android:text="@{word}"
+        android:text="@{word == null ? null : Html.fromHtml(word)}"
         android:textSize="@dimen/textSizeNormal"
         android:textColor="@color/colorText"
         android:layout_width="wrap_content"

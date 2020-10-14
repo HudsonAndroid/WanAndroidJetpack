@@ -32,4 +32,13 @@ class WhenTest{
     private fun getType(): Int{
         return 2
     }
+
+    @Test
+    fun testSum(){
+        // 结果会是 -0.09999999...8
+        // flutter结果也是，有点奇怪，浮点运算导致
+        // https://stackoverflow.com/questions/588004/is-floating-point-math-broken
+        // https://stackoverflow.com/questions/15625556/adding-and-subtracting-doubles-are-giving-strange-results
+        println("sum: ${ -1 + 0.9 }")
+    }
 }

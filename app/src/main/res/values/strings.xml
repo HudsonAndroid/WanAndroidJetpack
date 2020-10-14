@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">WanAndroid</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fragment_home">首页</string>
     <string name="fragment_wechat">公众号</string>
     <string name="fragment_nav">导航</string>
@@ -34,12 +32,17 @@
     <string name="tips_register_failed">注册失败</string>
     <string name="tips_operate_failed">操作失败</string>
     <string name="tips_not_login">点击登录</string>
+    <string name="tips_star_success">收藏成功</string>
+    <string name="tips_star_failed">收藏失败</string>
 
     <string name="title_level">Lv.</string>
     <string name="title_score">积分：</string>
     <string name="title_sort">排行：</string>
     <string name="title_score_board">积分榜</string>
     <string name="title_my_star">我的收藏</string>
+    <string name="title_browser_search">搜索引擎</string>
+    <string name="title_browser_search_baidu">百度</string>
+    <string name="title_browser_search_google">谷歌</string>
 
     <string name="article_type_top">置顶</string>
     <string name="article_type_new">新</string>
@@ -47,12 +50,14 @@
     <string name="menu_close">关闭菜单</string>
     <string name="menu_ask">问答</string>
     <string name="menu_square">广场</string>
-    <string name="menu_browser">我的浏览器</string>
+    <string name="menu_browser">浏览器</string>
     <string name="menu_night">夜间模式</string>
     <string name="menu_night_system">跟随系统</string>
+    <string name="menu_setting">设置</string>
     <string name="search_hot">热门搜索</string>
     <string name="search_history">历史搜索</string>
     <string name="search_input_hint">输入关键字，多个关键字空格隔开</string>
+    <string name="browser_search_hint">输入搜索</string>
 
     <string name="hint_account_name">输入用户名</string>
     <string name="hint_password">输入密码</string>

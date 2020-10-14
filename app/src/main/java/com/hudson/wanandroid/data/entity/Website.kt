@@ -1,5 +1,6 @@
 package com.hudson.wanandroid.data.entity
 
+import androidx.room.Entity
 import com.hudson.wanandroid.data.entity.wrapper.BaseResult
 
 /**
@@ -27,3 +28,23 @@ data class WebsiteItem(
         return "Website(icon='$icon', id=$id, link='$link', name='$name', order=$order, visible=$visible)"
     }
 }
+
+data class StarWebsiteResult(
+    val data: UserWebsiteItem
+): BaseResult()
+
+data class UserWebsite(
+    val data: List<UserWebsiteItem>
+): BaseResult()
+
+@Entity(primaryKeys = ["id", "userId"])
+data class UserWebsiteItem(
+    val desc: String,
+    val icon: String,
+    val id: Int,
+    val link: String,
+    val name: String,
+    val order: Int,
+    val userId: Long,
+    val visible: Int
+)

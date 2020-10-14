@@ -4,9 +4,11 @@ import android.app.Application
 import com.hudson.wanandroid.WanAndroidApp
 import com.hudson.wanandroid.di.module.*
 import com.hudson.wanandroid.di.module.article.ArticleActivityModule
+import com.hudson.wanandroid.di.module.browser.BrowserActivityModule
 import com.hudson.wanandroid.di.module.login.LoginActivityModule
 import com.hudson.wanandroid.di.module.main.MainActivityModule
 import com.hudson.wanandroid.di.module.search.SearchActivityModule
+import com.hudson.wanandroid.di.module.setting.SettingActivityModule
 import com.hudson.wanandroid.di.module.treelist.TreeListActivityModule
 import com.hudson.wanandroid.di.module.userinfo.UserInfoActivityModule
 import dagger.BindsInstance
@@ -26,7 +28,9 @@ import javax.inject.Singleton
     TreeListActivityModule::class,
     LoginActivityModule::class,
     UserInfoActivityModule::class,
-    ArticleActivityModule::class
+    ArticleActivityModule::class,
+    BrowserActivityModule::class,
+    SettingActivityModule::class
 ])
 interface AppComponent {
 

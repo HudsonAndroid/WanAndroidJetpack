@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="search_tools">
+        <item>谷歌-https://www.google.com/search?q=</item>
+        <item>百度-https://www.baidu.com/s?wd=</item>
+    </string-array>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="java.util.List"/>
+        <import type="androidx.lifecycle.LiveData"/>
+        <import type="com.hudson.wanandroid.data.entity.wrapper.Status"/>
+        <import type="com.hudson.wanandroid.data.entity.wrapper.Resource"/>
+        <import type="com.hudson.wanandroid.data.entity.UserWebsiteItem"/>
+        <variable
+            name="websites"
+            type="LiveData&lt;Resource&lt;List&lt;UserWebsiteItem>>>" />
+        <variable
+            name="clickListener"
+            type="com.hudson.wanandroid.viewmodel.bindingadapter.WebsiteClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.browser.BrowserDefaultFragment">
+
+        <com.hudson.wanandroid.ui.view.AutoAdaptLayout
+            android:id="@+id/al_hot"
+            showOrHide="@{websites.status == Status.SUCCESS}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="@dimen/spaceNormal"
+            android:layout_marginTop="@dimen/spaceNormal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            websites="@{websites.data}"
+            websiteClickListener="@{clickListener}"
+            app:layout_constraintWidth_percent="0.75"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

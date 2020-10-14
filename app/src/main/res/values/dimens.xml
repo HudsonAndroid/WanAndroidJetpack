@@ -13,6 +13,7 @@
     <dimen name="widthLine">1dp</dimen>
     <dimen name="heightLittle">30dp</dimen>
     <dimen name="heightSmall">40dp</dimen>
+    <dimen name="heightMiddle">45dp</dimen>
     <dimen name="heightNormal">50dp</dimen>
     <dimen name="heightLarge">60dp</dimen>
     <dimen name="heightAvatar">80dp</dimen>

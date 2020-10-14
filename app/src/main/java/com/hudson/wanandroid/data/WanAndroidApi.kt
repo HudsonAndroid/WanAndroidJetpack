@@ -47,9 +47,6 @@ interface WanAndroidApi {
     @GET("article/list/{pageNo}/json")
     fun homeArticle(@Path("pageNo") pageNo: Int): Call<ArticleResultWrapper>
 
-    @GET("friend/json")
-    fun websiteApi(): Call<Website>
-
     @GET("hotkey/json")
     fun searchHotWordApi(): Call<SearchHotWord>
 
@@ -129,4 +126,23 @@ interface WanAndroidApi {
 
     @GET("wenda/list/{pageNo}/json")
     suspend fun askArticles(@Path("pageNo")pageNo: Int): ArticleResultWrapper
+
+    // 网站相关
+    @GET("friend/json")
+    fun websiteApi(): Call<Website>
+
+    @GET("lg/collect/usertools/json")
+    fun userWebsite(): Call<UserWebsite>
+
+    @POST("lg/collect/addtool/json")
+    @FormUrlEncoded
+    suspend fun starWebsite(@Field("name")name: String, @Field("link")link: String): StarWebsiteResult
+
+    @POST("lg/collect/updatetool/json")
+    @FormUrlEncoded
+    fun editStarWebsite(@Field("id")id: Int, @Field("name")name: String, @Field("link")link: String): BaseResult
+
+    @POST("lg/collect/deletetool/json")
+    @FormUrlEncoded
+    fun deleteStarWebsite(@Field("id")id: Int): BaseResult
 }
