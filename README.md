@@ -1,4 +1,5 @@
 # WanAndroidJetpack
+演示apk[下载地址](/app/release/app-release.apk)
 ## 介绍
 本项目全部使用jetpack相关技术方案实现，充分借鉴单一可信数据源设计方案(如下图所示)，UI视图接触到的全部数据仅和ROOM数据库相关，
 即ROOM中的数据就是这个单一可信来源（更多见[官方描述](https://developer.android.google.cn/jetpack/docs/guide#truth)），
