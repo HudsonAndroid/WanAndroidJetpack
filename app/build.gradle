@@ -7,13 +7,13 @@ apply plugin: "androidx.navigation.safeargs" // 适用于java和kotlin混合的
 //apply plugin: "androidx.navigation.safeargs.kotlin" // for navigation safe args param
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "com.hudson.wanandroid"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
@@ -146,4 +146,9 @@ dependencies {
     // sqlcipher 数据库加密工具
     implementation "net.zetetic:android-database-sqlcipher:4.4.0"
     implementation "androidx.sqlite:sqlite:2.1.0"
+
+    // LeakCanary   only debug enable (LeakCanary only run in debug builds)
+    // 注意：2.0版本中不再需要在Application中初始化，因为 LeakSentryInstaller设计成了ContentProvider，会在Application创建前初始化
+    // 由于是debug模式下生效，因此无需考虑性能问题
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
 }
